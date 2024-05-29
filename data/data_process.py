@@ -8,7 +8,7 @@ con = mysql.connector.connect(
     host="localhost",
     database="taipei_day_trip_website"
 )
-#image URL filtering
+#image URL filtering and write to database
 def processing_img_url(img_url,id,cursor):
     pattern1 = r'https://[^\s]+?\.(?:jpg|JPG|mp3|PNG|png)'
     pattern2 = r'https://[^\s]+?\.(?:jpg|JPG|PNG|png)'
@@ -39,8 +39,8 @@ def data_process():
         image_url = i["file"]
         cursor.execute("INSERT INTO attractions (id,name,category,description,address,transport,mrt,lat,lng) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                       ,(id,name,category,description,address,transport,mrt,lat,lng))
-        con.commit()
-        processing_img_url(image_url,id,cursor)
+        con.commit() #執行完attractions table的一個景點寫入
+        processing_img_url(image_url,id,cursor) #執行此景點的圖片url寫入 images table
         id += 1
     cursor.close()
     con.close()
