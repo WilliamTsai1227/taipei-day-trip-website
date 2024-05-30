@@ -1,6 +1,6 @@
 from fastapi import *
 from mysql.connector import pooling
-from fastapi import APIRouter
+
 
 
 # 建立connection_pool
@@ -40,7 +40,7 @@ async def get_mrts():
         result = cursor.fetchall()
         cursor.close()
         conn.close()
-        station_names = [item[0] for item in result]
+        station_names = [item[0] for item in result if item[0] is not None]
         return {"data": station_names}
     except Exception as e:
         print("Caught exception:", e)

@@ -1,6 +1,6 @@
 from fastapi import *
 from mysql.connector import pooling
-from fastapi import APIRouter
+
 from pydantic import BaseModel,Field
 
 # 建立connection_pool
@@ -74,14 +74,12 @@ async def get_attractions(page: int = Query(0, ge=0), keyword: str = None):
                 'images': images
             }
             formatted_result.append(formatted_row)
-        cursor.close()
-        conn.close()
-
         return {"nextPage": page + 1 if len(result) == 12 else None,"data": formatted_result}
     except Exception as e:
-        print("Caught exception:", e)
         return {"error": True, "message": str(e)}
-        raise HTTPException(status_code=500, detail=e)
+    finally:
+        cursor.close()
+        conn.close()
 
 @attractions.get("/api/attraction/{attractionId}")
 async def get_attraction(attractionId: int = None):
@@ -116,14 +114,14 @@ async def get_attraction(attractionId: int = None):
             "lng": result[8],
             'images': images
         }
-        cursor.close()
-        conn.close()
-
         return {"data": formatted_row}
     except Exception as e:
         print("Caught exception:", e)
         return {"error": True, "message": str(e)}
-        raise HTTPException(status_code=500, detail=e)
+    finally:
+        cursor.close()
+        conn.close()
+
 
     # return {
     #     "nextPage": page + 1,
