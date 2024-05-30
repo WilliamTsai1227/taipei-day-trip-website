@@ -143,7 +143,7 @@ async def get_attraction(attractionId: int = None):
 
 
 
-#http://127.0.0.1:8000/api/attractions/1
+#http://127.0.0.1:8000/api/attraction/1
 #http://127.0.0.1:8000/api/attractions?page=0&keyword=中山
 #http://127.0.0.1:8000/api/attractions?page=0djdjd
 
