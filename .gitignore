@@ -147,3 +147,5 @@ sql_command.sql
 try.py
 note.py
 connection_pool.py
+#txt
+aws_command.txt
