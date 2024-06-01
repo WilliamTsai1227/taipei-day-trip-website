@@ -139,3 +139,11 @@ cython_debug/
 
 # macOS
 .DS_Store
+
+#sql command
+sql_command.sql
+
+#python 
+try.py
+note.py
+connection_pool.py
