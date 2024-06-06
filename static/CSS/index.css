@@ -210,6 +210,7 @@ body{
     width: 47px;
     height: 50px;
     padding: 9px 0px 9px 7.5px;
+    box-sizing: border-box;
 }
 .list_bar_left_arrow img{
     width: 32px;
@@ -227,6 +228,7 @@ body{
     width: 47px;
     height: 50px;
     padding: 9px 7.5px 9px 0px;
+    box-sizing: border-box;
 }
 .list_bar_right_arrow img{
     display: block;
@@ -242,9 +244,25 @@ body{
     transform: scale(1.1);
 }
 .list_bar_content{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     width: 1106px;
     height: 50px;
     padding: 13px 10px 13px 10px;
+    box-sizing: border-box;
+}
+.list_item{
+    width: 62px;
+    height: 24px;
+    padding: 5px 15px 5px 15px;
+    gap: 4px;
+    box-sizing: border-box;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+    text-align: center;
 }
 .footer{
     flex: none;
