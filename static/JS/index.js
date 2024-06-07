@@ -109,7 +109,7 @@ function scroll_list(){
     let rightArrow = document.querySelector('.list_bar_right_arrow img');
     let scrollAmount = 0;
 
-    let scrollStep = 800; // 每次移動像素
+    let scrollStep = 200; // 每次移動像素
 
     leftArrow.addEventListener('click', () => {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);

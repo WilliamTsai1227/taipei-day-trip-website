@@ -73,7 +73,6 @@ body{
     transform: scale(1.05);
 }
 .navigation_button_right:active {
-    /* :active是滑鼠點擊元素的狀態 */
     transform: scale(1);
     /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);*/
 }
@@ -182,13 +181,6 @@ body{
     align-items: center;
     justify-content: center;
     position: relative;
-    /* flex: none; */
-    /* position: absolute;
-    top: 0;
-    left: 0; */
-    /* position: absolute;
-    top: 8px;
-    left: 15px; */
     width: 30px;
     height: 30px;
 }
@@ -218,7 +210,7 @@ body{
     padding: 0px, 0px, 20px, 0px;
     flex-wrap: wrap;
     width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 20px auto;
 }
 .list_bar_left_arrow{
     width: 47px;
@@ -311,9 +303,9 @@ body{
 }
 .attraction_content{
     box-sizing: border-box;
-    background-color: #448899;
+    background-color: #C4C4C4;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid #E8E8E8;
     width: 100%;
     height: 100%;
     position: relative;
@@ -406,4 +398,74 @@ body{
     font-weight: 700;
     text-align: center;
     color:#FFFFFF;
+}
+
+@media (max-width:1200px){
+    .navigation{
+        width: 600px;
+    }
+    .hero_section_slogan{
+        width: 600px;
+    }
+    .list_bar{
+        width: 600px;
+    }
+    .list_bar_content_wrapper {
+        width: 506px;    
+    }
+    .list_bar_content{
+        width: 506px;
+    }
+    .main{
+        width: 600px;
+    }
+    .attraction{
+        width: calc(100% / 2);
+    }
+}
+
+
+@media (max-width:600px){
+    .navigation{
+        width: 360px;
+    }
+    .hero_section_slogan{
+        width: 340px;
+    }
+    .hero_section_search input{
+        width: 225px;
+    }
+    .main{
+        width: 360px;
+    }
+    .list_bar{
+        width: 360px;
+    }
+    .list_bar_content_wrapper {
+        width: 266px;    
+    }
+    .list_bar_content{
+        width: 266px;
+    }
+    .attractions{
+        width: 352px;
+        margin: 0 auto;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .attraction{
+        width: 322px;
+        height: 280px;
+        padding: 0px;
+        margin-bottom: 15px;
+    }
+    .attraction_name{
+        width: 320px;
+        top: 193px;
+    }
+    .attraction_mrt_cat{
+        width: 320px;
+        top: 233px;
+    }
+
 }
