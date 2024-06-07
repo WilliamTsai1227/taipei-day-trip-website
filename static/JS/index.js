@@ -16,15 +16,15 @@ function append_mrt_station(){
         console.log(error)
     })
 }
-
+let nextPage = 0;
 function fetch_attractions(){
     let attractions = document.querySelector(".attractions")
-    fetch("http://34.223.129.79:8000/api/attractions")
+    fetch(`http://34.223.129.79:8000/api/attractions?page=${nextPage}`)
     .then((response) =>{
         return response.json();
     })
     .then((response) =>{
-        let nextPage = response.nextPage;
+        nextPage = response.nextPage;
         for (let i of response.data){
             let attraction = document.createElement("div");
             attraction.className = "attraction";
@@ -68,6 +68,20 @@ function fetch_attractions(){
     })
 }
 fetch_attractions()
+
+window.addEventListener("scroll",function(e){
+    // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
+    let clientHeight = e.target.documentElement.clientHeight;
+    let scrollHeight = e.target.documentElement.scrollHeight;
+    let scrollTop = e.target.documentElement.scrollTop;
+    console.log(scrollTop,scrollHeight,clientHeight)
+    if(scrollTop+clientHeight >= scrollHeight ){
+        if (nextPage != null){
+            fetch_attractions()
+        }
+    }
+})
+
 append_mrt_station()
 
 function scroll_list(){
