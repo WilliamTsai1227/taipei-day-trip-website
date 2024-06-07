@@ -124,7 +124,6 @@ function scroll_list(){
 
 function monitor_mrt_click(){
     let list_items = document.querySelectorAll(".list_item");
-    console.log(list_items);
     let input = document.querySelector(".hero_section_search input");
     list_items.forEach(item => {
         item.addEventListener("click",() => {
