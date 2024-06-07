@@ -74,21 +74,33 @@ function fetch_attractions(){
     })
 }
 
-function scrolling_add_attractions(){
-    window.addEventListener("scroll",function(e){
-        // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
-        let clientHeight = e.target.documentElement.clientHeight;
-        let scrollHeight = e.target.documentElement.scrollHeight;
-        let scrollTop = e.target.documentElement.scrollTop;
-        // console.log(scrollTop,scrollHeight,clientHeight)
-        if(scrollTop+clientHeight >= scrollHeight ){
-            if (Page != null){
-                fetch_attractions()
-            }
-        }
-    })
-}
+// function scrolling_add_attractions(){
+//     window.addEventListener("scroll",function(e){
+//         // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
+//         let clientHeight = e.target.documentElement.clientHeight;
+//         let scrollHeight = e.target.documentElement.scrollHeight;
+//         let scrollTop = e.target.documentElement.scrollTop;
+//         // console.log(scrollTop,scrollHeight,clientHeight)
+//         if(scrollTop+clientHeight >= scrollHeight ){
+//             if (Page != null){
+//                 fetch_attractions();
+//             }
+//         }
+//     })
+// }
 
+function scrolling_add_attractions(){
+    let footer = document.querySelector(".footer");
+    window.addEventListener("scroll", function () {
+      const { bottom } = footer.getBoundingClientRect();
+      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+      if (bottom <= windowHeight) {
+        if (Page != null){
+            fetch_attractions();
+        }
+      }
+    });
+}
 function search(){
     let button = document.querySelector(".hero_section_search_icon");
     let input = document.querySelector(".hero_section_search input");
