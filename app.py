@@ -5,7 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from api.attractions import attractions
 from api.mrts import mrts
+from fastapi.staticfiles import StaticFiles
 app=FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # 設置允許所有來源
 app.add_middleware(
