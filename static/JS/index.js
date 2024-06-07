@@ -17,6 +17,57 @@ function append_mrt_station(){
     })
 }
 
+function fetch_attractions(){
+    let attractions = document.querySelector(".attractions")
+    fetch("http://34.223.129.79:8000/api/attractions")
+    .then((response) =>{
+        return response.json();
+    })
+    .then((response) =>{
+        let nextPage = response.nextPage;
+        for (let i of response.data){
+            let attraction = document.createElement("div");
+            attraction.className = "attraction";
+            let attraction_content = document.createElement("div");
+            attraction_content.className = "attraction_content";
+            let attraction_id = document.createElement("div");
+            attraction_id.className = "attraction_id";
+            let attraction_img = document.createElement("img");
+            attraction_img.className = "attraction_img";
+            let attraction_name = document.createElement("div");
+            attraction_name.className = "attraction_name";
+            let attraction_mrt_cat = document.createElement("div");
+            attraction_mrt_cat.className = "attraction_mrt_cat";
+            let attraction_mrt = document.createElement("div");
+            attraction_mrt.className = "attraction_mrt";
+            let attraction_cat = document.createElement("div");
+            attraction_cat.className = "attraction_cat";
+            let id = i.id;
+            let name = i.name;
+            let mrt = i.mrt;
+            let category = i.category;
+            let img = i.images[0];
+            attraction_id.textContent = id;
+            attraction_img.src = img;
+            attraction_name.textContent = name;
+            attraction_mrt.textContent = mrt;
+            attraction_cat.textContent = category;
+            attraction_mrt_cat.appendChild(attraction_mrt);
+            attraction_mrt_cat.appendChild(attraction_cat);
+            attraction_content.appendChild(attraction_id);
+            attraction_content.appendChild(attraction_img);
+            attraction_content.appendChild(attraction_name);
+            attraction_content.appendChild(attraction_mrt_cat);
+            attraction.appendChild(attraction_content);
+            attractions.appendChild(attraction);
+        }
+        console.log(nextPage)
+    })
+    .catch((error) =>{
+        console.log(error)
+    })
+}
+fetch_attractions()
 append_mrt_station()
 
 function scroll_list(){
@@ -39,6 +90,8 @@ function scroll_list(){
     });
 }
 scroll_list()
+
+
 
 
 
