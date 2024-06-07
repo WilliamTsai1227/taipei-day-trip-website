@@ -16,15 +16,20 @@ function append_mrt_station(){
         console.log(error)
     })
 }
-let nextPage = 0;
+
+let Page = 0;
+let keyword = "";
+let isLoading = false; // 建立標籤，表示是否正在加載數據
 function fetch_attractions(){
+    if (isLoading) return; // 如果正在加載數據，則不觸發加載操作
+    isLoading = true; // 開始加載數據，將 isLoading 設為 true
     let attractions = document.querySelector(".attractions")
-    fetch(`http://34.223.129.79:8000/api/attractions?page=${nextPage}`)
+    fetch(`http://34.223.129.79:8000/api/attractions?page=${Page}&keyword=${keyword}`)
     .then((response) =>{
         return response.json();
     })
     .then((response) =>{
-        nextPage = response.nextPage;
+        Page = response.nextPage;
         for (let i of response.data){
             let attraction = document.createElement("div");
             attraction.className = "attraction";
@@ -61,28 +66,42 @@ function fetch_attractions(){
             attraction.appendChild(attraction_content);
             attractions.appendChild(attraction);
         }
-        console.log(nextPage)
+        isLoading = false; // 數據加載完成，將 isLoading 設為 false
     })
     .catch((error) =>{
-        console.log(error)
+        console.log(error);
+        isLoading = false; // 數據加載出錯，將 isLoading 設為 false
     })
 }
-fetch_attractions()
 
-window.addEventListener("scroll",function(e){
-    // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
-    let clientHeight = e.target.documentElement.clientHeight;
-    let scrollHeight = e.target.documentElement.scrollHeight;
-    let scrollTop = e.target.documentElement.scrollTop;
-    console.log(scrollTop,scrollHeight,clientHeight)
-    if(scrollTop+clientHeight >= scrollHeight ){
-        if (nextPage != null){
-            fetch_attractions()
+function scrolling_add_attractions(){
+    window.addEventListener("scroll",function(e){
+        // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
+        let clientHeight = e.target.documentElement.clientHeight;
+        let scrollHeight = e.target.documentElement.scrollHeight;
+        let scrollTop = e.target.documentElement.scrollTop;
+        // console.log(scrollTop,scrollHeight,clientHeight)
+        if(scrollTop+clientHeight >= scrollHeight ){
+            if (Page != null){
+                fetch_attractions()
+            }
         }
-    }
-})
+    })
+}
 
-append_mrt_station()
+function search(){
+    let button = document.querySelector(".hero_section_search_icon");
+    let input = document.querySelector(".hero_section_search input");
+    let attractions = document.querySelector(".attractions");
+    button.addEventListener("click",() => {
+        Page = 0;
+        keyword = input.value;
+        while(attractions.firstChild){
+            attractions.removeChild(attractions.firstChild);
+        }
+        fetch_attractions()
+    })
+}
 
 function scroll_list(){
     let listBarContent = document.querySelector('.list_bar_content');
@@ -96,15 +115,35 @@ function scroll_list(){
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
         listBarContent.style.transform = `translateX(-${scrollAmount}px)`;
     });
-
     rightArrow.addEventListener('click', () => {
-        const maxScroll = listBarContent.scrollWidth - listBarContent.clientWidth;
+        let maxScroll = listBarContent.scrollWidth - listBarContent.clientWidth;
         scrollAmount = Math.min(scrollAmount + scrollStep, maxScroll);
         listBarContent.style.transform = `translateX(-${scrollAmount}px)`;
     });
 }
-scroll_list()
 
+function monitor_mrt_click(){
+    let list_items = document.querySelectorAll(".list_item");
+    console.log(list_items);
+    let input = document.querySelector(".hero_section_search input");
+    list_items.forEach(item => {
+        item.addEventListener("click",() => {
+            let searchInput = item.textContent;
+            input.value = searchInput;
+            search();
+        })
+    })    
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    append_mrt_station();
+    fetch_attractions();
+    scrolling_add_attractions();
+    search();
+    scroll_list();
+    setTimeout(monitor_mrt_click, 1000); 
+});
 
 
 

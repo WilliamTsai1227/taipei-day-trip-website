@@ -177,18 +177,31 @@ body{
     transform: scale(1);
     box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, .2);
 }
-.hero_section_search_icon img{
+.hero_section_search_icon_img{
     display: flex;
-
-    flex: none;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* flex: none; */
     /* position: absolute;
     top: 0;
     left: 0; */
     /* position: absolute;
     top: 8px;
     left: 15px; */
-    max-width: 30px;
-    max-height: 30px;
+    width: 30px;
+    height: 30px;
+}
+.hero_section_search_icon_img img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0; /* 將圖片固定在父層的大小 */
+    width: 100%;
+    height: 100%; /* 高和寬都填滿容器 */
+    object-fit: cover; /* 和background-image設定background-size: cover一樣，圖片剛好填滿 */
+    object-position: center;
 }
 .main{
     display: flex;
@@ -274,7 +287,10 @@ body{
     color: #666666;
     text-align: center;
     white-space: nowrap; /* 確保文本不換行 */
-    /* display: inline-block; 使寬度自適應文本 */
+    cursor: pointer;
+}
+.list_item:hover{
+    color: #000000;
 }
 .attractions{
     display: flex;
@@ -288,18 +304,23 @@ body{
     padding: 15px;
     box-sizing: border-box;
     height: 272px;
-    background-color: yellow;
+    /* background-color: yellow; */
     border-radius: 5px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     
 }
 .attraction_content{
+    box-sizing: border-box;
     background-color: #448899;
     border-radius: 5px;
     border: 1px solid black;
     width: 100%;
     height: 100%;
-    position: relative;    
+    position: relative;
+    cursor: pointer;    
+}
+.attraction_content:hover{
+    opacity: 0.9;
 }
 .attraction_id{
     display: none;
@@ -311,7 +332,7 @@ body{
     object-position: top 0px left 0px;
     position: absolute;
     z-index: 1;
-    background-color: antiquewhite;
+    border-radius: 5px;
 }
 .attraction_name{
     z-index: 2;
@@ -328,6 +349,12 @@ body{
     color: #FFFFFF;
     box-sizing: border-box;
     padding: 10px 9px 10px 9px;
+    white-space: nowrap; /* 防止文本换行 */
+    overflow: hidden; /* 溢出的文本隱藏 */
+    text-overflow: ellipsis; /* 溢出的文本顯示... */
+}
+.attraction_name:hover{
+    opacity: 1;
 }
 .attraction_mrt_cat{
     display: flex;
