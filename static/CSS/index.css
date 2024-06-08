@@ -1,0 +1,475 @@
+*{
+    margin: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.navigation{
+    display: flex;
+    flex: none;
+    width: 1200px;
+    height: 54px;
+    /* margin-left: calc((100%-1200px)/2);
+    margin-right: calc((100%-1200px)/2); */
+    align-items: center;
+    justify-content: space-between;
+}
+.navigation_title{
+    flex: none;
+    font-size: 30px;
+    color: #448899;
+    font-family: Noto Sans TC;
+    font-weight: 700;
+    text-align: left;
+
+}
+.navigation_button{
+    display: flex;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: 34px;
+    width: 175px;
+
+}
+.navigation_button_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex:none;
+    font-size: 16px;
+    color: #666666;
+    font-family: Noto Sans TC;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+.navigation_button_left:hover{
+    transform: scale(1.05);
+}
+.navigation_button_left:active {
+    /* :active是滑鼠點擊元素的狀態 */
+    transform: scale(1);
+    /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0);*/
+}
+.navigation_button_right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex: none;
+    font-size: 16px;
+    color: #666666;
+    font-family: Noto Sans TC;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+.navigation_button_right:hover{
+    transform: scale(1.05);
+}
+.navigation_button_right:active {
+    transform: scale(1);
+    /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);*/
+}
+.hero_section{
+    flex: none;
+    width: 100%;
+    height: 320px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #F8F8F8; 
+}
+.hero_section img{
+    flex: none;
+    object-fit: cover;
+    object-position: top 0px left 0px;
+    width: 100%;
+    height: 320px;
+    position: absolute; /* 改成絕對定位 */
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+}
+.hero_section_slogan{
+    box-sizing: border-box;
+    flex: none;
+    z-index: 2;
+    width: 1200px;
+    height: 169px;
+    padding: 10px;
+    opacity: 1;
+    position: relative;
+}
+.slogan{
+    width: 100%;
+    height: 78px;
+    position: relative;
+}
+.slogan_title_big{
+    display: flex;
+    align-items: center;
+    font-family: Noto Sans TC;
+    height: 41px;
+    font-size: 28px;
+    font-weight: 700;
+    position: absolute;
+    top: 0;
+    text-align: left;
+
+}
+.slogan_title_small{
+    display: flex;
+    align-items: center;
+    font-family: Noto Sans TC;
+    height: 22px;
+    position: absolute;
+    top: 56px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+}
+.hero_section_search{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 460px;
+    height: 46px;
+    top: 113px;
+}
+.hero_section_search input{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    width: 400px;
+    height: 100%; /* 高度设为父元素的100% */
+    box-sizing: border-box; /* 使用border-box盒模型 */
+    padding: 0 10px; /* 可根据需要调整内边距 */
+    border: none; /* 移除默认边框 */
+    outline: none; /* 移除焦点样式 */
+    border-radius: 5px 0 0 5px;
+}
+.hero_section_search_icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 60px;
+    height: 46px;
+    background: #448899;
+    border-radius: 0 5px 5px 0; 
+    cursor: pointer; 
+}
+.hero_section_search_icon:hover{
+    transform: scale(1.02);
+}
+.hero_section_search_icon:active {
+    /* :active是滑鼠點擊元素的狀態 */
+    transform: scale(1);
+    box-shadow: inset 0 0 10px 1px rgba(0, 0, 0, .2);
+}
+.hero_section_search_icon_img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+.hero_section_search_icon_img img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0; /* 將圖片固定在父層的大小 */
+    width: 100%;
+    height: 100%; /* 高和寬都填滿容器 */
+    object-fit: cover; /* 和background-image設定background-size: cover一樣，圖片剛好填滿 */
+    object-position: center;
+}
+.main{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px 0 40px 0;
+    justify-content: center;
+    flex: none;
+    width: 1200px;
+    margin: 0 auto;
+    
+}
+.list_bar{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    margin: 0 auto 20px auto;
+}
+.list_bar_left_arrow{
+    width: 47px;
+    height: 50px;
+    padding: 9px 0px 9px 15px;
+    box-sizing: border-box;
+}
+.list_bar_left_arrow img{
+    width: 32px;
+    height: 32px;
+    opacity: 50%;
+    cursor: pointer;
+}
+.list_bar_left_arrow img:hover{
+    opacity: 100%;
+}
+.list_bar_left_arrow img:active{
+    transform: scale(1.1);
+}
+.list_bar_right_arrow{
+    width: 47px;
+    height: 50px;
+    padding: 9px 15px 9px 0px;
+    box-sizing: border-box;
+}
+.list_bar_right_arrow img{
+    display: block;
+    width: 32px;
+    height: 32px;
+    opacity: 50%;
+    cursor: pointer;
+}
+.list_bar_right_arrow img:hover{
+    opacity: 100%;
+}
+.list_bar_right_arrow img:active{
+    transform: scale(1.1);
+}
+.list_bar_content_wrapper {
+    width: 1086px;
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow: hidden;
+    box-sizing: content-box;
+    /* filter: blur(10px);
+    clip-path: inset(0 40px 0 40px); */
+    
+}
+.list_bar_content{
+    display: flex;
+    align-items: center;
+    width: 1086px;
+    height: 50px;
+    padding: 13px 10px 13px 10px;
+    box-sizing: border-box;
+    transition: transform 0.7s ease;
+}
+.list_item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    padding: 5px 15px 5px 15px;
+    /* padding-left: 15px;
+    padding-right: 15px; */
+    box-sizing: border-box;
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 500;
+    color: #666666;
+    text-align: center;
+    white-space: nowrap; /* 確保文本不換行 */
+    cursor: pointer;
+}
+.list_item:hover{
+    color: #000000;
+}
+.attractions{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 1200px;
+    margin: 0 auto;
+}
+.attraction{
+    width: calc(100% / 4);
+    padding: 15px;
+    box-sizing: border-box;
+    height: 272px;
+    border-radius: 5px;
+    /* border: 1px solid black; */
+    
+}
+.attraction_content{
+    box-sizing: border-box;
+    background-color: #C4C4C4;
+    border-radius: 5px;
+    border: 1px solid #E8E8E8;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;    
+}
+.attraction_content:hover{
+    opacity: 0.9;
+}
+.attraction_id{
+    display: none;
+}
+.attraction_img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top 0px left 0px;
+    position: absolute;
+    z-index: 1;
+    border-radius: 5px;
+}
+.attraction_name{
+    z-index: 2;
+    position: absolute;
+    width: 268px;
+    height: 40px;
+    top: 155px;
+    background-color: rgba(0, 0, 0, 0.6);
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #FFFFFF;
+    box-sizing: border-box;
+    padding: 10px 9px 10px 9px;
+    white-space: nowrap; /* 防止文本换行 */
+    overflow: hidden; /* 溢出的文本隱藏 */
+    text-overflow: ellipsis; /* 溢出的文本顯示... */
+}
+.attraction_name:hover{
+    background-color: rgba(0, 0, 0, 1);
+}
+.attraction_mrt_cat{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+    box-sizing: border-box;
+    position: absolute;
+    width: 268px;
+    height: 45px;
+    padding: 10px 9px 10px 9px;
+    top: 195px;
+    background-color: #FFFFFF;
+    border-radius: 0 0 5px 5px;
+}
+.attraction_mrt{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #757575;
+}
+.attraction_cat{
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: right;
+    color: #757575;
+}
+.footer{
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+    height: 104px;
+    background-color:#757575;
+    box-sizing: border-box;
+}
+.footer_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 24px;
+    /* padding: 5px 0px 5px 0px; */
+    /* top: 5px; */
+    font-family: Noto Sans TC;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    color:#FFFFFF;
+}
+
+@media (max-width:1200px){
+    .navigation{
+        width: 600px;
+    }
+    .hero_section_slogan{
+        width: 600px;
+    }
+    .list_bar{
+        width: 600px;
+    }
+    .list_bar_content_wrapper {
+        width: 486px;    
+    }
+    .list_bar_content{
+        width: 486px;
+    }
+    .main{
+        width: 600px;
+    }
+    .attraction{
+        width: calc(100% / 2);
+    }
+}
+
+
+@media (max-width:600px){
+    .navigation{
+        width: 360px;
+    }
+    .hero_section_slogan{
+        width: 340px;
+    }
+    .hero_section_search input{
+        width: 225px;
+    }
+    .main{
+        width: 360px;
+    }
+    .list_bar{
+        width: 360px;
+    }
+    .list_bar_content_wrapper {
+        width: 246px;    
+    }
+    .list_bar_content{
+        width: 246px;
+    }
+    .attractions{
+        width: 352px;
+        margin: 0 auto;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .attraction{
+        width: 322px;
+        height: 280px;
+        padding: 0px;
+        margin-bottom: 15px;
+    }
+    .attraction_name{
+        width: 320px;
+        top: 193px;
+    }
+    .attraction_mrt_cat{
+        width: 320px;
+        top: 233px;
+    }
+
+}
