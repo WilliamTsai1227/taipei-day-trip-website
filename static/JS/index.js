@@ -17,19 +17,19 @@ function append_mrt_station(){
     })
 }
 
-let Page = 0;
+let page = 0;
 let keyword = "";
 let isLoading = false; // 建立標籤，表示是否正在加載數據
 function fetch_attractions(){
     if (isLoading) return; // 如果正在加載數據，則不觸發加載操作
     isLoading = true; // 開始加載數據，將 isLoading 設為 true
     let attractions = document.querySelector(".attractions")
-    fetch(`http://34.223.129.79:8000/api/attractions?page=${Page}&keyword=${keyword}`)
+    fetch(`http://34.223.129.79:8000/api/attractions?page=${page}&keyword=${keyword}`)
     .then((response) =>{
         return response.json();
     })
     .then((response) =>{
-        Page = response.nextPage;
+        page = response.nextPage;
         for (let i of response.data){
             let attraction = document.createElement("div");
             attraction.className = "attraction";
@@ -82,7 +82,7 @@ function fetch_attractions(){
 //         let scrollTop = e.target.documentElement.scrollTop;
 //         // console.log(scrollTop,scrollHeight,clientHeight)
 //         if(scrollTop+clientHeight >= scrollHeight ){
-//             if (Page != null){
+//             if (page != null){
 //                 fetch_attractions();
 //             }
 //         }
@@ -95,7 +95,7 @@ function scrolling_add_attractions(){
       const { bottom } = footer.getBoundingClientRect();
       const windowHeight = window.innerHeight || document.documentElement.clientHeight;
       if (bottom <= windowHeight) {
-        if (Page != null){
+        if (page != null){
             fetch_attractions();
         }
       }
@@ -106,7 +106,7 @@ function search(){
     let input = document.querySelector(".hero_section_search input");
     let attractions = document.querySelector(".attractions");
     button.addEventListener("click",() => {
-        Page = 0;
+        page = 0;
         keyword = input.value;
         while(attractions.firstChild){
             attractions.removeChild(attractions.firstChild);
@@ -142,7 +142,7 @@ function monitor_mrt_click(){
         item.addEventListener("click",() => {
             let searchInput = item.textContent;
             input.value = searchInput;
-            Page = 0;
+            page = 0;
             keyword = input.value;
             while(attractions.firstChild){
                 attractions.removeChild(attractions.firstChild);
