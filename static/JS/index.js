@@ -111,7 +111,7 @@ function search(){
         while(attractions.firstChild){
             attractions.removeChild(attractions.firstChild);
         }
-        fetch_attractions()
+        fetch_attractions();
     })
 }
 
@@ -137,11 +137,17 @@ function scroll_list(){
 function monitor_mrt_click(){
     let list_items = document.querySelectorAll(".list_item");
     let input = document.querySelector(".hero_section_search input");
+    let attractions = document.querySelector(".attractions");
     list_items.forEach(item => {
         item.addEventListener("click",() => {
             let searchInput = item.textContent;
             input.value = searchInput;
-            search();
+            Page = 0;
+            keyword = input.value;
+            while(attractions.firstChild){
+                attractions.removeChild(attractions.firstChild);
+            }
+            fetch_attractions();
         })
     })    
 }
