@@ -1,0 +1,418 @@
+*{
+    margin: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    font-family: Noto Sans TC;
+}
+.navigation{
+    display: flex;
+    flex: none;
+    width: 1200px;
+    height: 54px;
+    padding-left:calc((100% - 1200px)/2) ;
+    padding-right:calc((100% - 1200px)/2) ;
+    border-bottom: 1px solid #E8E8E8;
+    /* margin-left: calc((100%-1200px)/2);
+    margin-right: calc((100%-1200px)/2); */
+    align-items: center;
+    justify-content: space-between;
+}
+.navigation_title{
+    flex: none;
+    font-size: 30px;
+    color: #448899;
+    font-weight: 700;
+    text-align: left;
+
+}
+.navigation_button{
+    display: flex;
+    flex: none;
+    justify-content: center;
+    align-items: center;
+    height: 34px;
+    width: 175px;
+
+}
+.navigation_button_left{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex:none;
+    font-size: 16px;
+    color: #666666;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+.navigation_button_left:hover{
+    transform: scale(1.05);
+}
+.navigation_button_left:active {
+    /* :active是滑鼠點擊元素的狀態 */
+    transform: scale(1);
+    /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0);*/
+}
+.navigation_button_right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex: none;
+    font-size: 16px;
+    color: #666666;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+.navigation_button_right:hover{
+    transform: scale(1.05);
+}
+.navigation_button_right:active {
+    transform: scale(1);
+    /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);*/
+}
+.main_content{
+    display: flex;
+    width: 1200px;
+}
+.section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1200px;
+    margin-left: calc((100% - 1200px)/2);
+    margin-right: calc((100% - 1200px)/2);
+    height: 400px;
+    box-sizing: border-box;
+    position: relative;
+    top: 39px;
+    border-bottom: 1px solid #E8E8E8;
+}
+.section_picture{
+    width: 540px;
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: aliceblue;
+}
+.section_profile{
+    width: 600px;
+    margin-left: 15px;
+    margin-right: 15px;
+    height: 100%;
+    background-color: beige;
+}
+.section_profile_name{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 33px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.section_profile_cat_mrt{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 22px;
+    position: relative;
+    top: 15px;
+    font-weight: 400;
+    line-height: 13.3px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: #666666;
+}
+.section_profile_book_form{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 302px;
+    position: relative;
+    top: 20px;
+    background-color: #E8E8E8;
+    border-radius: 5px;
+}
+.section_profile_book_form_title{
+    width: 560px;
+    height: 22px;
+    margin-left: calc((100% - 560px)/2);
+    margin-right: calc((100% - 560px)/2);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.section_profile_book_form_description{
+    width: 560px;
+    height: 24px;
+    margin-left: calc((100% - 560px)/2);
+    margin-right: calc((100% - 560px)/2);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 52px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: #666666;
+    
+}
+.section_profile_book_form_date{
+    width: 560px;
+    height: 35px;
+    margin-left: calc((100% - 560px)/2);
+    margin-right: calc((100% - 560px)/2);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 91px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.section_profile_book_form_date input{
+    position: absolute;
+    left: 86px;
+    width: 193px;
+    height: 35px;
+    border: 0px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+
+}
+.section_profile_book_form_date input::-webkit-calendar-picker-indicator{
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+.section_profile_book_form_datetime{
+    width: 560px;
+    height: 22px;
+    margin-left: calc((100% - 560px)/2);
+    margin-right: calc((100% - 560px)/2);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 141px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.profile_book_form_datetime_morning_btn{
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 91px;
+
+}
+/* .profile_book_form_datetime_morning_btn [type='radio']:checked{
+    content: '';
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: 20% auto;
+    border-radius: 50%;
+}
+.profile_book_form_datetime_morning_btn [type='radio']:checked:before{
+    background: #448899;
+} */
+.profile_book_form_datetime_morning_text{
+    display: flex;
+    align-items: center;
+    width: 48px;
+    height: 14px;
+    position: absolute;
+    left: 117px;
+    top: 4px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+
+}
+.profile_book_form_datetime_afternoon_btn{
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 183px;
+
+}
+.profile_book_form_datetime_afternoon_text{
+    display: flex;
+    align-items: center;
+    width: 48px;
+    height: 14px;
+    position: absolute;
+    left: 209px;
+    top: 4px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+
+}
+.section_profile_book_form_price{
+    width: 560px;
+    height: 22px;
+    margin-left: calc((100% - 560px)/2);
+    margin-right: calc((100% - 560px)/2);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 178px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.section_profile_book_form_price_content{
+    display: flex;
+    align-items: center;
+    height: 14px;
+    position: absolute;
+    top: 4px;
+    left: 86px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+}
+.section_profile_book_form_button{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 154px;
+    height: 36px;
+    position: absolute;
+    top: 225px;
+    left: 20px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px 5px 5px 5px;
+    background-color: #448899;
+    font-size: 19px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.infors{
+    position: absolute;
+    top: 574px;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 1200px;
+    padding: 10px;
+}
+.infors_description{
+    width: 1180px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color:#666666;
+}
+.infors_location_title{
+    position: absolute;
+    width: 1180px;
+    height: 32px;
+    top: 126px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.infors_location_content{
+    position: absolute;
+    width: 1180px;
+    height: 24px;
+    top: 158px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;   
+    color: #666666;
+}
+.infors_transportation_title{
+    position: absolute;
+    width: 1180px;
+    height: 32px;
+    top: 202px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: left;
+    color: #666666;
+}
+.infors_transportation_content{
+    position: absolute;
+    width: 1180px;
+    height: 48px;
+    top: 234px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    color: #666666;
+}
+
+
+
+
+.footer{
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+    height: 104px;
+    background-color:#757575;
+    box-sizing: border-box;
+}
+.footer_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 24px;
+    /* padding: 5px 0px 5px 0px; */
+    /* top: 5px; */
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    color:#FFFFFF;
+}
