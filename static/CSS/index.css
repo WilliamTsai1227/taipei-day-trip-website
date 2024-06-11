@@ -26,6 +26,13 @@ body{
     text-align: left;
 
 }
+.navigation_title:hover{
+    cursor: pointer;
+}
+.navigation_title:active{
+    transform: scale(1.1);
+}
+
 .navigation_button{
     display: flex;
     flex: none;

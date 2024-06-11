@@ -152,6 +152,27 @@ function monitor_mrt_click(){
     })    
 }
 
+function monitor_attraction_clicks(){
+    let list_items = document.querySelectorAll(".attraction_content");
+    console.log(list_items);
+    let id = 0;
+    list_items.forEach(item => {
+        item.addEventListener("click", () =>{
+            id = item.querySelector(".attraction_id").textContent;
+            window.location.replace(`http://34.223.129.79:8000/attraction/${id}`)
+            // fetch(`http://34.223.129.79:8000/attraction/${id}`);
+            // console.log(`http://34.223.129.79:8000/attraction/${id}`);
+        })
+    })
+}
+
+function back_to_home_page(){
+    let homepage_btn = document.querySelector(".navigation_title")
+    homepage_btn.addEventListener("click",() => {
+        window.location.replace("http://34.223.129.79:8000")
+    })
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     append_mrt_station();
@@ -159,6 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
     scrolling_add_attractions();
     search();
     scroll_list();
+    back_to_home_page();
+    setTimeout(monitor_attraction_clicks, 3000);
     setTimeout(monitor_mrt_click, 1000); 
 });
 
