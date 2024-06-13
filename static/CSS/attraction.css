@@ -30,7 +30,11 @@ body{
 
 }
 .navigation_title:hover{
+    transform: scale(1.02);
     cursor: pointer;
+}
+.navigation_title:active{
+    transform: scale(1);
 }
 .navigation_button{
     display: flex;
@@ -82,7 +86,9 @@ body{
 }
 .main_content{
     display: flex;
-    width: 1200px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
     
 }
 .section{
@@ -92,10 +98,9 @@ body{
     width: 1200px;
     margin-left: calc((100% - 1200px)/2);
     margin-right: calc((100% - 1200px)/2);
-    height: 400px;
+    height: 440px;
     box-sizing: border-box;
-    position: relative;
-    top: 39px;
+    margin-top: 39px;
     border-bottom: 1px solid #E8E8E8;
 }
 .section_picture{
@@ -103,9 +108,10 @@ body{
     justify-content: center;
     align-items: center;
     width: 540px;
-    height: 100%;
+    height: 400px;
     margin-left: 15px;
     margin-right: 15px;
+    margin-bottom: 40px;
     background-color: aliceblue;
     position: relative;
 }
@@ -153,35 +159,36 @@ body{
 }
 .image_wrapper{
     display: flex;
-    height: 100%;
+    height: 400px;
     width: 540px;
     overflow: hidden;
 }
 .image_content{
     display: flex;
     width: 540px;
+    height: 400px;
     transition: transform 0.7s ease;
 }
-.image_wrapper img{
+.image_content img{
     display: block;
     /* position: absolute;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0; */
-    width: 540px;
-    height: 100%;
+    min-width: 540px;
+    /* height: 100%; */
     border-radius: 5px;
     object-fit: cover;
-    object-position: center;
+    object-position: top 0px left 0px;
 }
 
 .section_profile{
     width: 600px;
     margin-left: 15px;
     margin-right: 15px;
-    height: 100%;
-    background-color: beige;
+    margin-bottom: 40px;
+    height: 400px;
 }
 .section_profile_name{
     display: flex;
@@ -391,27 +398,27 @@ body{
     font-weight: 400;
     color: #FFFFFF;
 }
-
-
-
-
-
-
-
-
-
-
-
+.section_profile_book_form_button:hover{
+    cursor: pointer;
+}
+.section_profile_book_form_button:active{
+    transform: scale(0.92);
+}
 
 .infors{
-    position: absolute;
-    top: 574px;
+    /* position: relative;
+    top: 574px; */
+    margin-top: 40px;
+    margin-bottom: 80px;
+    display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     box-sizing: border-box;
     width: 1200px;
     padding: 10px;
 }
 .infors_description{
+    margin-top: 10px;
     width: 1180px;
     font-size: 16px;
     font-weight: 400;
@@ -419,7 +426,8 @@ body{
     color:#666666;
 }
 .infors_location_title{
-    position: absolute;
+    /* position: absolute; */
+    margin-top: 20px;
     width: 1180px;
     height: 32px;
     top: 126px;
@@ -429,7 +437,7 @@ body{
     color: #666666;
 }
 .infors_location_content{
-    position: absolute;
+    /* position: absolute; */
     width: 1180px;
     height: 24px;
     top: 158px;
@@ -439,10 +447,11 @@ body{
     color: #666666;
 }
 .infors_transportation_title{
-    position: absolute;
+    /* position: absolute; */
     width: 1180px;
     height: 32px;
-    top: 202px;
+    /* top: 202px; */
+    margin-top: 20px;
     font-size: 16px;
     font-weight: 700;
     text-align: left;
@@ -452,19 +461,15 @@ body{
     color: #666666;
 }
 .infors_transportation_content{
-    position: absolute;
+    /* position: absolute; */
     width: 1180px;
     height: 48px;
-    top: 234px;
     left: 10px;
     font-size: 16px;
     font-weight: 400;
     text-align: left;
     color: #666666;
 }
-
-
-
 
 .footer{
     flex: none;

@@ -27,10 +27,11 @@ body{
 
 }
 .navigation_title:hover{
+    transform: scale(1.02);
     cursor: pointer;
 }
 .navigation_title:active{
-    transform: scale(1.1);
+    transform: scale(1);
 }
 
 .navigation_button{

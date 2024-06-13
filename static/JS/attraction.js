@@ -1,37 +1,10 @@
-// function scroll_img(){
-//     let imgContent = document.querySelector('.section_picture');
-//     let leftArrow = document.querySelector('.section_picture_left_btn img');
-//     let rightArrow = document.querySelector('.section_picture_right_btn img');
-//     let scrollAmount = 0;
-    
-
-//     let scrollStep = 600; // 每次移動像素
-
-//     leftArrow.addEventListener('click', () => {
-//         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
-//         imgContent.style.transform = `translateX(-${scrollAmount}px)`;
-//     });
-//     rightArrow.addEventListener('click', () => {
-//         let maxScroll = imgContent.scrollWidth - imgContent.clientWidth;
-//         scrollAmount = Math.min(scrollAmount + scrollStep, maxScroll);
-//         imgContent.style.transform = `translateX(-${scrollAmount}px)`;
-//     });
-//     console.log(imgContent.clientWidth);
-//     console.log(imgContent.scrollWidth);
-//     console.log(scrollAmount);
-// }
-
-// scroll_img();
-
-
-
-function scroll_img() {
+async function scroll_img() {
     const imgContent = document.querySelector('.image_content');
     const leftArrow = document.querySelector('.section_picture_left_btn img');
     const rightArrow = document.querySelector('.section_picture_right_btn img');
     let scrollAmount = 0;
 
-    let scrollStep = 600; // 每次移動像素
+    let scrollStep = 540; // 每次移動像素
 
     leftArrow.addEventListener('click', () => {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
@@ -43,28 +16,24 @@ function scroll_img() {
         scrollAmount = Math.min(scrollAmount + scrollStep, maxScroll);
         imgContent.style.transform = `translateX(-${scrollAmount}px)`;
     });
-
-    console.log(imgContent.clientWidth);
-    console.log(imgContent.scrollWidth);
-    console.log(scrollAmount);
 }
 
 
-function loading_attraction_data(){
+async function loading_attraction_data(){
     let id = location.search;
     let name = document.querySelector(".section_profile_name");
     let cat_mrt = document.querySelector(".section_profile_cat_mrt");
     let description = document.querySelector(".infors_description");
     let address = document.querySelector(".infors_location_content");
     let transport = document.querySelector(".infors_transportation_content");
-    id = 1;
+    let imgContent = document.querySelector(".image_content");
+
     fetch(`http://34.223.129.79:8000/api/attraction/${id}`)
     .then((response) => {
         return response.json();
     })
     .then((result) => {
         let attraction = result.data;
-        console.log(attraction);
         let attractionId = attraction.id;
         let attractionName = attraction.name;
         let attractionAddress = attraction.address;
@@ -75,10 +44,18 @@ function loading_attraction_data(){
         let attractionImgList = attraction.images;
 
         name.textContent = attractionName;
-        cat_mrt.textContent = attractionCategory+"at"+attractionMrt;
+        cat_mrt.textContent = attractionCategory+" at "+attractionMrt;
         description.textContent = attractionDescription;
         address.textContent = attractionAddress;
         transport.textContent = attractionTrasport;
+        while(imgContent.firstChild){
+            imgContent.removeChild(imgContent.firstChild);
+        }
+        attractionImgList.forEach(item => {
+            let img = document.createElement("img");
+            img.src = item;
+            imgContent.appendChild(img);
+        })
 
     })
 }
@@ -88,7 +65,27 @@ function back_to_home_page(){
         window.location.replace("http://34.223.129.79:8000")
     })
 }
+function change_book_price_text(){
+    let morningBtn = document.querySelector(".profile_book_form_datetime_morning_btn");
+    let afternoonBtn = document.querySelector(".profile_book_form_datetime_afternoon_btn");
+    let priceContent = document.querySelector(".section_profile_book_form_price_content");
 
-back_to_home_page();
-loading_attraction_data();
-scroll_img();
+    morningBtn.addEventListener("change",() => {
+        if (morningBtn.checked){
+            priceContent.textContent = "新台幣 2000 元";
+        }
+    });
+    afternoonBtn.addEventListener("change",() => {
+        if (afternoonBtn.checked){
+            priceContent.textContent = "新台幣 2500 元";
+        }
+    });
+}
+async function excute(){
+    await loading_attraction_data();
+    await scroll_img();
+    change_book_price_text();
+    back_to_home_page();   
+}
+excute();
+
