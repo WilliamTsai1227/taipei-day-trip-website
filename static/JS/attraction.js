@@ -31,7 +31,7 @@ function scroll_img() {
     const rightArrow = document.querySelector('.section_picture_right_btn img');
     let scrollAmount = 0;
 
-    let scrollStep = 100; // 每次移動像素
+    let scrollStep = 600; // 每次移動像素
 
     leftArrow.addEventListener('click', () => {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
@@ -82,7 +82,13 @@ function loading_attraction_data(){
 
     })
 }
+function back_to_home_page(){
+    let homepage_btn = document.querySelector(".navigation_title")
+    homepage_btn.addEventListener("click",() => {
+        window.location.replace("http://34.223.129.79:8000")
+    })
+}
 
-
-loading_attraction_data()
+back_to_home_page();
+loading_attraction_data();
 scroll_img();

@@ -29,6 +29,9 @@ body{
     text-align: left;
 
 }
+.navigation_title:hover{
+    cursor: pointer;
+}
 .navigation_button{
     display: flex;
     flex: none;
@@ -152,18 +155,20 @@ body{
     display: flex;
     height: 100%;
     width: 540px;
+    overflow: hidden;
 }
 .image_content{
     display: flex;
     width: 540px;
+    transition: transform 0.7s ease;
 }
 .image_wrapper img{
     display: block;
-    position: absolute;
+    /* position: absolute;
     top: 0;
     right: 0;
     left: 0;
-    bottom: 0;
+    bottom: 0; */
     width: 540px;
     height: 100%;
     border-radius: 5px;
