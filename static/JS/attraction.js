@@ -20,7 +20,7 @@ async function scroll_img() {
 
 
 async function loading_attraction_data(){
-    let id = location.search;
+    let id = location.pathname.split("/").pop();
     let name = document.querySelector(".section_profile_name");
     let cat_mrt = document.querySelector(".section_profile_cat_mrt");
     let description = document.querySelector(".infors_description");
