@@ -29,7 +29,7 @@ async function loading_attraction_data(){
     let address = document.querySelector(".infors_location_content");
     let transport = document.querySelector(".infors_transportation_content");
     let imgContent = document.querySelector(".image_content");
-    id = 4;
+    
     fetch(`http://34.223.129.79:8000/api/attraction/${id}`)
     .then((response) => {
         return response.json();
