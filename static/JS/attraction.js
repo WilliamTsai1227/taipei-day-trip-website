@@ -1,10 +1,12 @@
-async function scroll_img() {
+function scroll_img() {
     const imgContent = document.querySelector('.image_content');
     const leftArrow = document.querySelector('.section_picture_left_btn img');
     const rightArrow = document.querySelector('.section_picture_right_btn img');
+    const imgWapper = document.querySelector('.image_wrapper');
+    imgContent.style.transform = 'translateX(0px)';
     let scrollAmount = 0;
 
-    let scrollStep = 540; // 每次移動像素
+    let scrollStep = imgWapper.offsetWidth; // 每次移動像素
 
     leftArrow.addEventListener('click', () => {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
@@ -81,11 +83,17 @@ function change_book_price_text(){
         }
     });
 }
+function handleResize(){
+    window.addEventListener("resize", () => {
+        scroll_img();
+    })
+}
 async function excute(){
     await loading_attraction_data();
-    await scroll_img();
+    scroll_img();
     change_book_price_text();
-    back_to_home_page();   
+    back_to_home_page(); 
+    handleResize();  
 }
 excute();
 

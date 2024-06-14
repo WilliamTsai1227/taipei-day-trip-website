@@ -98,7 +98,7 @@ body{
     width: 1200px;
     margin-left: calc((100% - 1200px)/2);
     margin-right: calc((100% - 1200px)/2);
-    height: 440px;
+    /* height: 440px; */
     box-sizing: border-box;
     margin-top: 39px;
     border-bottom: 1px solid #E8E8E8;
@@ -107,7 +107,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 540px;
     height: 400px;
     margin-left: 15px;
     margin-right: 15px;
@@ -171,13 +171,7 @@ body{
 }
 .image_content img{
     display: block;
-    /* position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0; */
-    min-width: 540px;
-    /* height: 100%; */
+    min-width: 100%;
     border-radius: 5px;
     object-fit: cover;
     object-position: top 0px left 0px;
@@ -221,6 +215,7 @@ body{
     flex-wrap: wrap;
     width: 600px;
     height: 302px;
+    /* margin-top: 20px; */
     position: relative;
     top: 20px;
     background-color: #E8E8E8;
@@ -244,7 +239,8 @@ body{
     height: 24px;
     margin-left: 20px;
     margin-right: 20px;
-    margin-top: 15px;
+    position: absolute;
+    top: 52px;
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -461,7 +457,7 @@ body{
 .infors_transportation_content{
     /* position: absolute; */
     width: 1180px;
-    height: 48px;
+    /* height: 48px; */
     left: 10px;
     font-size: 16px;
     font-weight: 400;
@@ -501,12 +497,14 @@ body{
     }
     .section{
         width: 100%;
-        margin-left: 30px;
-        margin-right: 30px;
-        height: 440px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
     .section_picture{
         width: calc(100% * 0.45);
+    }
+    .image_wrapper{
+        width: 100%;
     }
     .section_profile{
         width: calc(100% * 0.5);
@@ -521,26 +519,51 @@ body{
         margin-top: 15px;
     }
     .section_profile_book_form_description{
-        width: 100%;
+        width: calc(100% - 40px);
         margin-left: 20px;
         margin-right: 20px;
         
     }
     .section_profile_book_form_date{
-        width: 100%;
+        width: calc(100% - 40px);
         margin-left: 20px;
         margin-right: 20px;
     }
-
-
-
+    .section_profile_book_form_datetime{
+        width: calc(100% - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .section_profile_book_form_price{
+        width: calc(100% - 40px);
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .infors{
+        width: 100%;
+        padding-left: 35px;
+        padding-right: 35px;
+    }
 }
 
 
-@media (max-width:600px){
+@media (max-width:880px){
     .navigation{
-        width: 360px;
+        width: 100%;
+        border-bottom: 0px;
     }
-    
+    .section{
+        flex-wrap:wrap;
+        margin-top: 0px;
+    }
+    .section_picture{
+        width: 100%;
+    }
+    .section_profile{
+        width: 100%;
+    }
+    .image_content img{
+        border-radius: 0px;
+    }
 
 }
