@@ -639,12 +639,21 @@ body{
     }
     .section_picture{
         width: 100%;
+        margin-bottom: 10px;
     }
     .section_profile{
         width: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
     }
     .image_content img{
         border-radius: 0px;
     }
+    .infors {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-bottom: 134px;
+    }
+
 
 }
