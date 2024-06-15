@@ -60,7 +60,7 @@ async function loading_attraction_data(){
         img.src = item;
         imgContent.appendChild(img);
         })
-
+    scroll_img();
     // })
 }
 function back_to_home_page(){
@@ -97,7 +97,6 @@ function handleResize(){
 }
 async function excute(){
     await loading_attraction_data();
-    scroll_img();
     change_book_price_text();
     back_to_home_page(); 
     handleResize();  
