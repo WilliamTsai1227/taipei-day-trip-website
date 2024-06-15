@@ -9,6 +9,10 @@ body{
     font-family: Noto Sans TC;
 }
 .navigation{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #FFFFFF;
     display: flex;
     flex: none;
     width: 1200px;
@@ -27,6 +31,7 @@ body{
     color: #448899;
     font-weight: 700;
     text-align: left;
+    margin-left: 10px;
 
 }
 .navigation_title:hover{
@@ -43,6 +48,7 @@ body{
     align-items: center;
     height: 34px;
     width: 175px;
+    margin-right: 10px;
 
 }
 .navigation_button_left{
@@ -159,6 +165,7 @@ body{
 }
 .image_wrapper{
     display: flex;
+    justify-content: center;
     height: 400px;
     width: 540px;
     overflow: hidden;
@@ -175,6 +182,31 @@ body{
     border-radius: 5px;
     object-fit: cover;
     object-position: top 0px left 0px;
+}
+
+.circle {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    bottom: 10px;
+    padding: 2px 5px;
+}
+.not_current {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    opacity: 0.5;
+    margin: 0 3px;
+    
+}
+.current {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: #000000;
+    border: 1px solid #FFFFFF;
 }
 
 .section_profile{
@@ -211,11 +243,12 @@ body{
 }
 .section_profile_book_form{
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    flex-direction: column;
     flex-wrap: wrap;
     width: 600px;
     height: 302px;
-    /* margin-top: 20px; */
+    margin-top: 20px;
     position: relative;
     top: 20px;
     background-color: #E8E8E8;
@@ -223,7 +256,7 @@ body{
 }
 .section_profile_book_form_title{
     width: 560px;
-    height: 22px;
+    min-height: 22px;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 15px;
@@ -236,11 +269,12 @@ body{
 }
 .section_profile_book_form_description{
     width: 560px;
-    height: 24px;
+    min-height: 24px;
     margin-left: 20px;
     margin-right: 20px;
-    position: absolute;
-    top: 52px;
+    margin-top: 15px;
+    /* position: absolute;
+    top: 52px; */
     display: flex;
     align-items: center;
     font-size: 16px;
@@ -251,43 +285,70 @@ body{
 }
 .section_profile_book_form_date{
     width: 560px;
-    height: 35px;
+    min-height: 35px;
     margin-left: calc((100% - 560px)/2);
     margin-right: calc((100% - 560px)/2);
+    margin-top: 15px;
     display: flex;
     align-items: center;
-    position: absolute;
-    top: 91px;
+    position: relative;
+    /* position: absolute;
+    top: 91px; */
     font-size: 16px;
     font-weight: 700;
     text-align: left;
     color: #666666;
 }
 .section_profile_book_form_date input{
+    box-sizing: border-box;
     position: absolute;
     left: 86px;
     width: 193px;
-    height: 35px;
+    min-height: 35px;
     border: 0px;
     font-size: 16px;
     font-weight: 400;
     text-align: left;
+    padding-right: 40px; /* Leave space for the custom icon */
 
 }
-.section_profile_book_form_date input::-webkit-calendar-picker-indicator{
+
+/* Hide the default calendar icon */
+.section_profile_book_form_date input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+}
+
+.section_profile_book_form_date input::-moz-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+}
+/* Custom calendar icon */
+.date-label {
+    position: absolute;
+    left: 245px;
+    top: 6px;
+    /* transform: translateY(-50%); */
     width: 24px;
     height: 24px;
-    cursor: pointer;
+    background: url('/static/IMG/calendar.png') no-repeat center;
+    pointer-events: none; /* Allow clicks to pass through to the input */
 }
+
+
 .section_profile_book_form_datetime{
     width: 560px;
-    height: 22px;
+    min-height: 22px;
     margin-left: calc((100% - 560px)/2);
     margin-right: calc((100% - 560px)/2);
     display: flex;
     align-items: center;
-    position: absolute;
-    top: 141px;
+    position: relative;
+    margin-top: 15px;
+    /* position: absolute;
+    top: 141px; */
     font-size: 16px;
     font-weight: 700;
     text-align: left;
@@ -301,19 +362,20 @@ body{
     align-items: center;
     position: absolute;
     left: 91px;
+    appearance: none;
+    background: #FFFFFF;
+    border-radius: 50%;
 
 }
-/* .profile_book_form_datetime_morning_btn [type='radio']:checked{
-    content: '';
-    display: block;
-    width: 60%;
-    height: 60%;
-    margin: 20% auto;
-    border-radius: 50%;
-}
-.profile_book_form_datetime_morning_btn [type='radio']:checked:before{
+.profile_book_form_datetime_morning_btn:checked::before{
+    content: "";
     background: #448899;
-} */
+    border-radius: 50%;
+    position: absolute;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+}
 .profile_book_form_datetime_morning_text{
     display: flex;
     align-items: center;
@@ -335,7 +397,19 @@ body{
     align-items: center;
     position: absolute;
     left: 183px;
+    appearance: none;
+    background: #FFFFFF;
+    border-radius: 50%;
 
+}
+.profile_book_form_datetime_afternoon_btn:checked::before{
+    content: "";
+    background: #448899;
+    border-radius: 50%;
+    position: absolute;
+    left: 2px;
+    width: 18px;
+    height: 18px;
 }
 .profile_book_form_datetime_afternoon_text{
     display: flex;
@@ -352,13 +426,15 @@ body{
 }
 .section_profile_book_form_price{
     width: 560px;
-    height: 22px;
+    min-height: 22px;
     margin-left: calc((100% - 560px)/2);
     margin-right: calc((100% - 560px)/2);
     display: flex;
     align-items: center;
-    position: absolute;
-    top: 178px;
+    position: relative;
+    margin-top: 15px;
+    /* position: absolute;
+    top: 178px; */
     font-size: 16px;
     font-weight: 700;
     text-align: left;
@@ -382,8 +458,10 @@ body{
     justify-content: center;
     width: 154px;
     height: 36px;
-    position: absolute;
-    top: 225px;
+    position: relative;
+    margin-top: 25px;
+    /* position: absolute;
+    top: 225px; */
     left: 20px;
     padding: 10px 20px 10px 20px;
     border-radius: 5px 5px 5px 5px;

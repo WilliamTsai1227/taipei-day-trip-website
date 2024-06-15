@@ -101,6 +101,9 @@ async def get_attraction(attractionId: int = None):
         try:
             conn = connection_pool.get_connection()
             cursor = conn.cursor()
+            
+            # 设置 group_concat_max_len
+            cursor.execute("SET SESSION group_concat_max_len = 10000;")
         except Exception as e:
             raise HTTPException(status_code=500, detail="Database connect failed")
         try:
@@ -149,7 +152,3 @@ async def get_attraction(attractionId: int = None):
             cursor.close()
         if 'conn' in locals() and conn is not None:
             conn.close()
-
-
-
-
