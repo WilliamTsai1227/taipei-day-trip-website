@@ -30,36 +30,38 @@ async function loading_attraction_data(){
     let transport = document.querySelector(".infors_transportation_content");
     let imgContent = document.querySelector(".image_content");
     
-    fetch(`http://34.223.129.79:8000/api/attraction/${id}`)
-    .then((response) => {
-        return response.json();
-    })
-    .then((result) => {
-        let attraction = result.data;
-        let attractionId = attraction.id;
-        let attractionName = attraction.name;
-        let attractionAddress = attraction.address;
-        let attractionCategory = attraction.category;
-        let attractionMrt = attraction.mrt;
-        let attractionDescription = attraction.description;
-        let attractionTrasport = attraction.transport;
-        let attractionImgList = attraction.images;
+    let response = await fetch(`http://34.223.129.79:8000/api/attraction/${id}`);
+    let result = await response.json();
+    // fetch(`http://34.223.129.79:8000/api/attraction/${id}`)
+    // .then((response) => {
+    //     return response.json();
+    // })
+    // .then((result) => {
+    let attraction = result.data;
+    let attractionId = attraction.id;
+    let attractionName = attraction.name;
+    let attractionAddress = attraction.address;
+    let attractionCategory = attraction.category;
+    let attractionMrt = attraction.mrt;
+    let attractionDescription = attraction.description;
+    let attractionTrasport = attraction.transport;
+    let attractionImgList = attraction.images;
 
-        name.textContent = attractionName;
-        cat_mrt.textContent = attractionCategory+" at "+attractionMrt;
-        description.textContent = attractionDescription;
-        address.textContent = attractionAddress;
-        transport.textContent = attractionTrasport;
-        while(imgContent.firstChild){
-            imgContent.removeChild(imgContent.firstChild);
-        }
-        attractionImgList.forEach(item => {
-            let img = document.createElement("img");
-            img.src = item;
-            imgContent.appendChild(img);
+    name.textContent = attractionName;
+    cat_mrt.textContent = attractionCategory+" at "+attractionMrt;
+    description.textContent = attractionDescription;
+    address.textContent = attractionAddress;
+    transport.textContent = attractionTrasport;
+    while(imgContent.firstChild){
+        imgContent.removeChild(imgContent.firstChild);
+    }
+    attractionImgList.forEach(item => {
+        let img = document.createElement("img");
+        img.src = item;
+        imgContent.appendChild(img);
         })
 
-    })
+    // })
 }
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
@@ -84,9 +86,14 @@ function change_book_price_text(){
     });
 }
 function handleResize(){
+    let lastWidth = window.innerWidth;
+
     window.addEventListener("resize", () => {
-        scroll_img();
-    })
+        if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            scroll_img();
+        }
+    });
 }
 async function excute(){
     await loading_attraction_data();
