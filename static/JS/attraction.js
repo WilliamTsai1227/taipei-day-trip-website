@@ -61,15 +61,7 @@ function createCircle() {
     }
 }
 
-function updateCircle(){
-    let imgContent = document.querySelector('.image_content');
-    let imgWapper = document.querySelector('.image_wrapper');
-    let scrollStep = Number(imgWapper.offsetWidth);
-    let translate = Number(imgContent.style.transform);
-    let index = (translate / scrollStep) + 1
-    console.log(index);
 
-}
 
 
 async function loading_attraction_data(){
