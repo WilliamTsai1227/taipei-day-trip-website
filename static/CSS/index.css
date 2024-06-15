@@ -16,8 +16,8 @@ body{
     flex: none;
     width: 1200px;
     height: 54px;
-    /* margin-left: calc((100%-1200px)/2);
-    margin-right: calc((100%-1200px)/2); */
+    margin-left: calc((100%-1200px)/2);
+    margin-right: calc((100%-1200px)/2);
     align-items: center;
     justify-content: space-between;
 }
