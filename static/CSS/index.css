@@ -442,7 +442,7 @@ body{
 
 @media (max-width:600px){
     .navigation{
-        width: 360px;
+        width: 100%;
     }
     .hero_section_slogan{
         width: 340px;
