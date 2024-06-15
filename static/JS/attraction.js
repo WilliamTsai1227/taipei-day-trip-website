@@ -94,7 +94,7 @@ async function loading_attraction_data(){
         }
 
     }
-    id = 12;
+    
     checkId(id);
     let response = await fetch(`http://34.223.129.79:8000/api/attraction/${id}`);
     let result = await response.json();
