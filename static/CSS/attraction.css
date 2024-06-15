@@ -29,6 +29,7 @@ body{
     flex: none;
     font-size: 30px;
     color: #448899;
+    font-family: Noto Sans TC;
     font-weight: 700;
     text-align: left;
     margin-left: 10px;
@@ -59,6 +60,7 @@ body{
     flex:none;
     font-size: 16px;
     color: #666666;
+    font-family: Noto Sans TC;
     font-weight: 500;
     text-align: left;
     cursor: pointer;
@@ -79,6 +81,7 @@ body{
     flex: none;
     font-size: 16px;
     color: #666666;
+    font-family: Noto Sans TC;
     font-weight: 500;
     text-align: left;
     cursor: pointer;

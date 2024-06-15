@@ -28,6 +28,7 @@ body{
     font-family: Noto Sans TC;
     font-weight: 700;
     text-align: left;
+    margin-left: 10px;
 
 }
 .navigation_title:hover{
@@ -45,6 +46,7 @@ body{
     align-items: center;
     height: 34px;
     width: 175px;
+    margin-right: 10px;
 
 }
 .navigation_button_left{
