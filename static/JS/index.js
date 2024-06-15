@@ -1,4 +1,4 @@
-function append_mrt_station(){
+async function append_mrt_station(){
     listBarContent = document.querySelector(".list_bar_content");
     fetch("http://34.223.129.79:8000/api/mrts")
     .then((response) =>{
@@ -11,6 +11,7 @@ function append_mrt_station(){
             listItem.textContent = i;
             listBarContent.appendChild(listItem);
         }
+        monitor_mrt_click();
     })
     .catch((error) => {
         console.log(error)
@@ -20,7 +21,7 @@ function append_mrt_station(){
 let page = 0;
 let keyword = "";
 let isLoading = false; // 建立標籤，表示是否正在加載數據
-function fetch_attractions(){
+async function fetch_attractions(){
     if (isLoading) return; // 如果正在加載數據，則不觸發加載操作
     isLoading = true; // 開始加載數據，將 isLoading 設為 true
     let attractions = document.querySelector(".attractions")
@@ -67,6 +68,7 @@ function fetch_attractions(){
             attractions.appendChild(attraction);
         }
         isLoading = false; // 數據加載完成，將 isLoading 設為 false
+        monitor_attraction_clicks(); 
     })
     .catch((error) =>{
         console.log(error);
@@ -136,12 +138,14 @@ function scroll_list(){
 
 function monitor_mrt_click(){
     let list_items = document.querySelectorAll(".list_item");
+    console.log(list_items);
     let input = document.querySelector(".hero_section_search input");
     let attractions = document.querySelector(".attractions");
     list_items.forEach(item => {
         item.addEventListener("click",() => {
             let searchInput = item.textContent;
             input.value = searchInput;
+            console.log(input.value);
             page = 0;
             keyword = input.value;
             while(attractions.firstChild){
@@ -152,15 +156,40 @@ function monitor_mrt_click(){
     })    
 }
 
+function monitor_attraction_clicks(){
+    let list_items = document.querySelectorAll(".attraction_content");
+    let id = 0;
+    list_items.forEach(item => {
+        item.addEventListener("click", () =>{
+            id = item.querySelector(".attraction_id").textContent;
+            window.location.replace(`http://34.223.129.79:8000/attraction/${id}`)
+        })
+    })
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-    append_mrt_station();
-    fetch_attractions();
-    scrolling_add_attractions();
-    search();
+function back_to_home_page(){
+    let homepage_btn = document.querySelector(".navigation_title")
+    homepage_btn.addEventListener("click",() => {
+        window.location.replace("http://34.223.129.79:8000")
+    })
+}
+
+
+async function excute(){
+    await append_mrt_station();
+    await fetch_attractions();
+    monitor_mrt_click();
+    monitor_attraction_clicks();
     scroll_list();
-    setTimeout(monitor_mrt_click, 1000); 
-});
+    search();
+    scrolling_add_attractions();
+    back_to_home_page();
+}
+excute();
+
+
+
+
 
 
 

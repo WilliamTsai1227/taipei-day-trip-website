@@ -3,9 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/CSS/attraction.css">
+  <script src="/static/JS/attraction.js" defer></script>
   <title>Attraction</title>
 </head>
 <body>
-  
+    <div class="navigation">
+      <div class="navigation_title">台北一日遊</div>
+      <div class="navigation_button">
+        <div class="navigation_button_left">預定行程</div>
+        <div class="navigation_button_right">登入/註冊</div>
+      </div>
+    </div>
+    <div class="main_content">
+      <div class="section">
+        <div class="section_picture">
+          <div class="section_picture_left_btn">
+            <img src="/static/IMG/attraction_left_arrow.png" alt="">
+          </div>
+          <div class="section_picture_right_btn">
+            <img src="/static/IMG/attraction_right_arrow.png" alt="">
+          </div>
+          <div class="image_wrapper">
+            <div class="image_content">
+               
+            </div>
+            <div class="circle">  <!--这里是存放小圆圈，在js会根据图片的数量来添加-->
+            </div>
+          </div>
+        </div>
+        <div class="section_profile">
+          <div class="section_profile_name"></div>
+          <div class="section_profile_cat_mrt"></div>
+          <div class="section_profile_book_form">
+            <div class="section_profile_book_form_title">訂購導覽行程</div>
+            <div class="section_profile_book_form_description">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+            <div class="section_profile_book_form_date">
+              選擇日期 : <input type="date" name="book_day" class="profile_book_form_date_date">
+              <label for="date" class="date-label"></label>
+            </div>
+            <div class="section_profile_book_form_datetime">
+              選擇時間 :
+              <input type="radio" name="datetime" class="profile_book_form_datetime_morning_btn" checked>
+              <div class="profile_book_form_datetime_morning_text">上半天</div>
+              <input type="radio" name="datetime" class="profile_book_form_datetime_afternoon_btn">
+              <div class="profile_book_form_datetime_afternoon_text">下半天</div>
+            </div>
+            <div class="section_profile_book_form_price">
+              導覽費用 :
+              <div class="section_profile_book_form_price_content">新台幣 2000 元</div>
+            </div>
+            <div class="section_profile_book_form_button">
+              開始預約行程
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="infors">
+        <div class="infors_description">
+
+        </div>
+        <div class="infors_location_title">景點地址：</div>
+        <div class="infors_location_content"></div>
+        <div class="infors_transportation_title">交通方式：</div>
+        <div class="infors_transportation_content">
+          
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="footer_text">COPYRIGHT © 2021 台北一日遊</div>
+    </div>
 </body>
 </html>

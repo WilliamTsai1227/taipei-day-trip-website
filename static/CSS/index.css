@@ -8,6 +8,7 @@ body{
     flex-wrap: wrap;
 }
 .navigation{
+    background-color: #FFFFFF;
     display: flex;
     flex: none;
     width: 1200px;
@@ -24,8 +25,17 @@ body{
     font-family: Noto Sans TC;
     font-weight: 700;
     text-align: left;
+    margin-left: 10px;
 
 }
+.navigation_title:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}
+.navigation_title:active{
+    transform: scale(1);
+}
+
 .navigation_button{
     display: flex;
     flex: none;
@@ -33,6 +43,7 @@ body{
     align-items: center;
     height: 34px;
     width: 175px;
+    margin-right: 10px;
 
 }
 .navigation_button_left{
@@ -431,7 +442,7 @@ body{
 
 @media (max-width:600px){
     .navigation{
-        width: 360px;
+        width: 100%;
     }
     .hero_section_slogan{
         width: 340px;
