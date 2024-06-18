@@ -10,6 +10,8 @@ class User(BaseModel):
 
 @app.post("/api/user", status_code=200)
 async def create_user(user: User):
+    #從前端javascript拿到json格式資料
+    message_data = await request.json()
     # 假设这里有一些逻辑去检查用户是否已经存在
     # 例如，查询数据库
     user_exists = False  # 这里应该是实际的数据库查询结果
