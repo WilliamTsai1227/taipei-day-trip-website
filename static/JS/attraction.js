@@ -5,7 +5,7 @@ function scroll_img() {
     let imgWapper = document.querySelector('.image_wrapper');
     let circle = document.querySelector('.circle');
     let currentIndex = 0;
-    let scrollAmount = 0;
+    let scrollAmount = 0; //已經滑動像素
     let scrollStep = imgWapper.offsetWidth; // 每次移動像素
     
     imgContent.style.transform = 'translateX(0px)';
@@ -123,12 +123,16 @@ async function loading_attraction_data(){
     setTimeout(scroll_img, 1000);
     // })
 }
+
+
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
         window.location.replace("http://34.223.129.79:8000")
     })
 }
+
+
 function change_book_price_text(){
     let morningBtn = document.querySelector(".profile_book_form_datetime_morning_btn");
     let afternoonBtn = document.querySelector(".profile_book_form_datetime_afternoon_btn");
@@ -145,6 +149,8 @@ function change_book_price_text(){
         }
     });
 }
+
+
 function handleResize(){
     let lastWidth = window.innerWidth;
 
@@ -155,6 +161,8 @@ function handleResize(){
         }
     });
 }
+
+
 async function excute(){
     await loading_attraction_data();
     change_book_price_text();
