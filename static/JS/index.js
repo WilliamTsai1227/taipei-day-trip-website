@@ -174,6 +174,58 @@ function back_to_home_page(){
     })
 }
 
+function login(){
+    const data = {
+        email: 'user@example.com',
+        password: 'password123'
+    };
+    
+    fetch('/api/user/auth', {
+        method: 'PUT',  // 使用 PUT 方法发送请求
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const token = data.token;  // 
+        // 將 token 儲存到 LocalStorage
+        localStorage.setItem('token', token);
+        getLoginUserData();
+    })
+    .catch(error => {
+        console.error('Error fetching token:', error);
+    });
+}
+
+function getLoginUserData(){
+    let token = localStorage.getItem('token');
+    if (!token) {
+        console.error('Token not found in LocalStorage');
+        return;
+    }
+    fetch('/api/user/auth', {
+        method: 'GET',  // 使用 GET 方法获取用户信息
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('User info:', data);
+        // 在此处可以将返回的用户信息显示在前端页面上
+    })
+    .catch(error => {
+        console.error('Error fetching user info:', error);
+    });
+}
+
+function logout(){
+    localStorage.removeItem('token');
+    getLoginUserData();
+}
+
 
 async function excute(){
     await append_mrt_station();
