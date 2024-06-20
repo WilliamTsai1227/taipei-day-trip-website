@@ -227,6 +227,62 @@ function logout(){
 }
 
 
+let loginArea = document.querySelector(".login");
+let loginBlock = document.querySelector(".login_block");
+let loginBlockClose = document.querySelector(".login_block_close_btn");
+let navigation_button = document.querySelector(".navigation_button_right");
+let loginBlockTitle = document.querySelector(".login_block .title");
+let loginBlockName = document.querySelector(".login_block .name");
+let loginBlockNameInput = document.querySelector(".login_block .name input");
+let loginBlockAccount = document.querySelector(".login_block .account");
+let loginBlockAccountInput = document.querySelector(".login_block .account input");
+let loginBlockPassword = document.querySelector(".login_block .password");
+let loginBlockPasswordInput = document.querySelector(".login_block .password input");
+let loginBlockButton = document.querySelector(".login_block .submit_btn");
+let loginBlockChange = document.querySelector(".login_block .change_btn");
+let channgeTo = "signin";
+
+function close_login_block(){
+    loginBlockClose.addEventListener("click", ()=>{
+        loginArea.style.display = "none";
+    })
+}
+
+function show_login_block(){
+    navigation_button.addEventListener("click", ()=>{
+        loginArea.style.display = "flex";
+    })
+}
+
+function change_to_signin_block(){
+    if(channgeTo ==  "signin"){
+        loginBlockChange.addEventListener("click", ()=>{
+            loginBlock.style.height = "332px";
+            loginBlockTitle.textContent = "註冊會員帳號";
+            loginBlockName.style.display = "flex";
+            loginBlockAccountInput.style.placehoder = "輸入電子郵件";
+            loginBlockButton.textContent = "註冊新帳戶";
+            loginBlockChange = "已經有帳戶了?點此登入";
+            channgeTo =  "login";
+        });
+    }
+}
+function change_to_login_block(){
+    if(channgeTo ==  "login"){
+        loginBlockChange.addEventListener("click", ()=>{
+            loginBlock.style.height = "275px";
+            loginBlockTitle.textContent = "登入會員帳號";
+            loginBlockName.style.display = "none";
+            loginBlockAccountInput.style.placehoder = "輸入電子信箱";
+            loginBlockButton.textContent = "登入帳戶";
+            loginBlockChange = "還沒有帳戶了?點此註冊";
+            channgeTo = "signin";
+        })
+    }
+
+}
+
+
 async function excute(){
     await append_mrt_station();
     await fetch_attractions();
@@ -236,6 +292,10 @@ async function excute(){
     search();
     scrolling_add_attractions();
     back_to_home_page();
+    setTimeout(show_login_block, 1000);
+    setTimeout(close_login_block, 1000);
+    setTimeout(change_to_signin_block, 1000);
+    setTimeout(change_to_login_block, 1000);
 }
 excute();
 
