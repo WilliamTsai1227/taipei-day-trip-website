@@ -138,7 +138,6 @@ function scroll_list(){
 
 function monitor_mrt_click(){
     let list_items = document.querySelectorAll(".list_item");
-    console.log(list_items);
     let input = document.querySelector(".hero_section_search input");
     let attractions = document.querySelector(".attractions");
     list_items.forEach(item => {
@@ -174,29 +173,214 @@ function back_to_home_page(){
     })
 }
 
-function login(){
-    const data = {
-        email: 'user@example.com',
-        password: 'password123'
-    };
-    
-    fetch('/api/user/auth', {
-        method: 'PUT',  // 使用 PUT 方法发送请求
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+
+
+//登入註冊相關功能
+
+let loginArea = document.querySelector(".login");
+let loginBlock = document.querySelector(".login_block");
+let loginBlockClose = document.querySelector(".login_block_close_btn");
+let navigation_button = document.querySelector(".navigation_button_right");
+let loginBlockTitle = document.querySelector(".login_block .title");
+let loginBlockName = document.querySelector(".login_block .name");
+let loginBlockNameInput = document.querySelector(".login_block .name input");
+let loginBlockAccount = document.querySelector(".login_block .account");
+let loginBlockAccountInput = document.querySelector(".login_block .account input");
+let loginBlockPassword = document.querySelector(".login_block .password");
+let loginBlockPasswordInput = document.querySelector(".login_block .password input");
+let loginBlockButton = document.querySelector(".login_block .submit_btn");
+let loginBlockErrorMessage = document.querySelector(".login_block .error_message");
+let loginBlockChangeToSignup = document.querySelector(".login_block .change_to_signup_btn");
+let loginBlockChangeToLogin = document.querySelector(".login_block .change_to_login_btn");
+let loginBlockStatus = "login";
+
+
+function show_login_block(){
+    navigation_button.addEventListener("click", ()=>{
+        loginArea.style.display = "flex";
     })
-    .then(response => response.json())
-    .then(data => {
-        const token = data.token;  // 
-        // 將 token 儲存到 LocalStorage
-        localStorage.setItem('token', token);
-        getLoginUserData();
+}
+
+function close_login_block(){
+    loginBlockClose.addEventListener("click", ()=>{
+        loginArea.style.display = "none";
     })
-    .catch(error => {
-        console.error('Error fetching token:', error);
+}
+
+function change_to_signup_block(){    
+    loginBlockChangeToSignup.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        loginBlockTitle.textContent = "註冊會員帳號";
+        loginBlockName.style.display = "flex";
+        loginBlockAccountInput.placeholder = "輸入電子郵件";
+        loginBlockButton.textContent = "註冊新帳戶";
+        loginBlockChangeToSignup.style.display = "none";
+        loginBlockChangeToLogin.style.display = "flex";
+        loginBlock.style.height = "332px";
+        loginBlockStatus =  "signup";
     });
+}
+
+function change_to_login_block(){
+    loginBlockChangeToLogin.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        loginBlockTitle.textContent = "登入會員帳號";
+        loginBlockName.style.display = "none";
+        loginBlockAccountInput.placeholder = "輸入電子信箱";
+        loginBlockButton.textContent = "登入帳戶";
+        loginBlockChangeToSignup.style.display = "flex";
+        loginBlockChangeToLogin.style.display = "none";
+        loginBlock.style.height = "275px";
+        loginBlockStatus = "login";
+    })
+}
+
+// 姓名格式驗證，必須是中文或英文，至少兩個字元
+function checkNameFormat(name) {
+    const namePattern = /^[\u4e00-\u9fa5A-Za-z\s]{2,}$/;
+    return namePattern.test(name);
+}
+
+// 帳號(email)格式驗證
+function checkAccountFormat(account) {
+    const accountPattern = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+    return accountPattern.test(account);
+}
+
+// 密碼格式驗證，只能是數字及字母，至少八個字元
+function checkPasswordFormat(password) {
+    const passwordPattern = /^[A-Za-z0-9]{8,}$/;
+    return passwordPattern.test(password);
+}
+
+function erase_error_message(){
+    loginBlockNameInput.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        loginBlock.style.height = "275px"; 
+    })
+    loginBlockAccountInput.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        loginBlock.style.height = "275px"; 
+    })
+    loginBlockPasswordInput.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        loginBlock.style.height = "275px"; 
+    })
+}
+
+
+
+function login(){
+    let emailData = "";
+    let passwordData = "";
+    loginBlockButton.addEventListener("click", ()=>{
+        emailData = loginBlockAccountInput.value;
+        passwordData = loginBlockPasswordInput.value;
+        if(emailData===""){
+            loginBlockErrorMessage.textContent = "帳號不得空白";
+            loginBlock.style.height = "322px";
+            return
+        }
+        if(passwordData === ""){
+            loginBlockErrorMessage.textContent = "密碼不得空白";
+            loginBlock.style.height = "322px";
+            return
+        }
+        if(checkAccountFormat(emailData)=== false){
+            loginBlockErrorMessage.textContent = "帳號格式錯誤";
+            loginBlock.style.height = "322px";
+            return
+        }
+        if(checkPasswordFormat(passwordData)=== false){
+            loginBlockErrorMessage.textContent = "密碼格式錯誤";
+            loginBlock.style.height = "322px";
+            return
+        }
+    
+        const data = {
+            email: emailData,
+            password: passwordData
+        };
+        
+        fetch('http://127.0.0.1:8000/api/user/auth', {
+            method: 'PUT',  // 使用 PUT 方法
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const token = data.token;  // 
+            // 將 token 儲存到 LocalStorage
+            localStorage.setItem('token', token);
+            getLoginUserData();
+        })
+        .catch(error => {
+            console.error('Error fetching token:', error);
+        });
+    })
+
+}
+
+function signup(){
+    let nameData = "";
+    let emailData = "";
+    let passwordData = "";
+    loginBlockButton.addEventListener("click", ()=>{
+        emailData = loginBlockAccountInput.value;
+        passwordData = loginBlockPasswordInput.value;
+        if(emailData===""){
+            loginBlockErrorMessage.textContent = "帳號不得空白";
+            loginBlock.style.height = "379px";
+            return
+        }
+        if(nameData===""){
+            loginBlockErrorMessage.textContent = "姓名不得空白";
+            loginBlock.style.height = "379px";
+            return
+        }
+        if(passwordData === ""){
+            loginBlockErrorMessage.textContent = "密碼不得空白";
+            loginBlock.style.height = "379px";
+            return
+        }
+        if(checkAccountFormat(emailData)=== false){
+            loginBlockErrorMessage.textContent = "帳號格式錯誤";
+            loginBlock.style.height = "379px";
+            return
+        }
+        if(checkPasswordFormat(passwordData)=== false){
+            loginBlockErrorMessage.textContent = "密碼格式錯誤";
+            loginBlock.style.height = "379px";
+            return
+        }
+    
+        const data = {
+            email: emailData,
+            password: passwordData
+        };
+        
+        fetch('http://127.0.0.1:8000/api/user/auth', {
+            method: 'POST',  // 使用 PUT 方法
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const token = data.token;  // 
+            // 將 token 儲存到 LocalStorage
+            localStorage.setItem('token', token);
+            getLoginUserData();
+        })
+        .catch(error => {
+            console.error('Error fetching token:', error);
+        });
+    })
+
+    
 }
 
 function getLoginUserData(){
@@ -205,7 +389,7 @@ function getLoginUserData(){
         console.error('Token not found in LocalStorage');
         return;
     }
-    fetch('/api/user/auth', {
+    fetch('http://127.0.0.1:8000/api/user/auth', {
         method: 'GET',  // 使用 GET 方法获取用户信息
         headers: {
             'Authorization': `Bearer ${token}`
@@ -227,62 +411,6 @@ function logout(){
 }
 
 
-let loginArea = document.querySelector(".login");
-let loginBlock = document.querySelector(".login_block");
-let loginBlockClose = document.querySelector(".login_block_close_btn");
-let navigation_button = document.querySelector(".navigation_button_right");
-let loginBlockTitle = document.querySelector(".login_block .title");
-let loginBlockName = document.querySelector(".login_block .name");
-let loginBlockNameInput = document.querySelector(".login_block .name input");
-let loginBlockAccount = document.querySelector(".login_block .account");
-let loginBlockAccountInput = document.querySelector(".login_block .account input");
-let loginBlockPassword = document.querySelector(".login_block .password");
-let loginBlockPasswordInput = document.querySelector(".login_block .password input");
-let loginBlockButton = document.querySelector(".login_block .submit_btn");
-let loginBlockChange = document.querySelector(".login_block .change_btn");
-let channgeTo = "signin";
-
-function close_login_block(){
-    loginBlockClose.addEventListener("click", ()=>{
-        loginArea.style.display = "none";
-    })
-}
-
-function show_login_block(){
-    navigation_button.addEventListener("click", ()=>{
-        loginArea.style.display = "flex";
-    })
-}
-
-function change_to_signin_block(){
-    if(channgeTo ==  "signin"){
-        loginBlockChange.addEventListener("click", ()=>{
-            loginBlock.style.height = "332px";
-            loginBlockTitle.textContent = "註冊會員帳號";
-            loginBlockName.style.display = "flex";
-            loginBlockAccountInput.style.placehoder = "輸入電子郵件";
-            loginBlockButton.textContent = "註冊新帳戶";
-            loginBlockChange = "已經有帳戶了?點此登入";
-            channgeTo =  "login";
-        });
-    }
-}
-function change_to_login_block(){
-    if(channgeTo ==  "login"){
-        loginBlockChange.addEventListener("click", ()=>{
-            loginBlock.style.height = "275px";
-            loginBlockTitle.textContent = "登入會員帳號";
-            loginBlockName.style.display = "none";
-            loginBlockAccountInput.style.placehoder = "輸入電子信箱";
-            loginBlockButton.textContent = "登入帳戶";
-            loginBlockChange = "還沒有帳戶了?點此註冊";
-            channgeTo = "signin";
-        })
-    }
-
-}
-
-
 async function excute(){
     await append_mrt_station();
     await fetch_attractions();
@@ -292,10 +420,13 @@ async function excute(){
     search();
     scrolling_add_attractions();
     back_to_home_page();
-    setTimeout(show_login_block, 1000);
-    setTimeout(close_login_block, 1000);
-    setTimeout(change_to_signin_block, 1000);
-    setTimeout(change_to_login_block, 1000);
+    show_login_block();
+    close_login_block();
+    change_to_signup_block();
+    change_to_login_block();
+    login();
+    signup();
+    erase_error_message();
 }
 excute();
 
