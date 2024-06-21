@@ -436,6 +436,8 @@ function signup(){
 function getUserData(){
     let token = localStorage.getItem('token');
     if (!token) {
+        signin_signup_button.style.display = "flex";
+        signout_button.style.display = "none";
         return false;
     }
     fetch('http://34.223.129.79:8000/api/user/auth', {
@@ -451,14 +453,17 @@ function getUserData(){
         }));
     })
     .then(responseData => {
-        if(responseData.statusCode === 200){
+        if(responseData.data.data === null){
+            signin_signup_button.style.display = "flex";
+            signout_button.style.display = "none"; 
+        }
+        if(responseData.data.data){
             let id = responseData.data.data.id; //取得會員資訊
             let name = responseData.data.data.name;
             let account = responseData.data.data.email;
-            
             signin_signup_button.style.display = "none";
             signout_button.style.display = "flex";
-            return{"id":id,"name":name,"accpunt":account}
+            return{"id":id,"name":name,"acccount":account}
         } 
     })
     .catch(error => {
@@ -471,8 +476,7 @@ function getUserData(){
 function logout(){
     signout_button.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        signin_signup_button.style.display = "flex";
-        signout_button.style.display = "none";
+        getUserData();
     })
 }
 
