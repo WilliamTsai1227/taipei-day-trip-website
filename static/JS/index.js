@@ -344,10 +344,11 @@ function signin(){
                 if(statusCode === 200){
                     const token = data.token;
                     localStorage.setItem('token', token);
-                    loginArea.style.display = "none";
                     clear_input();
                     if (getUserData() === false){
-                        console.error("Can't get user token.")
+                        console.error("user token procedure error.")
+                    }else{
+                        loginArea.style.display = "none";
                     }
                 }
 
@@ -447,6 +448,8 @@ function signup(){
 function getUserData(){
     let token = localStorage.getItem('token');
     if (!token) {
+        signin_signup_button.style.display = "flex";
+        signout_button.style.display = "none";
         return false;
     }
     fetch('http://34.223.129.79:8000/api/user/auth', {
@@ -462,14 +465,17 @@ function getUserData(){
         }));
     })
     .then(responseData => {
-        if(responseData.statusCode === 200){
+        if(responseData.data.data === null){
+            signin_signup_button.style.display = "flex";
+            signout_button.style.display = "none"; 
+        }
+        if(responseData.data.data){
             let id = responseData.data.data.id; //取得會員資訊
             let name = responseData.data.data.name;
             let account = responseData.data.data.email;
-            
             signin_signup_button.style.display = "none";
             signout_button.style.display = "flex";
-            return{"id":id,"name":name,"accpunt":account}
+            return{"id":id,"name":name,"acccount":account}
         } 
     })
     .catch(error => {
@@ -482,13 +488,13 @@ function getUserData(){
 function logout(){
     signout_button.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        signin_signup_button.style.display = "flex";
-        signout_button.style.display = "none";
+        getUserData();
     })
 }
 
 
 async function excute(){
+    getUserData();
     await append_mrt_station();
     await fetch_attractions();
     monitor_mrt_click();
@@ -497,7 +503,6 @@ async function excute(){
     search();
     scrolling_add_attractions();
     back_to_home_page();
-    getUserData();
     show_login_block();
     close_login_block();
     change_to_signup_block();

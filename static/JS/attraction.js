@@ -479,11 +479,11 @@ function logout(){
 
 
 async function excute(){
+    getUserData();
     await loading_attraction_data();
     change_book_price_text();
     back_to_home_page(); 
     handleResize();
-    getUserData();
     show_login_block();
     close_login_block();
     change_to_signup_block();
