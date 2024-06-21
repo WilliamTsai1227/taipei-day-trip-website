@@ -104,7 +104,7 @@ body{
     font-weight: 500;
     text-align: left;
     color: #757575;
-    padding-left: 15px;
+    
 }
 
 
@@ -217,7 +217,7 @@ body{
 .navigation_button{
     display: flex;
     flex: none;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 34px;
     width: 175px;
@@ -245,7 +245,7 @@ body{
     /*box-shadow: inset 0 0 0 1px rgba(0, 0, 0);*/
 }
 .navigation_button_signin_signup{
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     padding: 10px;
