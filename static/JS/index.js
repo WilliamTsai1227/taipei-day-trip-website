@@ -144,7 +144,6 @@ function monitor_mrt_click(){
         item.addEventListener("click",() => {
             let searchInput = item.textContent;
             input.value = searchInput;
-            console.log(input.value);
             page = 0;
             keyword = input.value;
             while(attractions.firstChild){
@@ -221,7 +220,6 @@ function change_to_signup_block(){
         loginBlockButton.textContent = "註冊新帳戶";
         loginBlockChangeToSignup.style.display = "none";
         loginBlockChangeToLogin.style.display = "flex";
-        loginBlock.style.height = "332px";
         loginBlockStatus =  "signup";
     });
 }
@@ -235,7 +233,6 @@ function change_to_login_block(){
         loginBlockButton.textContent = "登入帳戶";
         loginBlockChangeToSignup.style.display = "flex";
         loginBlockChangeToLogin.style.display = "none";
-        loginBlock.style.height = "275px";
         loginBlockStatus = "login";
     })
 }
@@ -252,7 +249,7 @@ function checkAccountFormat(account) {
     return accountPattern.test(account);
 }
 
-// 密碼格式驗證，只能是數字及字母，至少八個字元
+// 密碼格式驗證，只能是數字或字母，至少八個字元
 function checkPasswordFormat(password) {
     const passwordPattern = /^[A-Za-z0-9]{8,}$/;
     return passwordPattern.test(password);
@@ -269,23 +266,18 @@ function clear_input(){
 function erase_error_message(){
     signin_signup_button.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        // loginBlock.style.height = "275px"; 
     })
     loginBlockNameInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        // loginBlock.style.height = "275px"; 
     })
     loginBlockAccountInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        // loginBlock.style.height = "275px"; 
     })
     loginBlockPasswordInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        // loginBlock.style.height = "275px"; 
     })
     loginBlockClose.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        // loginBlock.style.height = "275px"; 
     })
 }
 
@@ -300,22 +292,22 @@ function signin(){
         if(loginBlockButton.textContent == "登入帳戶"){
             if(emailData===""){
                 loginBlockErrorMessage.textContent = "帳號不得空白";
-                // loginBlock.style.height = "322px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(passwordData === ""){
                 loginBlockErrorMessage.textContent = "密碼不得空白";
-                // loginBlock.style.height = "322px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(checkAccountFormat(emailData)=== false){
                 loginBlockErrorMessage.textContent = "帳號格式錯誤";
-                // loginBlock.style.height = "322px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(checkPasswordFormat(passwordData)=== false){
-                loginBlockErrorMessage.textContent = "密碼格式錯誤";
-                // loginBlock.style.height = "322px";
+                loginBlockErrorMessage.textContent = "密碼格式錯誤,數字或字母,至少八個字";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
         
@@ -324,7 +316,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://127.0.0.1:8000/api/user/auth', {
+            fetch('http://34.223.129.79:8000/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -344,6 +336,7 @@ function signin(){
                 
                 if(statusCode === 400){
                     loginBlockErrorMessage.textContent = data.message;
+                    loginBlockErrorMessage.style.color = "red";
                 }
                 if(statusCode === 500){
                     console.error(statusCode , data.message);
@@ -360,7 +353,7 @@ function signin(){
 
             })
             .catch(error => {
-                console.error('Error fetching token:', error);
+                // console.error('Error fetching token:', error);
             });
         }
     })
@@ -379,27 +372,32 @@ function signup(){
         if(loginBlockButton.textContent == "註冊新帳戶"){
             if(emailData===""){
                 loginBlockErrorMessage.textContent = "帳號不得空白";
-                // loginBlock.style.height = "379px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(nameData===""){
                 loginBlockErrorMessage.textContent = "姓名不得空白";
-                // loginBlock.style.height = "379px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(passwordData === ""){
                 loginBlockErrorMessage.textContent = "密碼不得空白";
-                // loginBlock.style.height = "379px";
+                loginBlockErrorMessage.style.color = "red";
+                return
+            }
+            if(checkNameFormat(nameData)=== false){
+                loginBlockErrorMessage.textContent = "姓名格式錯誤,中文或英文，至少兩個字";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(checkAccountFormat(emailData)=== false){
                 loginBlockErrorMessage.textContent = "帳號格式錯誤";
-                // loginBlock.style.height = "379px";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
             if(checkPasswordFormat(passwordData)=== false){
-                loginBlockErrorMessage.textContent = "密碼格式錯誤";
-                // loginBlock.style.height = "379px";
+                loginBlockErrorMessage.textContent = "密碼格式錯誤,數字或字母,至少八個字";
+                loginBlockErrorMessage.style.color = "red";
                 return
             }
         
@@ -409,7 +407,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://127.0.0.1:8000/api/user', {
+            fetch('http://34.223.129.79:8000/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -425,19 +423,20 @@ function signup(){
             })
             .then(responseData => {
                 const statusCode = responseData.statusCode;
-                console.log(statusCode);
                 if(statusCode === 400){
                     loginBlockErrorMessage.textContent = responseData.data.message;
+                    loginBlockErrorMessage.style.color = "red";
                 }
                 if(statusCode === 500){
                     console.error(statusCode , responseData.data.message);
                 }
                 if(statusCode === 200 && responseData.data.ok === true){
                     loginBlockErrorMessage.textContent = "註冊成功";
+                    loginBlockErrorMessage.style.color = "green";
                 }
             })
             .catch(error => {
-                console.error('Error signup procedure:', error);
+                // console.error('Error signup procedure:', error);
             });
         }
     })    
@@ -450,7 +449,7 @@ function getUserData(){
     if (!token) {
         return false;
     }
-    fetch('http://127.0.0.1:8000/api/user/auth', {
+    fetch('http://34.223.129.79:8000/api/user/auth', {
         method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`
