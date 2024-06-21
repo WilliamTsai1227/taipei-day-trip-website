@@ -86,7 +86,7 @@ async def login_process(request: Request):
             response = {"error": True,"message": "帳號或密碼錯誤"}
             return JSONResponse(content=response, status_code=400)
         if user_data is False:
-            response = {"error": True,"message": "Database登入程序伺服器運作錯誤"}
+            response = {"error": True,"message": "Database login procedure server error."}
             return JSONResponse(content=response, status_code=500)
         
         #獲取登入使用者database 資料包裝成token

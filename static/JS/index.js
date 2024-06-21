@@ -177,10 +177,12 @@ function back_to_home_page(){
 
 //登入註冊相關功能
 
+let htmlBody = document.querySelector("body")
 let loginArea = document.querySelector(".login");
 let loginBlock = document.querySelector(".login_block");
 let loginBlockClose = document.querySelector(".login_block_close_btn");
-let navigation_button = document.querySelector(".navigation_button_right");
+let signin_signup_button = document.querySelector(".navigation_button_signin_signup");
+let signout_button = document.querySelector(".navigation_button_signout");
 let loginBlockTitle = document.querySelector(".login_block .title");
 let loginBlockName = document.querySelector(".login_block .name");
 let loginBlockNameInput = document.querySelector(".login_block .name input");
@@ -195,12 +197,14 @@ let loginBlockChangeToLogin = document.querySelector(".login_block .change_to_lo
 let loginBlockStatus = "login";
 
 
+//打開登入框
 function show_login_block(){
-    navigation_button.addEventListener("click", ()=>{
+    signin_signup_button.addEventListener("click", ()=>{
         loginArea.style.display = "flex";
     })
 }
 
+//關閉登入框
 function close_login_block(){
     loginBlockClose.addEventListener("click", ()=>{
         loginArea.style.display = "none";
@@ -209,6 +213,7 @@ function close_login_block(){
 
 function change_to_signup_block(){    
     loginBlockChangeToSignup.addEventListener("click", ()=>{
+        clear_input();
         loginBlockErrorMessage.textContent="";
         loginBlockTitle.textContent = "註冊會員帳號";
         loginBlockName.style.display = "flex";
@@ -253,161 +258,234 @@ function checkPasswordFormat(password) {
     return passwordPattern.test(password);
 }
 
+//清除使用者輸入Input內容
+function clear_input(){
+    loginBlockNameInput.value = "";
+    loginBlockAccountInput.value = "";
+    loginBlockPasswordInput.value = "";
+}
+
+//清除error message字樣
 function erase_error_message(){
+    signin_signup_button.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        // loginBlock.style.height = "275px"; 
+    })
     loginBlockNameInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        loginBlock.style.height = "275px"; 
+        // loginBlock.style.height = "275px"; 
     })
     loginBlockAccountInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        loginBlock.style.height = "275px"; 
+        // loginBlock.style.height = "275px"; 
     })
     loginBlockPasswordInput.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
-        loginBlock.style.height = "275px"; 
+        // loginBlock.style.height = "275px"; 
+    })
+    loginBlockClose.addEventListener("click", ()=>{
+        loginBlockErrorMessage.textContent="";
+        // loginBlock.style.height = "275px"; 
     })
 }
 
+//登入
 
-
-function login(){
+function signin(){
     let emailData = "";
     let passwordData = "";
     loginBlockButton.addEventListener("click", ()=>{
         emailData = loginBlockAccountInput.value;
         passwordData = loginBlockPasswordInput.value;
-        if(emailData===""){
-            loginBlockErrorMessage.textContent = "帳號不得空白";
-            loginBlock.style.height = "322px";
-            return
-        }
-        if(passwordData === ""){
-            loginBlockErrorMessage.textContent = "密碼不得空白";
-            loginBlock.style.height = "322px";
-            return
-        }
-        if(checkAccountFormat(emailData)=== false){
-            loginBlockErrorMessage.textContent = "帳號格式錯誤";
-            loginBlock.style.height = "322px";
-            return
-        }
-        if(checkPasswordFormat(passwordData)=== false){
-            loginBlockErrorMessage.textContent = "密碼格式錯誤";
-            loginBlock.style.height = "322px";
-            return
-        }
-    
-        const data = {
-            email: emailData,
-            password: passwordData
-        };
+        if(loginBlockButton.textContent == "登入帳戶"){
+            if(emailData===""){
+                loginBlockErrorMessage.textContent = "帳號不得空白";
+                // loginBlock.style.height = "322px";
+                return
+            }
+            if(passwordData === ""){
+                loginBlockErrorMessage.textContent = "密碼不得空白";
+                // loginBlock.style.height = "322px";
+                return
+            }
+            if(checkAccountFormat(emailData)=== false){
+                loginBlockErrorMessage.textContent = "帳號格式錯誤";
+                // loginBlock.style.height = "322px";
+                return
+            }
+            if(checkPasswordFormat(passwordData)=== false){
+                loginBlockErrorMessage.textContent = "密碼格式錯誤";
+                // loginBlock.style.height = "322px";
+                return
+            }
         
-        fetch('http://127.0.0.1:8000/api/user/auth', {
-            method: 'PUT',  // 使用 PUT 方法
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            const token = data.token;  // 
-            // 將 token 儲存到 LocalStorage
-            localStorage.setItem('token', token);
-            getLoginUserData();
-        })
-        .catch(error => {
-            console.error('Error fetching token:', error);
-        });
-    })
+            const data = {
+                email: emailData,
+                password: passwordData
+            };
+            
+            fetch('http://127.0.0.1:8000/api/user/auth', {
+                method: 'PUT',  
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                const statusCode = response.status;
+                return response.json().then(data => ({
+                    statusCode: statusCode,
+                    data: data
+                }));
+            })
+            .then(responseData => {
+                const statusCode = responseData.statusCode;
+                const data = responseData.data;
+                
+                if(statusCode === 400){
+                    loginBlockErrorMessage.textContent = data.message;
+                }
+                if(statusCode === 500){
+                    console.error(statusCode , data.message);
+                }
+                if(statusCode === 200){
+                    const token = data.token;
+                    localStorage.setItem('token', token);
+                    loginArea.style.display = "none";
+                    clear_input();
+                    if (getUserData() === false){
+                        console.error("Can't get user token.")
+                    }
+                }
 
+            })
+            .catch(error => {
+                console.error('Error fetching token:', error);
+            });
+        }
+    })
 }
+
+//註冊
 
 function signup(){
     let nameData = "";
     let emailData = "";
     let passwordData = "";
     loginBlockButton.addEventListener("click", ()=>{
+        nameData = loginBlockNameInput.value;
         emailData = loginBlockAccountInput.value;
         passwordData = loginBlockPasswordInput.value;
-        if(emailData===""){
-            loginBlockErrorMessage.textContent = "帳號不得空白";
-            loginBlock.style.height = "379px";
-            return
-        }
-        if(nameData===""){
-            loginBlockErrorMessage.textContent = "姓名不得空白";
-            loginBlock.style.height = "379px";
-            return
-        }
-        if(passwordData === ""){
-            loginBlockErrorMessage.textContent = "密碼不得空白";
-            loginBlock.style.height = "379px";
-            return
-        }
-        if(checkAccountFormat(emailData)=== false){
-            loginBlockErrorMessage.textContent = "帳號格式錯誤";
-            loginBlock.style.height = "379px";
-            return
-        }
-        if(checkPasswordFormat(passwordData)=== false){
-            loginBlockErrorMessage.textContent = "密碼格式錯誤";
-            loginBlock.style.height = "379px";
-            return
-        }
-    
-        const data = {
-            email: emailData,
-            password: passwordData
-        };
+        if(loginBlockButton.textContent == "註冊新帳戶"){
+            if(emailData===""){
+                loginBlockErrorMessage.textContent = "帳號不得空白";
+                // loginBlock.style.height = "379px";
+                return
+            }
+            if(nameData===""){
+                loginBlockErrorMessage.textContent = "姓名不得空白";
+                // loginBlock.style.height = "379px";
+                return
+            }
+            if(passwordData === ""){
+                loginBlockErrorMessage.textContent = "密碼不得空白";
+                // loginBlock.style.height = "379px";
+                return
+            }
+            if(checkAccountFormat(emailData)=== false){
+                loginBlockErrorMessage.textContent = "帳號格式錯誤";
+                // loginBlock.style.height = "379px";
+                return
+            }
+            if(checkPasswordFormat(passwordData)=== false){
+                loginBlockErrorMessage.textContent = "密碼格式錯誤";
+                // loginBlock.style.height = "379px";
+                return
+            }
         
-        fetch('http://127.0.0.1:8000/api/user/auth', {
-            method: 'POST',  // 使用 PUT 方法
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            const token = data.token;  // 
-            // 將 token 儲存到 LocalStorage
-            localStorage.setItem('token', token);
-            getLoginUserData();
-        })
-        .catch(error => {
-            console.error('Error fetching token:', error);
-        });
-    })
-
-    
+            const data = {
+                name: nameData,
+                email: emailData,
+                password: passwordData
+            };
+            
+            fetch('http://127.0.0.1:8000/api/user', {
+                method: 'POST',  
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                const statusCode = response.status;
+                return response.json().then(data => ({
+                    statusCode: statusCode,
+                    data: data
+                }));
+            })
+            .then(responseData => {
+                const statusCode = responseData.statusCode;
+                console.log(statusCode);
+                if(statusCode === 400){
+                    loginBlockErrorMessage.textContent = responseData.data.message;
+                }
+                if(statusCode === 500){
+                    console.error(statusCode , responseData.data.message);
+                }
+                if(statusCode === 200 && responseData.data.ok === true){
+                    loginBlockErrorMessage.textContent = "註冊成功";
+                }
+            })
+            .catch(error => {
+                console.error('Error signup procedure:', error);
+            });
+        }
+    })    
 }
 
-function getLoginUserData(){
+//取得現在登入使用者資料
+
+function getUserData(){
     let token = localStorage.getItem('token');
     if (!token) {
-        console.error('Token not found in LocalStorage');
-        return;
+        return false;
     }
     fetch('http://127.0.0.1:8000/api/user/auth', {
-        method: 'GET',  // 使用 GET 方法获取用户信息
+        method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log('User info:', data);
-        // 在此处可以将返回的用户信息显示在前端页面上
+    .then(response => {
+        return response.json().then(data => ({
+            statusCode: response.status,
+            data: data
+        }));
+    })
+    .then(responseData => {
+        if(responseData.statusCode === 200){
+            let id = responseData.data.data.id; //取得會員資訊
+            let name = responseData.data.data.name;
+            let account = responseData.data.data.email;
+            
+            signin_signup_button.style.display = "none";
+            signout_button.style.display = "flex";
+            return{"id":id,"name":name,"accpunt":account}
+        } 
     })
     .catch(error => {
         console.error('Error fetching user info:', error);
     });
 }
 
+//登出
+
 function logout(){
-    localStorage.removeItem('token');
-    getLoginUserData();
+    signout_button.addEventListener("click", ()=>{
+        localStorage.removeItem('token');
+        signin_signup_button.style.display = "flex";
+        signout_button.style.display = "none";
+    })
 }
 
 
@@ -420,13 +498,15 @@ async function excute(){
     search();
     scrolling_add_attractions();
     back_to_home_page();
+    getUserData();
     show_login_block();
     close_login_block();
     change_to_signup_block();
     change_to_login_block();
-    login();
+    signin();
     signup();
     erase_error_message();
+    logout();
 }
 excute();
 
