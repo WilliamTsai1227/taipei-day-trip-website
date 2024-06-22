@@ -146,6 +146,6 @@ sql_command.sql
 #python 
 try.py
 note.py
-connection_pool.py
+
 #txt
 aws_command.txt 

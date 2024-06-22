@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from api.attractions import attractions
 from api.mrts import mrts
+from api.user import user
 from fastapi.staticfiles import StaticFiles
 app=FastAPI()
 
@@ -36,6 +37,7 @@ async def thankyou(request: Request):
 
 app.include_router(attractions)
 app.include_router(mrts)
+app.include_router(user)
 
 # 異常處理
 @app.exception_handler(RequestValidationError)
