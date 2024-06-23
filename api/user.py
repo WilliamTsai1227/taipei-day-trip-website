@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Request, HTTPException,Depends
 from fastapi.responses import JSONResponse
 from module.user import *
+from module.JWT import *
 from pydantic import BaseModel, Field
-import jwt
 from fastapi.security import OAuth2PasswordBearer
 
 
