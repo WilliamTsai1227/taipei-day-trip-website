@@ -1,45 +1,48 @@
 
 from module.connection_pool import connection_pool
 import re
-import jwt
 import datetime
 from datetime import timezone
 
 class Book:
     @staticmethod
-    def find_member_unpay_booking(user_id):
+    def find_member_booking(user_id):
         try:
             conn = connection_pool.get_connection()
-            cursor = conn.cursor(dictionary=True)
-            cursor.execute(
-                """
-                SELECT * FROM booking
-                WHERE user_id = %s AND status = 'unpaid'
-                """,
-                (user_id,)
-            )
-            result = cursor.fetchone()
-            return result
+            with conn.cursor(dictionary=True) as cursor:
+                cursor.execute(
+                    """
+                    SELECT attractions.id, attractions.name, attractions.address,
+                    booking.date, booking.time, booking.price, images.image_url 
+                    FROM attractions 
+                    INNER JOIN booking ON attractions.id = booking.attraction_id
+                    INNER JOIN images ON attractions.id = images.attractions_id 
+                    WHERE booking.user_id = %s
+                    """,
+                    (user_id,)
+                )
+                result = cursor.fetchone()
+                return result
         except Exception as e:
-            print(f"booking database error: {e}")
-            return False
+            raise ValueError(f"find member booking database error: {e}")
         finally:
-            cursor.close()
-            conn.close()
+            if conn:
+                conn.close()
+
 
     @staticmethod
     def create_booking(user_id, attraction_id, date, time, price,status):
         try:
             conn = connection_pool.get_connection()
             cursor = conn.cursor()
-            cursor.execute(                 #如果已經存在相同的尚未付款行程用新的行程取代舊的
+            cursor.execute(                 #如果已經存在相同用戶的行程，用新的行程取代舊的
                 """
                 DELETE FROM booking
-                WHERE user_id = %s AND attraction_id = %s AND date = %s AND time = %s AND status = 'unpaid'
+                WHERE user_id = %s 
                 """,
-                (user_id,attraction_id,date,time)
+                (user_id,)
             )
-            cursor.execute(
+            cursor.execute(    #寫入預定
                 """
                 INSERT INTO booking (user_id, attraction_id, date, time, price,status)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -49,29 +52,27 @@ class Book:
             conn.commit()
             return True
         except Exception as e:
-            print(f"booking database error: {e}")
-            return False
+            raise ValueError(f"create booking database error:{e}")
         finally:
             cursor.close()
             conn.close()
 
     @staticmethod
-    def delete_booking(user_id, booking_id):
+    def delete_booking(user_id):
         try:
             conn = connection_pool.get_connection()
             cursor = conn.cursor()
             cursor.execute(
                 """
                 DELETE FROM booking
-                WHERE user_id = %s AND booking_id = %s
+                WHERE user_id = %s 
                 """,
-                (user_id, booking_id)
+                (user_id,)
             )
             conn.commit()
             return True
         except Exception as e:
-            print(f"delete booking database data error: {e}")
-            return False
+            raise ValueError(f'delete booking database error:{e}')
         finally:
             cursor.close()
             conn.close()
