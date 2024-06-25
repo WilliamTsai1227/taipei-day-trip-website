@@ -9,15 +9,15 @@ class Book:
     def find_member_booking(user_id):
         try:
             conn = connection_pool.get_connection()
-            with conn.cursor(dictionary=True) as cursor:
+            with conn.cursor(dictionary=True,buffered=True) as cursor:
                 cursor.execute(
                     """
-                    SELECT attractions.id, attractions.name, attractions.address,
-                    booking.date, booking.time, booking.price, images.image_url 
-                    FROM attractions 
-                    INNER JOIN booking ON attractions.id = booking.attraction_id
-                    INNER JOIN images ON attractions.id = images.attractions_id 
-                    WHERE booking.user_id = %s
+                        SELECT attractions.id, attractions.name, attractions.address,
+                        booking.`date`, booking.`time`, booking.price, images.image_url 
+                        FROM attractions 
+                        INNER JOIN booking ON attractions.id = booking.attraction_id
+                        INNER JOIN images ON attractions.id = images.attractions_id 
+                        WHERE booking.user_id = %s
                     """,
                     (user_id,)
                 )
@@ -76,3 +76,36 @@ class Book:
         finally:
             cursor.close()
             conn.close()
+
+    @staticmethod
+    def validate_attraction_id(attraction_id):
+        """驗證 attraction_id 為數字且在 1～58 範圍"""
+        if isinstance(attraction_id, int) and 1 <= attraction_id <= 58:
+            return True
+        return False
+
+    @staticmethod
+    def validate_price(price):
+        """驗證 price 為數字且為 2000 或 2500"""
+        if isinstance(price, int) and price in [2000, 2500]:
+            return True
+        return False
+
+    @staticmethod
+    def validate_date(date):
+        """驗證 date 為 '2024-01-08' 這種格式，並確認輸入是否為字串"""
+        if not isinstance(date, str):
+            return False
+        date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+        if date_pattern.match(date):
+            return True
+        return False
+    
+    @staticmethod
+    def validate_time(time):
+        """驗證 time 為 'morning' 或 'afternoon'，並確認輸入是否為字串"""
+        if not isinstance(time, str):
+            return False
+        if time in ["morning", "afternoon"]:
+            return True
+        return False

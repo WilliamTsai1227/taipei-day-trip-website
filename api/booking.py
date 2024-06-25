@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Request, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
-from module.JWT import decode_jwt  # 确保正确导入
-from module.booking import Book  # 确保正确导入
+from module.JWT import decode_jwt  
+from module.booking import Book  
+import json
 
 # 使用 APIRouter()
 router = APIRouter()  # 确保使用不同的名字，避免冲突
@@ -16,7 +17,7 @@ async def get_user_booking(token: str = Depends(oauth2_scheme)):
     try:
         payload = decode_jwt(token)
         if payload is None:
-            response = {"error": True, "message": "未登入系統,token驗證失敗"}
+            response = {"error": True, "message": "未登入系統,拒絕存取"}
             return JSONResponse(content=response, status_code=403)
         
         user_id = payload.get("user_id")
@@ -28,7 +29,7 @@ async def get_user_booking(token: str = Depends(oauth2_scheme)):
                         "id":data.get("id"),
                         "name":data.get("name"),
                         "address":data.get("address"),
-                        "image":data.get("image_url")[0] if data.get("image_url") else None
+                        "image":data.get("image_url")
                     },
                     "date":data.get("date"),
                     "time":data.get("time"),
@@ -50,29 +51,49 @@ async def create_booking(request: Request, token: str = Depends(oauth2_scheme)):
     SECRET_KEY = "secret"
     ALGORITHM = "HS256"
     try:
-        data = await request.json()  # 等待來自前端的json數據
-        if data == {}:  # 檢查是否接收到请求數據
-            response = {"error": True, "message": "Request data not received."}
-            return JSONResponse(content=response, status_code=400)
-        #這裡要在做一些前端Request格式驗證
-        
         payload = decode_jwt(token)
         if payload is None:
-            response = {"error": True, "message": "未登入系統,token驗證失敗"}
+            response = {"error": True, "message": "未登入系統,拒絕存取"}
             return JSONResponse(content=response, status_code=403)
         
         # token 解碼
         user_id = payload.get("user_id")
-        name = payload.get("name")
-        account = payload.get("account")
+
+        #處理json數據
+        try:
+            data = await request.json()  
+        except json.JSONDecodeError:            # 在 JSON 解析(格式)出錯的情況下，返回 400 錯誤碼
+            response = {"error": True, "message": "Invalid JSON format."}
+            return JSONResponse(content=response, status_code=400)
         
+        if data == {}:  # 檢查是否接收到请求數據
+            response = {"error": True, "message": "Request data not received."}
+            return JSONResponse(content=response, status_code=400)
         # request 解析
         attraction_id = data["attractionId"]
         date = data["date"]
         time = data["time"]
         price = data["price"]
-        status = "unpaid" #設定booking 行程為"unpaid"狀態
-        
+        status = "unpaid"               #設定booking 行程為"unpaid"狀態
+                     
+        #前端Request格式驗證
+        if not Book.validate_attraction_id(attraction_id):
+            response = {"error": True, "message": "Invalid attractionId. It must be a integer between 1 and 58."}
+            return JSONResponse(content=response, status_code=400)
+
+        if not Book.validate_date(date):
+            response = {"error": True, "message": "Invalid date format. It must be YYYY-MM-DD."}
+            return JSONResponse(content=response, status_code=400)
+
+        if not Book.validate_time(time):
+            response = {"error": True, "message": "Invalid time. It must be a string of 'morning' or 'afternoon'."}
+            return JSONResponse(content=response, status_code=400)
+
+        if not Book.validate_price(price):
+            response = {"error": True, "message": "Invalid price. It must be an integer of 2000 or 2500."}
+            return JSONResponse(content=response, status_code=400)
+
+        #處理預定手續
         booking_result = Book.create_booking(user_id, attraction_id, date, time, price,status)
         if booking_result:
             response = {"ok": True}
