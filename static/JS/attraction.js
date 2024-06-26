@@ -225,7 +225,7 @@ function booking(){
         let data = getBookingData();
         if(data === false){
             alert("請填寫預約資訊")
-            return false
+            return {"error":"getBookingData()"}
         }
         fetch("http://34.223.129.79:8000/api/booking",{
             method: 'POST',  
@@ -273,7 +273,7 @@ function getBookingData(){
     let id = location.pathname.split("/").pop();
     let price = 0;
     if(checkId(id) === false){  //若id有錯誤及終止回傳false
-        return false;
+        return;
     }
     if (!dateInput.checkValidity()) { // 如果日期未選擇，顯示內建的警告信息並返回 false
         dateInput.reportValidity();
