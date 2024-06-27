@@ -33,9 +33,10 @@
   <div class="main_content">
     <div class="booking_data_block">
       <div class="headline">您好，Yakko，待預定的行程如下:</div>
-      <div class="content">
+      <div class="no_booking_content">目前沒有任何待預定的行程</div>
+      <div class="content" style="display: none;">
         <div class="img"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt=""></div>
-        <div class="text_content">
+        <div class="text_content" >
           <div class="attraction_name">台北一日遊:平安鐘</div>
           <div class="date">日期 : </div>
           <div class="date_content">2024-04-23</div>
@@ -53,29 +54,34 @@
         </div>
       </div>
     </div>
-    <div class="contract_block">
+    <div class="contract_block" style="display: none;">
       <div class="content">
         <div class="title">您的聯絡資訊</div>
-        <div class="name">聯絡姓名: </div><input type="text" class="name_input">
-        <div class="email">聯絡信箱: </div><input type="text" class="email_input">
-        <div class="phone">手機號碼: </div><input type="text" class="phone_input">
+        <div class="name">聯絡姓名 : </div>
+        <input type="text" class="name_input">
+        <div class="email">聯絡信箱 : </div>
+        <input type="text" class="email_input">
+        <div class="phone">手機號碼 : </div>
+        <input type="text" class="phone_input">
         <div class="notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
       </div>
     </div>
-    <div class="payment_block">
+    <div class="payment_block" style="display: none;">
       <div class="content">
         <div class="title">信用卡付款資訊</div>
-        <div class="card_number">卡片號碼: </div><input type="text" class="card_number_input">
-        <div class="expiration">過期時間: </div><input type="text" class="expiration_input">
-        <div class="verification_code">驗證密碼: </div><input type="text" class="verification_code_input">
+        <div class="card_number">卡片號碼: </div><input type="text" class="card_number_input" inputmode="numeric" placeholder="**** **** **** ****">
+        <div class="expiration">過期時間: </div><input type="text" class="expiration_input" placeholder="MM / YY">
+        <div class="verification_code">驗證密碼: </div><input type="text" class="verification_code_input" placeholder="CVV">
       </div>
     </div>
-    <div class="submit_block">
-      <div class="total_price">總價: 新台幣2000元</div>
-      <div class="submit_btn">確認訂購並付款</div>
+    <div class="submit_block" style="display: none;">
+      <div class="content">
+        <div class="total_price">總價 : 新台幣2000元</div>
+        <div class="submit_btn">確認訂購並付款</div>
+      </div>
     </div>
   </div>
-  <div class="footer">
+  <div class="footer" >
     <div class="footer_text">COPYRIGHT © 2021 台北一日遊</div>
   </div>
 </body>
