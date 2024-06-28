@@ -28,13 +28,14 @@ function back_to_home_page(){
 //拿到使用者booking data
 
 async function get_booking_data(){
-    const userData = await getUserData();
+    let userData = await getUserData();
+    console.log(userData);
     if (userData === false){
         // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
     }
     if (userData){
         let token = localStorage.getItem('token');
-        fetch("http://34.223.129.79:8000/api/booking",{
+        fetch("http://127.0.0.1:8000/api/booking",{
             method: 'GET',  
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -48,7 +49,7 @@ async function get_booking_data(){
             }));
         })
         .then(responseData => {
-            const statusCode = responseData.statusCode;
+            let statusCode = responseData.statusCode;
             if(statusCode === 403){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
                 // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
@@ -84,6 +85,7 @@ async function get_booking_data(){
             }
             if(statusCode === 500){
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
+                // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
                 return {"status_code":statusCode,"message":responseData.data.message}
             }
         })
@@ -142,88 +144,9 @@ function changeToBookingPage(){
             return
         }
         loginArea.style.display = "none";
-        window.location.href = "http://34.223.129.79:8000/booking";
+        window.location.href = "http://127.0.0.1:8000/booking";
     })
 }
-
-// //預定行程
-// function booking(){
-//     bookingButton.addEventListener("click",async ()=>{
-//         let loginResult = await getUserData();
-//         if(loginResult === false){
-//             loginArea.style.display = "flex";
-//             return
-//         }
-//         let token = localStorage.getItem('token');
-//         let data = getBookingData();
-//         if(data === false){
-//             alert("請填寫預約資訊")
-//             return false
-//         }
-//         fetch("http://34.223.129.79:8000/api/booking",{
-//             method: 'POST',  
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${token}`
-//             },
-//             body: JSON.stringify(data)
-//         })
-//         .then(response => {
-//             const statusCode = response.status;
-//             return response.json().then(data => ({
-//                 statusCode: statusCode,
-//                 data: data
-//             }));
-//         })
-//         .then(responseData => {
-//             const statusCode = responseData.statusCode;
-//             if(statusCode === 400){
-//                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-//                 return {"status_code":statusCode,"message":responseData.data.message}
-//             }
-//             if(statusCode === 403){
-//                 alert("尚未登入，預約失敗")
-//                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-//                 return {"status_code":statusCode,"message":responseData.data.message}
-//             }
-//             if(statusCode === 500){
-//                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-//                 return {"status_code":statusCode,"message":responseData.data.message}
-//             }
-//             if(statusCode === 200 && responseData.data.ok === true){
-//                 window.location.href = "http://34.223.129.79:8000/booking";
-//                 return true
-//             }
-//         })
-
-//     })
-// }
-
-// function getBookingData(){
-//     let dateInput = document.querySelector(".section_profile_book_form_date input[name='book_day']");
-//     let date = dateInput.value;
-//     let time = document.querySelector(".section_profile_book_form_datetime input[name='datetime']:checked").value;
-//     let id = location.pathname.split("/").pop();
-//     let price = 0;
-//     if(checkId(id) === false){  //若id有錯誤及終止回傳false
-//         return false;
-//     }
-//     if (!dateInput.checkValidity()) { // 如果日期未選擇，顯示內建的警告信息並返回 false
-//         dateInput.reportValidity();
-//         return;
-//     }
-//     if(time === "morning"){
-//         price = 2000;
-//     }
-//     if(time === "afternoon"){
-//         price = 2500;
-//     }
-//     if(price === 0){  ////若價錢為空白及終止回傳false
-//         return false;
-//     }
-//     id = Number(id);
-//     return {"attractionId":id,"date":date,"time":time, "price":price};
-// }
 
 
 function change_to_signup_block(){    
@@ -332,7 +255,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user/auth', {
+            fetch('http://127.0.0.1:8000/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -366,6 +289,7 @@ function signin(){
                         console.error("Can't get user token.")
                     }
                 }
+                get_booking_data();
 
             })
             .catch(error => {
@@ -423,7 +347,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user', {
+            fetch('http://127.0.0.1:8000/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -469,7 +393,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
+        const response = await fetch('http://127.0.0.1:8000/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -494,8 +418,6 @@ async function getUserData() {
         }
     } catch (error) {
         console.error('getUserData() error occurred:', error.message);
-        signin_signup_button.style.display = "flex";
-        signout_button.style.display = "none";
         return false;
     }
 }
@@ -511,8 +433,8 @@ function logout(){
 
 
 async function excute(){
-    getUserData();
-    changeToBookingPage();
+    await get_booking_data();
+    // getUserData();
     back_to_home_page(); 
     show_login_block();
     close_login_block();
@@ -522,6 +444,5 @@ async function excute(){
     signup();
     erase_error_message();
     logout(); 
-    booking(); 
 }
 excute();

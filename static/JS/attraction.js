@@ -206,7 +206,7 @@ function changeToBookingPage(){
         let loginResult = await getUserData();
         if(loginResult === false){
             loginArea.style.display = "flex";
-            return
+            return;
         }
         loginArea.style.display = "none";
         window.location.href = "http://34.223.129.79:8000/booking";
@@ -219,13 +219,13 @@ function booking(){
         let loginResult = await getUserData();
         if(loginResult === false){
             loginArea.style.display = "flex";
-            return
+            return;
         }
         let token = localStorage.getItem('token');
         let data = getBookingData();
         if(data === false){
-            alert("請填寫預約資訊")
-            return {"error":"getBookingData()"}
+            console.error("Get booking data error(date/time/price).");
+            return {"error":"Get booking data error(date/time/price)."};
         }
         fetch("http://34.223.129.79:8000/api/booking",{
             method: 'POST',  
@@ -245,21 +245,23 @@ function booking(){
         .then(responseData => {
             const statusCode = responseData.statusCode;
             if(statusCode === 400){
-                console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                return {"status_code":statusCode,"message":responseData.data.message}
+                alert("輸入錯誤，預約失敗")
+                console.error(`status_code: ${statusCode},message:${responseData.data.message}`);
+                return {"status_code":statusCode,"message":responseData.data.message};
             }
             if(statusCode === 403){
                 alert("尚未登入，預約失敗")
-                console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                return {"status_code":statusCode,"message":responseData.data.message}
+                console.error(`status_code: ${statusCode},message:${responseData.data.message}`);
+                return {"status_code":statusCode,"message":responseData.data.message};
             }
             if(statusCode === 500){
-                console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                return {"status_code":statusCode,"message":responseData.data.message}
+                alert("預約失敗")
+                console.error(`status_code: ${statusCode},message:${responseData.data.message}`);
+                return {"status_code":statusCode,"message":responseData.data.message};
             }
             if(statusCode === 200 && responseData.data.ok === true){
                 window.location.href = "http://34.223.129.79:8000/booking";
-                return true
+                return true;
             }
         })
 
@@ -272,12 +274,12 @@ function getBookingData(){
     let time = document.querySelector(".section_profile_book_form_datetime input[name='datetime']:checked").value;
     let id = location.pathname.split("/").pop();
     let price = 0;
-    if(checkId(id) === false){  //若id有錯誤及終止回傳false
-        return;
+    if(checkId(id) === false){  //若id有錯誤checkId(id)會自動返回首頁
+        return;                 // stop this function
     }
     if (!dateInput.checkValidity()) { // 如果日期未選擇，顯示內建的警告信息並返回 false
         dateInput.reportValidity();
-        return;
+        return false;
     }
     if(time === "morning"){
         price = 2000;
@@ -285,7 +287,7 @@ function getBookingData(){
     if(time === "afternoon"){
         price = 2500;
     }
-    if(price === 0){  ////若價錢為空白及終止回傳false
+    if(price === 0){  //若價錢為空白及終止回傳flase
         return false;
     }
     id = Number(id);
@@ -376,22 +378,22 @@ function signin(){
             if(emailData===""){
                 loginBlockErrorMessage.textContent = "帳號不得空白";
                 loginBlockErrorMessage.style.color = "red";
-                return
+                return;
             }
             if(passwordData === ""){
                 loginBlockErrorMessage.textContent = "密碼不得空白";
                 loginBlockErrorMessage.style.color = "red";
-                return
+                return;
             }
             if(checkAccountFormat(emailData)=== false){
                 loginBlockErrorMessage.textContent = "帳號格式錯誤";
                 loginBlockErrorMessage.style.color = "red";
-                return
+                return;
             }
             if(checkPasswordFormat(passwordData)=== false){
                 loginBlockErrorMessage.textContent = "密碼格式錯誤,數字或字母,至少八個字";
                 loginBlockErrorMessage.style.color = "red";
-                return
+                return;
             }
         
             const data = {
@@ -430,7 +432,7 @@ function signin(){
                     loginArea.style.display = "none";
                     clear_input();
                     if (getUserData() === false){
-                        console.error("Can't get user token.")
+                        console.error("Can't get user token.");
                     }
                 }
 
