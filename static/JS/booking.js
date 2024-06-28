@@ -1,5 +1,6 @@
+
 let headline = document.querySelector(".main_content .booking_data_block .headline");
-let bookingContent = document.querySelector(".main_content .booking_data_block .contnet");
+let bookingContent = document.querySelector(".main_content .booking_data_block .content");
 let bookingDataBlock = document.querySelector(".main_content .booking_data_block")
 let attractionImg = document.querySelector(".main_content .booking_data_block .content .img img");
 let attractionName = document.querySelector(".main_content .booking_data_block .content .text_content .attraction_name");
@@ -11,6 +12,9 @@ let contractBlock = document.querySelector(".main_content .contract_block ");
 let paymentBlock = document.querySelector(".main_content .payment_block");
 let submitBlock = document.querySelector(".main_content .submit_block");
 let footer = document.querySelector(".footer");
+let deleteBtn = document.querySelector(".delete_block .btn")
+
+
 
 
 
@@ -27,13 +31,14 @@ function back_to_home_page(){
 
 //拿到使用者booking data
 
-async function get_booking_data(){
+async function getBookingData(){
     let userData = await getUserData();
     console.log(userData);
     if (userData === false){
         // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
     }
     if (userData){
+        let userName = userData.name;
         let token = localStorage.getItem('token');
         fetch("http://127.0.0.1:8000/api/booking",{
             method: 'GET',  
@@ -55,14 +60,16 @@ async function get_booking_data(){
                 // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
                 return false
             }
+            console.log(responseData.data.data)
             if(statusCode === 200 && responseData.data.data === null){
                 bookingContent.style.display = "none";
                 contractBlock.style.display = "none";
                 paymentBlock.style.display = "none";
                 submitBlock.style.display = "none";
+                headline.textContent = `您好，${userName}，待預定的行程如下：`;
                 let noBookingContent= document.createElement("div");
                 noBookingContent.textContent = "目前沒有任何待預定的行程";
-                bookingDataBlock.className = "booking_data_block";
+                noBookingContent.className = "no_booking_content";
                 bookingDataBlock.appendChild(noBookingContent);
                 footer.style = "height: calc(100vh - 254px);"
                 return {"status_code":200,"data":null}
@@ -77,10 +84,21 @@ async function get_booking_data(){
                 let fetchAttractionPrice = String(responseData.data.data.price);
                 attractionName.textContent = fetchAttractionName;
                 attractionDate.textContent = fetchAttractionDate;
+                if(fetchAttractionTime === "morning"){
+                    fetchAttractionTime = "早上９點到下午4點"
+                };
+                if(fetchAttractionTime === "afternoon"){
+                    fetchAttractionTime = "下午2點到晚上9點"
+                };
                 attractionTime.textContent = fetchAttractionTime;
+                headline.textContent = `您好，${userName}，待預定的行程如下：`;
                 attractionPrice.textContent = `新台幣${fetchAttractionPrice}元`;
                 attractionLocaion.textContent = fetchAttractionAddress;
                 attractionImg.src = fetchAttractionImage;
+                bookingContent.style.display = "flex";
+                contractBlock.style.display = "flex";
+                paymentBlock.style.display = "flex";
+                submitBlock.style.display = "flex";
                 return {"status_code":200,"data":responseData.data.data}
             }
             if(statusCode === 500){
@@ -91,6 +109,34 @@ async function get_booking_data(){
         })
     }
     
+}
+
+function deleteBookingData(){
+    deleteBtn.addEventListener("click",()=>{
+        let loginResult = getUserData()
+        if(loginResult !== false){
+            let token = localStorage.getItem('token');
+            fetch("http://127.0.0.1:8000/api/booking",{
+                method: 'DELETE',  
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            .then(response => {
+                const statusCode = response.status;
+                if(statusCode === 403){
+                    // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
+                }
+                if(statusCode === 500){
+                    alert("刪除程序出錯")
+                }
+                if(statusCode === 200){
+                    window.location.reload();
+                }
+            })
+        }
+    })
+
 }
 
 
@@ -137,14 +183,14 @@ function close_login_block(){
 
 //查看預定行程按鈕
 function changeToBookingPage(){
-    checkBookingButton.addEventListener("click", async ()=>{
-        let loginResult = await getUserData();
-        if(loginResult === false){
-            loginArea.style.display = "flex";
-            return
+    checkBookingButton.addEventListener("click", ()=>{
+        let loginResult = getUserData();
+        if(loginResult == false){
+            window.location.href = "http://34.223.129.79:8000/";
+        }else{
+            // window.location.href = "http://34.223.129.79:8000/booking";
         }
-        loginArea.style.display = "none";
-        window.location.href = "http://127.0.0.1:8000/booking";
+        
     })
 }
 
@@ -289,7 +335,7 @@ function signin(){
                         console.error("Can't get user token.")
                     }
                 }
-                get_booking_data();
+                getBookingData();
 
             })
             .catch(error => {
@@ -400,18 +446,18 @@ async function getUserData() {
             }
         });
 
-        const responseData = await response.json();
+        let responseData = await response.json();
         
-        if (responseData.data.data === null) {
+        if (responseData.data === null) {
             signin_signup_button.style.display = "flex";
             signout_button.style.display = "none";
             return false;
         }
 
-        if (responseData.data.data) {
-            let id = responseData.data.data.id; //取得會員資訊
-            let name = responseData.data.data.name;
-            let account = responseData.data.data.email;
+        if (responseData.data) {
+            let id = responseData.data.id; //取得會員資訊
+            let name = responseData.data.name;
+            let account = responseData.data.email;
             signin_signup_button.style.display = "none";
             signout_button.style.display = "flex";
             return { "id": id, "name": name, "account": account };
@@ -426,15 +472,14 @@ async function getUserData() {
 function logout(){
     signout_button.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        getUserData();
+        window.location.replace = "http://34.223.129.79:8000";
     })
 }
 
 
 
 async function excute(){
-    await get_booking_data();
-    // getUserData();
+    await getBookingData();
     back_to_home_page(); 
     show_login_block();
     close_login_block();
@@ -443,6 +488,8 @@ async function excute(){
     signin();
     signup();
     erase_error_message();
-    logout(); 
+    logout();
+    changeToBookingPage();
+    deleteBookingData(); 
 }
 excute();
