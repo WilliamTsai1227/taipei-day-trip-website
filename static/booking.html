@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/CSS/booking.css">
-  <script src="../static/JS/booking.js" defer></script>
+  <link rel="stylesheet" href="/static/CSS/booking.css">
+  <script src="/static/JS/booking.js" defer></script>
   <title>Booking</title>
 </head>
 <body>
@@ -12,7 +12,7 @@
     <div class="login_block">
       <div class="decorator_bar"></div>
       <div class="title">登入會員帳號</div>
-      <div class="login_block_close_btn"><img src="../static/IMG/icon_close.png" alt=""></div>
+      <div class="login_block_close_btn"><img src="/static/IMG/icon_close.png" alt=""></div>
       <div class="name" style="display: none;"><input type="text" placeholder="輸入姓名" ></div>
       <div class="account"><input type="text" placeholder="輸入電子信箱"></div>
       <div class="password"><input type="password" placeholder="輸入密碼"></div>
@@ -33,9 +33,8 @@
   <div class="main_content">
     <div class="booking_data_block">
       <div class="headline"></div>
-      <!-- <div class="no_booking_content">目前沒有任何待預定的行程</div> -->
-      <div class="content" style="display: none;">
-        <div class="img"><img src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11000848.jpg" alt=""></div>
+      <div class="content" >
+        <div class="img"><img src="" alt=""></div>
         <div class="text_content" >
           <div class="attraction_name"></div>
           <div class="date">日期 : </div>
@@ -48,13 +47,13 @@
           <div class="location_content"></div>
           <div class="delete_block">
             <div class="btn">
-              <img src="../static/IMG/delete.png">
+              <img src="/static/IMG/delete.png">
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="contract_block" style="display: none;">
+    <div class="contract_block">
       <div class="content">
         <div class="title">您的聯絡資訊</div>
         <div class="name">聯絡姓名 : </div>
@@ -66,7 +65,7 @@
         <div class="notice">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式。</div>
       </div>
     </div>
-    <div class="payment_block" style="display: none;">
+    <div class="payment_block" >
       <div class="content">
         <div class="title">信用卡付款資訊</div>
         <div class="card_number">卡片號碼: </div><input type="text" class="card_number_input" inputmode="numeric" placeholder="**** **** **** ****">
@@ -74,9 +73,9 @@
         <div class="verification_code">驗證密碼: </div><input type="text" class="verification_code_input" placeholder="CVV">
       </div>
     </div>
-    <div class="submit_block" style="display: none;">
+    <div class="submit_block">
       <div class="content">
-        <div class="total_price">總價 : 新台幣2000元</div>
+        <div class="total_price"></div>
         <div class="submit_btn">確認訂購並付款</div>
       </div>
     </div>

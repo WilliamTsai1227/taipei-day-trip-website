@@ -1,7 +1,7 @@
 
 let headline = document.querySelector(".main_content .booking_data_block .headline");
 let bookingContent = document.querySelector(".main_content .booking_data_block .content");
-let bookingDataBlock = document.querySelector(".main_content .booking_data_block")
+let bookingDataBlock = document.querySelector(".main_content .booking_data_block");
 let attractionImg = document.querySelector(".main_content .booking_data_block .content .img img");
 let attractionName = document.querySelector(".main_content .booking_data_block .content .text_content .attraction_name");
 let attractionDate = document.querySelector(".main_content .booking_data_block .content .text_content .date_content");
@@ -9,8 +9,11 @@ let attractionTime = document.querySelector(".main_content .booking_data_block .
 let attractionPrice = document.querySelector(".main_content .booking_data_block .content .text_content .price_content");
 let attractionLocaion = document.querySelector(".main_content .booking_data_block .content .text_content .location_content");
 let contractBlock = document.querySelector(".main_content .contract_block ");
+let contractName = document.querySelector(".contract_block .content .name_input");
+let contractEmail = document.querySelector(".contract_block .content .email_input");
 let paymentBlock = document.querySelector(".main_content .payment_block");
 let submitBlock = document.querySelector(".main_content .submit_block");
+let submitTotalPrice = document.querySelector(".main_content .submit_block .content .total_price");
 let footer = document.querySelector(".footer");
 let deleteBtn = document.querySelector(".delete_block .btn")
 
@@ -35,12 +38,13 @@ async function getBookingData(){
     let userData = await getUserData();
     console.log(userData);
     if (userData === false){
-        // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
+        window.location.replace("http://34.223.129.79:8000"); //返回首頁
     }
     if (userData){
         let userName = userData.name;
+        let userAccount = userData.account;
         let token = localStorage.getItem('token');
-        fetch("http://127.0.0.1:8000/api/booking",{
+        fetch("http://34.223.129.79:8000/api/booking",{
             method: 'GET',  
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -57,7 +61,7 @@ async function getBookingData(){
             let statusCode = responseData.statusCode;
             if(statusCode === 403){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
-                // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
+                window.location.replace("http://34.223.129.79:8000"); //返回首頁
                 return false
             }
             console.log(responseData.data.data)
@@ -82,6 +86,7 @@ async function getBookingData(){
                 let fetchAttractionDate = responseData.data.data.date;
                 let fetchAttractionTime = responseData.data.data.time;
                 let fetchAttractionPrice = String(responseData.data.data.price);
+                //景點資訊
                 attractionName.textContent = fetchAttractionName;
                 attractionDate.textContent = fetchAttractionDate;
                 if(fetchAttractionTime === "morning"){
@@ -95,6 +100,11 @@ async function getBookingData(){
                 attractionPrice.textContent = `新台幣${fetchAttractionPrice}元`;
                 attractionLocaion.textContent = fetchAttractionAddress;
                 attractionImg.src = fetchAttractionImage;
+                //聯絡資訊
+                contractName.value = userName;
+                contractEmail.value = userAccount;
+                //訂購資訊
+                submitTotalPrice.textContent = `總價 : 新台幣${fetchAttractionPrice}元`
                 bookingContent.style.display = "flex";
                 contractBlock.style.display = "flex";
                 paymentBlock.style.display = "flex";
@@ -102,8 +112,9 @@ async function getBookingData(){
                 return {"status_code":200,"data":responseData.data.data}
             }
             if(statusCode === 500){
+                alert("伺服器錯誤")
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
+                window.location.replace("http://34.223.129.79:8000"); //返回首頁
                 return {"status_code":statusCode,"message":responseData.data.message}
             }
         })
@@ -114,9 +125,12 @@ async function getBookingData(){
 function deleteBookingData(){
     deleteBtn.addEventListener("click",()=>{
         let loginResult = getUserData()
+        if(loginResult == false){
+            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+        }
         if(loginResult !== false){
             let token = localStorage.getItem('token');
-            fetch("http://127.0.0.1:8000/api/booking",{
+            fetch("http://34.223.129.79:8000/api/booking",{
                 method: 'DELETE',  
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -125,10 +139,10 @@ function deleteBookingData(){
             .then(response => {
                 const statusCode = response.status;
                 if(statusCode === 403){
-                    // window.location.replace("http://34.223.129.79:8000"); 先不要做返回首頁
+                    window.location.replace("http://34.223.129.79:8000"); //返回首頁
                 }
                 if(statusCode === 500){
-                    alert("刪除程序出錯")
+                    alert("伺服器錯誤")
                 }
                 if(statusCode === 200){
                     window.location.reload();
@@ -186,9 +200,10 @@ function changeToBookingPage(){
     checkBookingButton.addEventListener("click", ()=>{
         let loginResult = getUserData();
         if(loginResult == false){
-            window.location.href = "http://34.223.129.79:8000/";
+            alert("尚未登入");
+            window.location.replace = "http://34.223.129.79:8000/";
         }else{
-            // window.location.href = "http://34.223.129.79:8000/booking";
+            window.location.href = "http://34.223.129.79:8000/booking";
         }
         
     })
@@ -301,7 +316,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://127.0.0.1:8000/api/user/auth', {
+            fetch('http://34.223.129.79:8000/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -393,7 +408,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://127.0.0.1:8000/api/user', {
+            fetch('http://34.223.129.79:8000/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -439,7 +454,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://127.0.0.1:8000/api/user/auth', {
+        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`

@@ -468,6 +468,7 @@ function getUserData(){
         if(responseData.data.data === null){
             signin_signup_button.style.display = "flex";
             signout_button.style.display = "none"; 
+            return false;
         }
         if(responseData.data.data){
             let id = responseData.data.data.id; //取得會員資訊
@@ -480,6 +481,7 @@ function getUserData(){
     })
     .catch(error => {
         console.error('Error fetching user info:', error);
+        return false;
     });
 }
 
@@ -489,6 +491,20 @@ function logout(){
     signout_button.addEventListener("click", ()=>{
         localStorage.removeItem('token');
         getUserData();
+    })
+}
+
+//查看預定行程按鈕
+function changeToBookingPage(){
+    checkBookingButton.addEventListener("click", ()=>{
+        let loginResult = getUserData();
+        if(loginResult == false){
+            loginArea.style.display = "flex";
+        }else{
+            loginArea.style.display = "none";
+            window.location.href = "http://34.223.129.79:8000/booking";
+        }
+        
     })
 }
 
@@ -511,6 +527,7 @@ async function excute(){
     signup();
     erase_error_message();
     logout();
+    changeToBookingPage();
 }
 excute();
 
