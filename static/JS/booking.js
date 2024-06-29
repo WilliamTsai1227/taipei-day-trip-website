@@ -201,7 +201,7 @@ function changeToBookingPage(){
         let loginResult = getUserData();
         if(loginResult == false){
             alert("尚未登入");
-            window.location.replace = "http://34.223.129.79:8000/";
+            window.location.replace("http://34.223.129.79:8000/");
         }else{
             window.location.href = "http://34.223.129.79:8000/booking";
         }
@@ -487,7 +487,7 @@ async function getUserData() {
 function logout(){
     signout_button.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        window.location.replace = "http://34.223.129.79:8000";
+        window.location.replace("http://34.223.129.79:8000");
     })
 }
 
