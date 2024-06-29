@@ -829,6 +829,9 @@ body{
     .booking_data_block .content .text_content{
         width: calc(100% - 280px);
     }
+    .contract_block .content, .payment_block .content{
+        width: 100%;
+    }
     .contract_block .content .title,.payment_block .content .title{
         width: 100%;
     }
