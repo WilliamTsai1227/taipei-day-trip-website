@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from api.attractions import attractions
 from api.mrts import mrts
 from api.user import user
+from api.booking import router
 from fastapi.staticfiles import StaticFiles
 app=FastAPI()
 
@@ -38,6 +39,7 @@ async def thankyou(request: Request):
 app.include_router(attractions)
 app.include_router(mrts)
 app.include_router(user)
+app.include_router(router)
 
 # 異常處理
 @app.exception_handler(RequestValidationError)
