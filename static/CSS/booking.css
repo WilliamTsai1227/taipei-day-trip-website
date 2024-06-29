@@ -781,7 +781,7 @@ body{
     flex: none;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     padding-top: 40px;
     padding-bottom: 40px;
     width: 100%;
