@@ -86,7 +86,7 @@ async function getBookingData(){
                 let fetchAttractionTime = responseData.data.data.time;
                 let fetchAttractionPrice = String(responseData.data.data.price);
                 //景點資訊
-                attractionName.textContent = fetchAttractionName;
+                attractionName.textContent = `台北一日遊 ： ${fetchAttractionName}`;
                 attractionDate.textContent = fetchAttractionDate;
                 if(fetchAttractionTime === "morning"){
                     fetchAttractionTime = "早上９點到下午4點"
