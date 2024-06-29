@@ -1,3 +1,23 @@
+let htmlBody = document.querySelector("body")
+let loginArea = document.querySelector(".login");
+let loginBlock = document.querySelector(".login_block");
+let loginBlockClose = document.querySelector(".login_block_close_btn");
+let signin_signup_button = document.querySelector(".navigation_button_signin_signup");
+let signout_button = document.querySelector(".navigation_button_signout");
+let loginBlockTitle = document.querySelector(".login_block .title");
+let loginBlockName = document.querySelector(".login_block .name");
+let loginBlockNameInput = document.querySelector(".login_block .name input");
+let loginBlockAccount = document.querySelector(".login_block .account");
+let loginBlockAccountInput = document.querySelector(".login_block .account input");
+let loginBlockPassword = document.querySelector(".login_block .password");
+let loginBlockPasswordInput = document.querySelector(".login_block .password input");
+let loginBlockButton = document.querySelector(".login_block .submit_btn");
+let loginBlockErrorMessage = document.querySelector(".login_block .error_message");
+let loginBlockChangeToSignup = document.querySelector(".login_block .change_to_signup_btn");
+let loginBlockChangeToLogin = document.querySelector(".login_block .change_to_login_btn");
+let loginBlockStatus = "login";
+let checkBookingButton = document.querySelector(".navigation_button_book");
+
 async function append_mrt_station(){
     listBarContent = document.querySelector(".list_bar_content");
     fetch("http://34.223.129.79:8000/api/mrts")
@@ -176,24 +196,7 @@ function back_to_home_page(){
 
 //登入註冊相關功能
 
-let htmlBody = document.querySelector("body")
-let loginArea = document.querySelector(".login");
-let loginBlock = document.querySelector(".login_block");
-let loginBlockClose = document.querySelector(".login_block_close_btn");
-let signin_signup_button = document.querySelector(".navigation_button_signin_signup");
-let signout_button = document.querySelector(".navigation_button_signout");
-let loginBlockTitle = document.querySelector(".login_block .title");
-let loginBlockName = document.querySelector(".login_block .name");
-let loginBlockNameInput = document.querySelector(".login_block .name input");
-let loginBlockAccount = document.querySelector(".login_block .account");
-let loginBlockAccountInput = document.querySelector(".login_block .account input");
-let loginBlockPassword = document.querySelector(".login_block .password");
-let loginBlockPasswordInput = document.querySelector(".login_block .password input");
-let loginBlockButton = document.querySelector(".login_block .submit_btn");
-let loginBlockErrorMessage = document.querySelector(".login_block .error_message");
-let loginBlockChangeToSignup = document.querySelector(".login_block .change_to_signup_btn");
-let loginBlockChangeToLogin = document.querySelector(".login_block .change_to_login_btn");
-let loginBlockStatus = "login";
+
 
 
 //打開登入框
