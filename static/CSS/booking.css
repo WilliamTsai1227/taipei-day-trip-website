@@ -658,7 +658,7 @@ body{
     text-align: left; 
     color: #000000;    
 }
-.payment_block .content .verification_code{
+.payment_block .content .ccv{
     display: flex;
     align-items: center;
     width: 81px;
@@ -669,7 +669,7 @@ body{
     text-align: left;
     color: #666666;    
 }
-.payment_block .content .verification_code_input{
+.payment_block .content .ccv_input{
     box-sizing: border-box;
     display: flex;
     align-items: center;
