@@ -369,6 +369,8 @@ function tapPay() {
                 alert('get prime error ' + result.msg);
                 return;
             }
+            console.log(result.card.prime);
+            console.log(result);
 
             // 发送付款请求到后端
             fetch('http://34.223.129.79:8000/api/order', {
