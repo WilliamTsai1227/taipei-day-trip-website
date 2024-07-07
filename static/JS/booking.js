@@ -237,9 +237,7 @@ function logout(){
 
 //金流相關功能
 
-let cardResult = document.querySelector(".cardResult");
-let expiryResult = document.querySelector(".expiryResult");
-let cvvResult = document.querySelector(".cvvResult");
+
 
 function tapPay(){
     TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
@@ -320,48 +318,30 @@ function tapPay(){
             // Handle card type visa.
         }
         if (update.status.number === 1) {
-            cardResult.textContent="✘";
-            cardResult.style.color="#FF0000";
             inputFormatStatus = false;
         }
         if (update.status.number === 2) {
-            cardResult.textContent="✘";
-            cardResult.style.color="#FF0000";
             inputFormatStatus = false;
         } 
         if (update.status.number === 0) {
-            cardResult.textContent="✔";
-            cardResult.style.color="#008000";
             inputFormatStatus = true;
         }    
         if (update.status.expiry === 1) {
-            expiryResult.textContent="✘";
-            expiryResult.style.color="#FF0000";
             inputFormatStatus = false;
         }
         if (update.status.expiry === 2) {
-            expiryResult.textContent="✘";
-            expiryResult.style.color="#FF0000";
             inputFormatStatus = false;
         }
         if (update.status.expiry === 0) {
-            expiryResult.textContent="✔";
-            expiryResult.style.color="#008000";
             inputFormatStatus = true;
         }   
         if (update.status.ccv === 1) {
-            cvvResult.textContent="✘";
-            cvvResult.style.color="#FF0000";
             inputFormatStatus = false;
         }
         if (update.status.ccv === 2) {
-            cvvResult.textContent="✘";
-            cvvResult.style.color="#FF0000";
             inputFormatStatus = false;
         }
         if (update.status.ccv === 0) {
-            cvvResult.textContent="✔";
-            cvvResult.style.color="#008000";
             inputFormatStatus = true;
         }
     })
