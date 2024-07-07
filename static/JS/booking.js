@@ -371,7 +371,7 @@ function tapPay() {
             }
 
             // 发送付款请求到后端
-            fetch('http://34.223.129.79:8000/api/booking', {
+            fetch('http://34.223.129.79:8000/api/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
