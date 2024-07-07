@@ -15,10 +15,23 @@ let paymentBlock = document.querySelector(".main_content .payment_block");
 let submitBlock = document.querySelector(".main_content .submit_block");
 let submitTotalPrice = document.querySelector(".main_content .submit_block .content .total_price");
 let footer = document.querySelector(".footer");
-let deleteBtn = document.querySelector(".delete_block .btn")
-let htmlBody = document.querySelector("body")
+let deleteBtn = document.querySelector(".delete_block .btn");
+let htmlBody = document.querySelector("body");
 let signoutButton = document.querySelector(".navigation_button_signout");
 let checkBookingButton = document.querySelector(".navigation_button_book");
+// 宣告Attraction相關data
+let fetchAttractionName;
+let fetchAttractionId;
+let fetchAttractionAddress;
+let fetchAttractionImage;
+let fetchAttractionDate;
+let fetchAttractionTime; //原始景點時間data ,morning or afternoon.
+let fetchAttractionTimeToText; //文字顯示部分
+let fetchAttractionPrice;
+//宣告會員相關data
+let userName;
+let userAccount;
+
 
 
 
@@ -40,8 +53,8 @@ async function getBookingData(){
         window.location.replace("http://34.223.129.79:8000"); //返回首頁
     }
     if (userData){
-        let userName = userData.name;
-        let userAccount = userData.account;
+        userName = userData.name;
+        userAccount = userData.account;
         let token = localStorage.getItem('token');
         fetch("http://34.223.129.79:8000/api/booking",{
             method: 'GET',  
@@ -78,32 +91,32 @@ async function getBookingData(){
                 return {"status_code":200,"data":null}
             }
             if(statusCode === 200 && responseData.data.data !== null){
-                let fetchAttractionName = responseData.data.data.attraction.name;
-                let fetchAttractionId = responseData.data.data.attraction.id;
-                let fetchAttractionAddress = responseData.data.data.attraction.address;
-                let fetchAttractionImage = responseData.data.data.attraction.image;
-                let fetchAttractionDate = responseData.data.data.date;
-                let fetchAttractionTime = responseData.data.data.time;
-                let fetchAttractionPrice = String(responseData.data.data.price);
+                fetchAttractionName = responseData.data.data.attraction.name;
+                fetchAttractionId = responseData.data.data.attraction.id;
+                fetchAttractionAddress = responseData.data.data.attraction.address;
+                fetchAttractionImage = responseData.data.data.attraction.image;
+                fetchAttractionDate = responseData.data.data.date;
+                fetchAttractionTime = responseData.data.data.time;
+                fetchAttractionPrice = responseData.data.data.price;
                 //景點資訊
                 attractionName.textContent = `台北一日遊 ： ${fetchAttractionName}`;
                 attractionDate.textContent = fetchAttractionDate;
                 if(fetchAttractionTime === "morning"){
-                    fetchAttractionTime = "早上９點到下午4點"
+                    fetchAttractionTimeToText = "早上９點到下午4點"
                 };
                 if(fetchAttractionTime === "afternoon"){
-                    fetchAttractionTime = "下午2點到晚上9點"
+                    fetchAttractionTimeToText = "下午2點到晚上9點"
                 };
-                attractionTime.textContent = fetchAttractionTime;
+                attractionTime.textContent = fetchAttractionTimeToText;
                 headline.textContent = `您好，${userName}，待預定的行程如下：`;
-                attractionPrice.textContent = `新台幣${fetchAttractionPrice}元`;
+                attractionPrice.textContent = `新台幣${String(fetchAttractionPrice)}元`;
                 attractionLocaion.textContent = fetchAttractionAddress;
                 attractionImg.src = fetchAttractionImage;
                 //聯絡資訊
                 contractName.value = userName;
                 contractEmail.value = userAccount;
                 //訂購資訊
-                submitTotalPrice.textContent = `總價 : 新台幣${fetchAttractionPrice}元`
+                submitTotalPrice.textContent = `總價 : 新台幣${String(fetchAttractionPrice)}元`
                 bookingContent.style.display = "flex";
                 contractBlock.style.display = "flex";
                 paymentBlock.style.display = "flex";
@@ -224,105 +237,197 @@ function logout(){
 
 //金流相關功能
 
-TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
-TPDirect.card.setup({
-    fields: {
+let cardResult = document.querySelector(".cardResult");
+let expiryResult = document.querySelector(".expiryResult");
+let cvvResult = document.querySelector(".cvvResult");
+
+function tapPay(){
+    TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
+    // Display ccv field
+    let fields = {
         number: {
-            element: '.form-control.card-number',
+            // css selector
+            element: '#card-number',
             placeholder: '**** **** **** ****'
         },
         expirationDate: {
-            element: document.getElementById('tappay-expiration-date'),
+            // DOM object
+            element: '#card-expiration-date',
             placeholder: 'MM / YY'
         },
         ccv: {
-            element: $('.form-control.ccv')[0],
-            placeholder: '後三碼'
+            element: '#card-ccv',
+            placeholder: 'ccv'
         }
-    },
-    styles: {
-        'input': {
-            'color': 'gray'
-        },
-        'input.ccv': {
-            // 'font-size': '16px'
-        },
-        ':focus': {
-            'color': 'black'
-        },
-        '.valid': {
-            'color': 'green'
-        },
-        '.invalid': {
-            'color': 'red'
-        },
-        '@media screen and (max-width: 400px)': {
+    }
+    // # TPDirect.card.setup(config)
+    TPDirect.card.setup({
+        fields: fields,
+        styles: {
+            // Style all elements
             'input': {
-                'color': 'orange'
+                'color': 'gray'
+            },
+            // Styling ccv field
+            'input.ccv': {
+                // 'font-size': '16px'
+            },
+            // Styling expiration-date field
+            'input.expiration-date': {
+                // 'font-size': '16px'
+            },
+            // Styling card-number field
+            'input.card-number': {
+                // 'font-size': '16px'
+            },
+            // style focus state
+            ':focus': {
+                'color': 'black'
+            },
+            // style valid state
+            '.valid': {
+                'color': 'green'
+            },
+            // style invalid state
+            '.invalid': {
+                'color': 'red'
+            },
+            // Media queries
+            // Note that these apply to the iframe, not the root window.
+            '@media screen and (max-width: 400px)': {
+                'input': {
+                    'color': 'orange'
+                }
             }
+        },
+        // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+        isMaskCreditCardNumber: true,
+        maskCreditCardNumberRange: {
+            beginIndex: 6,
+            endIndex: 11
         }
-    },
-    // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
-    isMaskCreditCardNumber: true,
-    maskCreditCardNumberRange: {
-        beginIndex: 6, 
-        endIndex: 11
-    }
-})
-// listen for TapPay Field
-TPDirect.card.onUpdate(function (update) {
-    /* Disable / enable submit button depend on update.canGetPrime  */
-    /* ============================================================ */
+    })
+    // # TPDirect.card.onUpdate(callback)
+    let inputFormatStatus = false;
+    TPDirect.card.onUpdate(function (update) {
+        if (update.canGetPrime) {
+            inputFormatStatus = true;
+        } else {
+            inputFormatStatus = false;
+        }                                        
+        // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
+        if (update.cardType === 'visa') {
+            // Handle card type visa.
+        }
+        if (update.status.number === 1) {
+            cardResult.textContent="✘";
+            cardResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        }
+        if (update.status.number === 2) {
+            cardResult.textContent="✘";
+            cardResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        } 
+        if (update.status.number === 0) {
+            cardResult.textContent="✔";
+            cardResult.style.color="#008000";
+            inputFormatStatus = true;
+        }    
+        if (update.status.expiry === 1) {
+            expiryResult.textContent="✘";
+            expiryResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        }
+        if (update.status.expiry === 2) {
+            expiryResult.textContent="✘";
+            expiryResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        }
+        if (update.status.expiry === 0) {
+            expiryResult.textContent="✔";
+            expiryResult.style.color="#008000";
+            inputFormatStatus = true;
+        }   
+        if (update.status.ccv === 1) {
+            cvvResult.textContent="✘";
+            cvvResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        }
+        if (update.status.ccv === 2) {
+            cvvResult.textContent="✘";
+            cvvResult.style.color="#FF0000";
+            inputFormatStatus = false;
+        }
+        if (update.status.ccv === 0) {
+            cvvResult.textContent="✔";
+            cvvResult.style.color="#008000";
+            inputFormatStatus = true;
+        }
+    })
 
-    // update.canGetPrime === true
-    //     --> you can call TPDirect.card.getPrime()
-    // const submitButton = document.querySelector('button[type="submit"]')
-    if (update.canGetPrime) {
-        // submitButton.removeAttribute('disabled')
-        $('button[type="submit"]').removeAttr('disabled')
-    } else {
-        // submitButton.setAttribute('disabled', true)
-        $('button[type="submit"]').attr('disabled', true)
-    }
+
+    // 確認訂購並付款按鈕
+    document.querySelector('.submit_btn').addEventListener('click', function (event) {
+        event.preventDefault();
+        const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+        
+        if (tappayStatus.canGetPrime === false) {
+            alert('Can not get prime.');
+            console.error(`inputFormatStatus: ${inputFormatStatus}`)
+            return;
+        }
+
+        // 取得 TapPay Prime
+        TPDirect.card.getPrime((result) => {
+            if (result.status !== 0) {
+                alert('get prime error ' + result.msg);
+                return;
+            }
+
+            // 送出付款請求給後端
+            fetch('http://34.223.129.79:8000/api/booking', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    prime: result.card.prime,
+                    order: {
+                        price: fetchAttractionPrice,
+                        trip: {
+                            attraction: {
+                                id: fetchAttractionId,
+                                name: fetchAttractionName,
+                                address: fetchAttractionAddress,
+                                image: fetchAttractionImage
+                            },
+                            date: fetchAttractionDate,
+                            time: fetchAttractionTime
+                        },
+                        contact: {
+                            name: userName,
+                            email: userAccount,
+                            phone: document.querySelector('.phone_input').value
+                        }
+                    }
+                })
+            })
+            .then(response => response.json())
+            .then(responseData => {
+                if (responseData.status_code === 200) {
+                    window.location.href = "/thankyou?number=" + responseData.data.number;
+                } else {
+                    alert(responseData.message);
+                }
+            })
+        });
+    });
+}
 
 
-    /* Change card type display when card type change */
-    /* ============================================== */
 
-    // cardTypes = ['visa', 'mastercard', ...]
-    var newType = update.cardType === 'unknown' ? '' : update.cardType
-    $('#cardtype').text(newType)
-
-
-
-    /* Change form-group style when tappay field status change */
-    /* ======================================================= */
-
-    // number 欄位是錯誤的
-    if (update.status.number === 2) {
-        setNumberFormGroupToError('.card-number-group')
-    } else if (update.status.number === 0) {
-        setNumberFormGroupToSuccess('.card-number-group')
-    } else {
-        setNumberFormGroupToNormal('.card-number-group')
-    }
-
-    if (update.status.expiry === 2) {
-        setNumberFormGroupToError('.expiration-date-group')
-    } else if (update.status.expiry === 0) {
-        setNumberFormGroupToSuccess('.expiration-date-group')
-    } else {
-        setNumberFormGroupToNormal('.expiration-date-group')
-    }
-
-    if (update.status.ccv === 2) {
-        setNumberFormGroupToError('.ccv-group')
-    } else if (update.status.ccv === 0) {
-        setNumberFormGroupToSuccess('.ccv-group')
-    } else {
-        setNumberFormGroupToNormal('.ccv-group')
-    }
-})
 
 async function excute(){
     await getBookingData();
@@ -330,5 +435,6 @@ async function excute(){
     logout();
     changeToBookingPage();
     deleteBookingData(); 
+    tapPay();
 }
 excute();
