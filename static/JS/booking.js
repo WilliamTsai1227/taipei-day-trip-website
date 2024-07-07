@@ -19,6 +19,7 @@ let deleteBtn = document.querySelector(".delete_block .btn");
 let htmlBody = document.querySelector("body");
 let signoutButton = document.querySelector(".navigation_button_signout");
 let checkBookingButton = document.querySelector(".navigation_button_book");
+let submitButton = document.querySelector('.submit_block .content .submit_btn');
 // 宣告Attraction相關data
 let fetchAttractionName;
 let fetchAttractionId;
@@ -239,7 +240,7 @@ function logout(){
 
 
 
-function tapPay(){
+function tapPay() {
     TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
     // Display ccv field
     let fields = {
@@ -305,6 +306,7 @@ function tapPay(){
             endIndex: 11
         }
     })
+
     // # TPDirect.card.onUpdate(callback)
     let inputFormatStatus = false;
     TPDirect.card.onUpdate(function (update) {
@@ -312,7 +314,8 @@ function tapPay(){
             inputFormatStatus = true;
         } else {
             inputFormatStatus = false;
-        }                                        
+        }
+
         // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
         if (update.cardType === 'visa') {
             // Handle card type visa.
@@ -322,10 +325,10 @@ function tapPay(){
         }
         if (update.status.number === 2) {
             inputFormatStatus = false;
-        } 
+        }
         if (update.status.number === 0) {
             inputFormatStatus = true;
-        }    
+        }
         if (update.status.expiry === 1) {
             inputFormatStatus = false;
         }
@@ -334,7 +337,7 @@ function tapPay(){
         }
         if (update.status.expiry === 0) {
             inputFormatStatus = true;
-        }   
+        }
         if (update.status.ccv === 1) {
             inputFormatStatus = false;
         }
@@ -346,27 +349,28 @@ function tapPay(){
         }
     })
 
+    // 确认订购并付款按钮
 
-    // 確認訂購並付款按鈕
-    document.querySelector('.submit_btn').addEventListener('click', function (event) {
+    submitButton.addEventListener('click', function (event) {
         event.preventDefault();
-        console.log(".submit_btn get")
+        console.log("button get")
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-        
+        console.log(tappayStatus)
+
         if (tappayStatus.canGetPrime === false) {
-            alert('Can not get prime.');
+            alert('Cannot get prime.');
             console.error(`inputFormatStatus: ${inputFormatStatus}`)
             return;
         }
 
-        // 取得 TapPay Prime
+        // 获取 TapPay Prime
         TPDirect.card.getPrime((result) => {
             if (result.status !== 0) {
                 alert('get prime error ' + result.msg);
                 return;
             }
 
-            // 送出付款請求給後端
+            // 发送付款请求到后端
             fetch('http://34.223.129.79:8000/api/booking', {
                 method: 'POST',
                 headers: {
@@ -403,6 +407,10 @@ function tapPay(){
                     alert(responseData.message);
                 }
             })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while processing the payment.');
+            });
         });
     });
 }
@@ -419,3 +427,7 @@ async function excute(){
     tapPay();
 }
 excute();
+
+
+
+
