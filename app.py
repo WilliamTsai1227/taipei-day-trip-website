@@ -13,14 +13,14 @@ app=FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# 設置允許所有來源
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # 允許所有來源
-    allow_credentials=True,
-    allow_methods=["*"],  # 允許所有 HTTP 方法
-    allow_headers=["*"],  # 允許所有 HTTP 標頭
-)
+# # 設置允許所有來源
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # 允許所有來源
+#     allow_credentials=True,
+#     allow_methods=["*"],  # 允許所有 HTTP 方法
+#     allow_headers=["*"],  # 允許所有 HTTP 標頭
+# )
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)

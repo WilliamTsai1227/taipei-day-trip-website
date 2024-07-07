@@ -350,6 +350,7 @@ function tapPay(){
     // 確認訂購並付款按鈕
     document.querySelector('.submit_btn').addEventListener('click', function (event) {
         event.preventDefault();
+        console.log(".submit_btn get")
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
         
         if (tappayStatus.canGetPrime === false) {
