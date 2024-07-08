@@ -240,7 +240,7 @@ function logout(){
 
 
 
-function tapPay() {
+async function tapPay() {
     TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
     // Display ccv field
     let fields = {
@@ -363,14 +363,15 @@ function tapPay() {
             return;
         }
 
-        // 获取 TapPay Prime
-        TPDirect.card.getPrime((result) => {
+
+        TPDirect.card.getPrime(function (result) {
             if (result.status !== 0) {
-                alert('get prime error ' + result.msg);
-                return;
+                alert('get prime error ' + result.msg)
+                return
             }
-            console.log(result.card.prime);
-            console.log(result);
+            alert('get prime 成功，prime: ' + result.card.prime)
+        
+
 
             // 发送付款请求到后端
             fetch('http://34.223.129.79:8000/api/order', {
@@ -406,7 +407,7 @@ function tapPay() {
                 if (responseData.status_code === 200) {
                     window.location.href = "/thankyou?number=" + responseData.data.number;
                 } else {
-                    alert(responseData.message);
+                    alert(responseData.payment.message);
                 }
             })
             .catch(error => {
@@ -414,6 +415,9 @@ function tapPay() {
                 alert('An error occurred while processing the payment.');
             });
         });
+
+
+
     });
 }
 
