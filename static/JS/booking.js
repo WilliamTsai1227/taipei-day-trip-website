@@ -11,6 +11,7 @@ let attractionLocaion = document.querySelector(".main_content .booking_data_bloc
 let contractBlock = document.querySelector(".main_content .contract_block ");
 let contractName = document.querySelector(".contract_block .content .name_input");
 let contractEmail = document.querySelector(".contract_block .content .email_input");
+let contractPhone = document.querySelector('.contract_block .content .phone_input');
 let paymentBlock = document.querySelector(".main_content .payment_block");
 let submitBlock = document.querySelector(".main_content .submit_block");
 let submitTotalPrice = document.querySelector(".main_content .submit_block .content .total_price");
@@ -353,9 +354,10 @@ async function tapPay() {
 
     submitButton.addEventListener('click', function (event) {
         event.preventDefault();
-        console.log("button get")
+        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){
+            alert("請完整填寫聯絡資訊");
+        }
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-        console.log(tappayStatus)
 
         if (tappayStatus.canGetPrime === false) {
             alert('Cannot get prime.');
