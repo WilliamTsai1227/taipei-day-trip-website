@@ -356,22 +356,22 @@ async function tapPay() {
         event.preventDefault();
         if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){
             alert("請完整填寫聯絡資訊");
-        }
+        };
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
         if (tappayStatus.canGetPrime === false) {
             alert('Cannot get prime.');
             console.error(`inputFormatStatus: ${inputFormatStatus}`)
             return;
-        }
+        };
 
 
         TPDirect.card.getPrime(function (result) {
             if (result.status !== 0) {
                 alert('get prime error ' + result.msg)
                 return
-            }
-            alert('get prime 成功，prime: ' + result.card.prime)
+            };
+            alert('get prime 成功，prime: ' + result.card.prime);
         
 
 
@@ -409,7 +409,7 @@ async function tapPay() {
                 if (responseData.status_code === 200) {
                     window.location.href = "/thankyou?number=" + responseData.data.number;
                 } else {
-                    alert(responseData.payment.message);
+                    alert(responseData.data.payment.message);
                 }
             })
             .catch(error => {
@@ -417,9 +417,6 @@ async function tapPay() {
                 alert('An error occurred while processing the payment.');
             });
         });
-
-
-
     });
 }
 
