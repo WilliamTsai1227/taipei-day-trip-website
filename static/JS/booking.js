@@ -359,6 +359,7 @@ async function tapPay() {
             return;
         };
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+        console.log(tappayStatus);
 
         if (tappayStatus.canGetPrime === false) {
             alert('Cannot get prime.');
