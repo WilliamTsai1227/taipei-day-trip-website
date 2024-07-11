@@ -356,6 +356,7 @@ async function tapPay() {
         event.preventDefault();
         if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){
             alert("請完整填寫聯絡資訊");
+            return;
         };
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
 
@@ -369,7 +370,7 @@ async function tapPay() {
         TPDirect.card.getPrime(function (result) {
             if (result.status !== 0) {
                 alert('get prime error ' + result.msg)
-                return
+                return;
             };
             alert('get prime 成功，prime: ' + result.card.prime);
         
