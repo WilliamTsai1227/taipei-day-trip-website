@@ -237,9 +237,9 @@ function logout(){
     })
 }
 
+
+
 //金流相關功能
-
-
 
 async function tapPay() {
     TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
@@ -309,52 +309,74 @@ async function tapPay() {
     })
 
     // # TPDirect.card.onUpdate(callback)
-    let inputFormatStatus = false;
-    TPDirect.card.onUpdate(function (update) {
-        if (update.canGetPrime) {
-            inputFormatStatus = true;
-        } else {
-            inputFormatStatus = false;
-        }
+    // let inputFormatStatus = false;
+    // TPDirect.card.onUpdate(function (update) {
+    //     if (update.canGetPrime) {
+    //         inputFormatStatus = true;
+    //     } else {
+    //         inputFormatStatus = false;
+    //     }
+    //     // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
+    //     if (update.cardType === 'visa') {
+    //         // Handle card type visa.
+    //     }
+    //     if (update.status.number === 1 || update.status.number === 2) {
+    //         inputFormatStatus = false;
+    //     }
+    //     if (update.status.number === 0) {
+    //         inputFormatStatus = true;
+    //     }
+    //     if (update.status.expiry === 1 || update.status.expiry === 2) {
+    //         inputFormatStatus = false;
+    //     }
+    //     if (update.status.expiry === 0) {
+    //         inputFormatStatus = true;
+    //     }
+    //     if (update.status.ccv === 1 || update.status.ccv === 2) {
+    //         inputFormatStatus = false;
+    //     }
+    //     if (update.status.ccv === 0) {
+    //         inputFormatStatus = true;
+    //     }
+    // })
 
-        // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
-        if (update.cardType === 'visa') {
-            // Handle card type visa.
-        }
-        if (update.status.number === 1) {
-            inputFormatStatus = false;
-        }
-        if (update.status.number === 2) {
-            inputFormatStatus = false;
-        }
-        if (update.status.number === 0) {
-            inputFormatStatus = true;
-        }
-        if (update.status.expiry === 1) {
-            inputFormatStatus = false;
-        }
-        if (update.status.expiry === 2) {
-            inputFormatStatus = false;
-        }
-        if (update.status.expiry === 0) {
-            inputFormatStatus = true;
-        }
-        if (update.status.ccv === 1) {
-            inputFormatStatus = false;
-        }
-        if (update.status.ccv === 2) {
-            inputFormatStatus = false;
-        }
-        if (update.status.ccv === 0) {
-            inputFormatStatus = true;
-        }
-    })
+    // 確認訂購並付款按鈕
 
-    // 确认订购并付款按钮
-
-    submitButton.addEventListener('click', function (event) {
+    submitButton.addEventListener('click',async function (event) {
         event.preventDefault();
-        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){
+        let token = localStorage.getItem('token');
+        if (!token) {
+            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            return ;
+        }
+
+        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        let responseData = await response.json();
+        
+        if (responseData.data === null) {
+            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            return ;
+        }
+
+        // if (responseData.data) {
+        //     let id = responseData.data.id; //取得會員資訊
+        //     let name = responseData.data.name;
+        //     let account = responseData.data.email;
+        //     signoutButton.style.display = "flex";
+        //     return { "id": id, "name": name, "account": account };
+        // }
+        // let userdata = getUserData();
+        // if (userdata === false){
+        //     window.location.replace("http://34.223.129.79:8000"); //返回首頁
+        //     return;
+        // }
+        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //檢查會員填寫資訊
             alert("請完整填寫聯絡資訊");
             return;
         };
@@ -362,7 +384,8 @@ async function tapPay() {
         console.log(tappayStatus);
 
         if (tappayStatus.canGetPrime === false) {
-            alert('Cannot get prime.');
+            alert("信用卡資料錯誤")
+            // alert('Cannot get prime.');
             console.error(`inputFormatStatus: ${inputFormatStatus}`)
             return;
         };
@@ -382,7 +405,8 @@ async function tapPay() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': `Bearer ${token}`
+                    // 'Authorization': `Bearer ${localStorage.getItem('token')}`
                 },
                 body: JSON.stringify({
                     prime: result.card.prime,
@@ -408,11 +432,29 @@ async function tapPay() {
             })
             .then(response => response.json())
             .then(responseData => {
-                if (responseData.status_code === 200) {
+                if (responseData.status_code === 200 && responseData.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.data.number;
-                } else {
-                    alert(responseData.data.payment.message);
+                    return;
+                } 
+                if (responseData.status_code === 200 && responseData.data.payment.status === 1) {
+                    alert("付款失敗");
+                    return;
+                } 
+                if(responseData.status_code === 400){
+                    alert(responseData.message);
+                    return;
                 }
+                if(responseData.status_code === 500){
+                    alert("伺服器錯誤");
+                    return;
+                }
+                if(responseData.status_code === 403){
+                    alert(responseData.message);
+                    window.location.replace("http://34.223.129.79:8000"); //返回首頁
+                    return;
+                }
+
+                
             })
             .catch(error => {
                 console.error('Error:', error);
