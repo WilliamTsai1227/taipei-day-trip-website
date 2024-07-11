@@ -73,9 +73,11 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             # Fetching Data Using Tappay API
             tappay_response = requests.post(
                 "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
-                paydata,
-                headers={"Content-Type": "application/json", 
-                "x-api-key": partner_key},
+                data=paydata,
+                headers={
+                    "Content-Type": "application/json", 
+                    "x-api-key": partner_key
+                },
             )
             
             tappay_response_data = tappay_response.json()
