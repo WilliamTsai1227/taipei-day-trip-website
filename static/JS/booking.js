@@ -429,7 +429,8 @@ async function tapPay() {
             })
             .then(response => response.json())
             .then(responseData => {
-                console.log(responseData.data);
+                console.log(responseData.data.payment);
+                console.log(responseData.data.payment.status);
                 if (responseData.status_code === 200 && responseData.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.data.number;
                     return;
