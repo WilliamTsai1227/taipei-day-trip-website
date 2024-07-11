@@ -50,7 +50,6 @@ function backToHomePage(){
 
 async function getBookingData(){
     let userData = await getUserData();
-    console.log(userData);
     if (userData === false){
         window.location.replace("http://34.223.129.79:8000"); //返回首頁
     }
@@ -78,7 +77,6 @@ async function getBookingData(){
                 window.location.replace("http://34.223.129.79:8000"); //返回首頁
                 return false
             }
-            console.log(responseData.data.data)
             if(statusCode === 200 && responseData.data.data === null){
                 bookingContent.style.display = "none";
                 contractBlock.style.display = "none";
@@ -381,7 +379,6 @@ async function tapPay() {
             return;
         };
         const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-        console.log(tappayStatus);
 
         if (tappayStatus.canGetPrime === false) {
             alert("信用卡資料錯誤")
@@ -432,7 +429,7 @@ async function tapPay() {
             })
             .then(response => response.json())
             .then(responseData => {
-                console.log(responseData,responseData.status_code,responseData.data.payment.status);
+                console.log(responseData);
                 if (responseData.status_code === 200 && responseData.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.data.number;
                     return;
