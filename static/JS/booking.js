@@ -435,6 +435,7 @@ async function tapPay() {
                     return;
                 } 
                 if (responseData.status_code === 200 && responseData.data.payment.status === 1) {
+                    console.log("付款失敗");
                     alert("付款失敗");
                     return;
                 } 
