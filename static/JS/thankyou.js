@@ -2,8 +2,8 @@ let signoutButton = document.querySelector(".navigation_button_signout");
 let checkBookingButton = document.querySelector(".navigation_button_book");
 let title = document.querySelector(".data_block .title");
 let orderNumberCaption = document.querySelector(".data_block .order_number_caption");
-let orderNumber = document.querySelector(".data_block .order_number");
-let notice = document.querySelector(".data_block .notice");
+let orderNumber = document.querySelector(".main_content .data_block .order_number");
+let notice = document.querySelector(".main_content .data_block .notice");
 let footer = document.querySelector(".footer");
 
 
@@ -20,8 +20,9 @@ async function getOrderResult(){
     let currentUrl = window.location.href;
     let token = localStorage.getItem('token');
     // 解析出 {orderNumber}
-    let orderNumber = currentUrl.split('/').pop();
-    let url = `http://34.223.129.79:8000/api/order/${orderNumber}`;
+    let url = new URL(currentUrl); //轉換成URL對象
+    let orderNumber = url.searchParams.get('number'); //使用searchParams屬性
+    url = `http://34.223.129.79:8000/api/order/${orderNumber}`;
     fetch(url,{
         method: 'GET',  
         headers: {
