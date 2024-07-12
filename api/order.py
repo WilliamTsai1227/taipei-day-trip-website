@@ -53,7 +53,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             pay_status = 1 # haven't pay 
             Order.create_new_order(user_id, attraction_id, order_number, price, pay_status, date, time, name, email, phone)
             # partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
-            merchant_id = "williamtsai_FUBON_POS_3"
+            merchant_id = "williamtsai_CTBC"
             partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
             # merchant_id = "GlobalTesting_CTBC"
             paydata = {
@@ -81,6 +81,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             )
             
             tappay_response_data = tappay_response.json()
+            print(tappay_response_data)
             if tappay_response_data["status"] == 0:
                 Order.order_paystatus_change(order_number)
                 pay_status=0   
