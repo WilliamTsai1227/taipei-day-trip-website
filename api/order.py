@@ -53,8 +53,10 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             pay_status = 1 # haven't pay 
             Order.create_new_order(user_id, attraction_id, order_number, price, pay_status, date, time, name, email, phone)
             # partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
-            merchant_id = "williamtsai_CTBC"
+            # merchant_id = "williamtsai_CTBC"
+            # partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
             partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
+            merchant_id = "GlobalTesting_CTBC"
             # merchant_id = "GlobalTesting_CTBC"
             paydata = {
                 "prime":  data["prime"],
