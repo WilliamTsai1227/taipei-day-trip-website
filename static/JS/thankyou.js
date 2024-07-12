@@ -43,13 +43,13 @@ async function getOrderResult(){
             window.location.replace("http://34.223.129.79:8000"); //返回首頁
             return false
         }
-        if(statusCode === 200 && responseData.data.data === null){
+        if(statusCode === 200 && responseData.data.data.status === 1){
             title.textContent = "行程預定失敗，尚未扣款";
             orderNumberElement.textContent = orderNumber;
             notice.textContent = "請至預定行程嘗試再次付款";
             return {"status_code":200,"data":null}
         }
-        if(statusCode === 200 && responseData.data.data !== null){
+        if(statusCode === 200 && responseData.data.data.status === 0){
             title.textContent = "行程預定成功";
             orderNumberElement.textContent = orderNumber;
             notice.textContent = "請記住此編號，或到會員中心查詢歷史訂單";
@@ -85,7 +85,7 @@ function changeToBookingPage(){
             alert("尚未登入");
             window.location.replace("http://34.223.129.79:8000/");
         }else{
-            window.location.href = "http://34.223.129.79:8000/thankyou";
+            window.location.href = "http://34.223.129.79:8000/booking";
         }
         
     })
