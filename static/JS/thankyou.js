@@ -18,6 +18,7 @@ async function getOrderResult(){
     let userName = userdata.name;
     let userAccount = userdata.account;
     let currentUrl = window.location.href;
+    let token = localStorage.getItem('token');
     // 解析出 {orderNumber}
     let orderNumber = currentUrl.split('/').pop();
     let url = `http://34.223.129.79:8000/api/order/${orderNumber}`;
