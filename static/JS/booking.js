@@ -382,8 +382,7 @@ async function tapPay() {
 
         if (tappayStatus.canGetPrime === false) {
             alert("信用卡資料錯誤")
-            // alert('Cannot get prime.');
-            console.error(`inputFormatStatus: ${inputFormatStatus}`)
+            console.error(`Frontend get Tappay prime status: ${tappayStatus.canGetPrime}`)
             return;
         };
 
