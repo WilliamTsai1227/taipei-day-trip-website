@@ -427,17 +427,26 @@ async function tapPay() {
                     }
                 })
             })
-            .then(response => response.json())
+            .then(response =>{
+                let statusCode = response.status;
+                return response.json().then(data => ({
+                    statusCode: statusCode,
+                    body: data
+                }));
+            })
             .then(responseData => {
-                console.log("Response status code: "+responseData.status);
+                statusCode = responseData.statusCode;
+                let paymentStatus = responseData.body.data.payment.status;
+                let orderNumber = responseData.body.data.number;
+                console.log("Response status code: "+statusCode);
                 console.log("Response: "+responseData.body)
-                console.log("Response payment status: "+responseData.data.payment.status);
-                console.log("Type of Response payment status:"+ typeof responseData.data.payment.status);
-                if (responseData.status_code === 200 && responseData.data.payment.status === 0) {
-                    window.location.href = "/thankyou?number=" + responseData.data.number;
+                console.log("Response payment status: "+responseData.body.data.payment.status);
+                console.log("Type of Response payment status:"+ typeof responseData.body.data.payment.status);
+                if (responseData.status_code === 200 && paymentStatus === 0) {
+                    window.location.href = "/thankyou?number=" + orderNumber;
                     return;
                 } 
-                if (responseData.status_code === 200 && responseData.data.payment.status === 1) {
+                if (responseData.status_code === 200 && paymentStatus === 1) {
                     console.log("付款失敗");
                     alert("付款失敗");
                     return;
