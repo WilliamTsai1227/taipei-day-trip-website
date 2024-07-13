@@ -440,17 +440,19 @@ async function tapPay() {
                 // console.log("Response payment status: "+responseData.body.data.payment.status);
                 // console.log("Type of Response payment status:"+ typeof responseData.body.data.payment.status);
                 if (statusCode === 200 && responseData.body.data.payment.status === 0) {
-                    window.location.href = "/thankyou?number=" + responseData.body.data.number;;
+                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
                     return;
                 } 
                 if (statusCode === 200 && responseData.body.data.payment.status === 1) {
                     console.log("付款失敗");
                     alert("付款失敗");
+                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
                     return;
                 } 
                 if(statusCode === 400){
                     alert("付款失敗，輸入資訊有誤，請重新再試一次")
                     console.error(responseData.body.message);
+                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
                     return;
                 }
                 if(statusCode === 500){

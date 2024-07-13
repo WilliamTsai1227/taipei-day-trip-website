@@ -50,7 +50,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             time = booking_information.get("time")
             order_number = datetime.now(timezone(timedelta(hours=+8)))
             order_number = order_number.strftime("%Y%m%d%H%M%S") +"-"+ str(booking_id)
-            pay_status = 1 # haven't pay 
+            pay_status = 1 # UNPAID 
             Order.create_new_order(user_id, attraction_id, order_number, price, pay_status, date, time, name, email, phone)
             merchant_id = "williamtsai_FUBON_POS_3"
             partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
@@ -84,8 +84,8 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             print("Received response from TapPay API:")
             print(tappay_response_data)
             if tappay_response_data["status"] == 0:
-                Order.order_paystatus_change(order_number)
-                pay_status=0   
+                Order.order_paystatus_change(order_number) #change order status to paid.
+                pay_status=0   # PAID
                 pay_status_message="付款成功"
                 response={
                     "data": {
@@ -100,7 +100,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
                 return JSONResponse(content=response, status_code=200) 
                   
             else:
-                pay_status=1  
+                pay_status=1  # UNPAID
                 pay_status_message="付款失敗"             
                 response = {
                     "data": {
