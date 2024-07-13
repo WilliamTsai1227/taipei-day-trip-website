@@ -362,18 +362,6 @@ async function tapPay() {
             return ;
         }
 
-        // if (responseData.data) {
-        //     let id = responseData.data.id; //取得會員資訊
-        //     let name = responseData.data.name;
-        //     let account = responseData.data.email;
-        //     signoutButton.style.display = "flex";
-        //     return { "id": id, "name": name, "account": account };
-        // }
-        // let userdata = getUserData();
-        // if (userdata === false){
-        //     window.location.replace("http://34.223.129.79:8000"); //返回首頁
-        //     return;
-        // }
         if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //檢查會員填寫資訊
             alert("請完整填寫聯絡資訊");
             return;
@@ -389,14 +377,12 @@ async function tapPay() {
 
         TPDirect.card.getPrime(function (result) {
             if (result.status !== 0) {
-                alert('get prime error ' + result.msg)
+                console.error('get prime error ' + result.msg);
                 return;
             };
-            alert('get prime 成功，prime: ' + result.card.prime);
-        
 
 
-            // 发送付款请求到后端
+            // 發送付款請求到後端
             fetch('http://34.223.129.79:8000/api/order', {
                 method: 'POST',
                 headers: {
