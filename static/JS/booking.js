@@ -465,8 +465,8 @@ async function tapPay() {
                 }  
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while processing the payment.');
+                console.error('Payment processing Error:', error);
+                //alert('An error occurred while processing the payment.');
             });
         });
     });
