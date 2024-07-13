@@ -429,8 +429,8 @@ async function tapPay() {
             })
             .then(response => response.json())
             .then(responseData => {
-                console.log("Response status code: "+responseData.status_code);
-                console.log("Response: "+responseData.data)
+                console.log("Response status code: "+responseData.status);
+                console.log("Response: "+responseData.body)
                 console.log("Response payment status: "+responseData.data.payment.status);
                 console.log("Type of Response payment status:"+ typeof responseData.data.payment.status);
                 if (responseData.status_code === 200 && responseData.data.payment.status === 0) {
