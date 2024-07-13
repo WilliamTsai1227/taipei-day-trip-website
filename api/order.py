@@ -73,6 +73,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             }
             paydata=json.dumps(paydata)
             # Fetching Data Using Tappay API
+            print("Sending request to TapPay API...")
             tappay_response = requests.post(
                 "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
                 data=paydata,
@@ -81,8 +82,9 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
                     "x-api-key": partner_key
                 },
             )
-            
+            print(f"Response status code: {tappay_response.status_code}")
             tappay_response_data = tappay_response.json()
+            print("Received response from TapPay API:")
             print(tappay_response_data)
             if tappay_response_data["status"] == 0:
                 Order.order_paystatus_change(order_number)
