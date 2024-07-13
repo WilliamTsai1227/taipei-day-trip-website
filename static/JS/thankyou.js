@@ -44,13 +44,13 @@ async function getOrderResult(){
             return false
         }
         if(statusCode === 200 && responseData.data.data.status === 1){
-            title.textContent = "行程預定失敗，尚未扣款";
+            title.textContent = "行程付款失敗，尚未扣款";
             orderNumberElement.textContent = orderNumber;
-            notice.textContent = "請至預定行程嘗試再次付款";
+            notice.textContent = "請至預定行程再次嘗試";
             return {"status_code":200,"data":null}
         }
         if(statusCode === 200 && responseData.data.data.status === 0){
-            title.textContent = "行程預定成功";
+            title.textContent = "行程付款成功";
             orderNumberElement.textContent = orderNumber;
             notice.textContent = "請記住此編號，或到會員中心查詢歷史訂單";
             return {"status_code":200,"data":responseData.data.data}
@@ -58,7 +58,7 @@ async function getOrderResult(){
         if(statusCode === 500){
             alert("伺服器錯誤")
             console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-            title.textContent = "行程預定失敗，尚未扣款";
+            title.textContent = "行程付款失敗，尚未扣款";
             orderNumberElement.textContent = orderNumber;
             return {"status_code":statusCode,"message":responseData.data.message}
         }
