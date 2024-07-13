@@ -436,36 +436,31 @@ async function tapPay() {
             })
             .then(responseData => {
                 statusCode = responseData.statusCode;
-                let paymentStatus = responseData.body.data.payment.status;
-                let orderNumber = responseData.body.data.number;
                 console.log("Response status code: "+statusCode);
                 console.log("Response: "+responseData.body)
                 console.log("Response payment status: "+responseData.body.data.payment.status);
                 console.log("Type of Response payment status:"+ typeof responseData.body.data.payment.status);
-                if (responseData.status_code === 200 && paymentStatus === 0) {
-                    window.location.href = "/thankyou?number=" + orderNumber;
+                if (statusCode === 200 && responseData.body.data.payment.status === 0) {
+                    window.location.href = "/thankyou?number=" + responseData.body.data.number;;
                     return;
                 } 
-                if (responseData.status_code === 200 && paymentStatus === 1) {
+                if (statusCode === 200 && responseData.body.data.payment.status === 1) {
                     console.log("付款失敗");
                     alert("付款失敗");
                     return;
                 } 
-                if(responseData.status_code === 400){
-                    alert(responseData.message);
+                if(statusCode === 400){
+                    alert(responseData.body.message);
                     return;
                 }
-                if(responseData.status_code === 500){
+                if(statusCode === 500){
                     alert("伺服器錯誤");
                     return;
                 }
-                if(responseData.status_code === 403){
-                    alert(responseData.message);
+                if(statusCode === 403){
                     window.location.replace("http://34.223.129.79:8000"); //返回首頁
                     return;
-                }
-
-                
+                }  
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -474,8 +469,6 @@ async function tapPay() {
         });
     });
 }
-
-
 
 
 async function excute(){
