@@ -438,8 +438,8 @@ async function tapPay() {
                 statusCode = responseData.statusCode;
                 console.log("Response status code: "+statusCode);
                 console.log("Response: "+responseData.body)
-                console.log("Response payment status: "+responseData.body.data.payment.status);
-                console.log("Type of Response payment status:"+ typeof responseData.body.data.payment.status);
+                // console.log("Response payment status: "+responseData.body.data.payment.status);
+                // console.log("Type of Response payment status:"+ typeof responseData.body.data.payment.status);
                 if (statusCode === 200 && responseData.body.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.body.data.number;;
                     return;
@@ -450,7 +450,8 @@ async function tapPay() {
                     return;
                 } 
                 if(statusCode === 400){
-                    alert(responseData.body.message);
+                    alert("付款失敗，輸入資訊有誤，請重新再試一次")
+                    console.error(responseData.body.message);
                     return;
                 }
                 if(statusCode === 500){
