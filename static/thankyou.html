@@ -3,9 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/CSS/thankyou.css">
+  <script src="/static/JS/thankyou.js" defer></script>
   <title>Thank You</title>
 </head>
 <body>
-  
+  <div class="login">
+    <div class="login_block">
+      <div class="decorator_bar"></div>
+      <div class="title">登入會員帳號</div>
+      <div class="login_block_close_btn"><img src="/static/IMG/icon_close.png" alt=""></div>
+      <div class="name" style="display: none;"><input type="text" placeholder="輸入姓名" ></div>
+      <div class="account"><input type="text" placeholder="輸入電子信箱"></div>
+      <div class="password"><input type="password" placeholder="輸入密碼"></div>
+      <div class="submit_btn">登入帳戶</div>
+      <div class="error_message"></div>
+      <div class="change_to_signup_btn">還沒有帳戶?點此註冊</div>
+      <div class="change_to_login_btn">已經有帳戶了?點此登入</div>
+    </div> 
+  </div>
+  <div class="navigation">
+    <div class="navigation_title">台北一日遊</div>
+    <div class="navigation_button">
+      <div class="navigation_button_book">預定行程</div>
+      <div class="navigation_button_signin_signup" style="display: none;">登入/註冊</div>
+      <div class="navigation_button_signout">登出系統</div>
+    </div>
+  </div>
+  <div class="main_content">
+    <div class="data_block">
+      <div class="title"></div>
+      <div class="order_number_caption">您的訂單編號如下</div>
+      <div class="order_number"></div>
+      <div class="notice"></div>
+    </div>
+  </div>
+  <div class="footer" >
+    <div class="footer_text">COPYRIGHT © 2021 台北一日遊</div>
+  </div>
 </body>
 </html>

@@ -7,19 +7,20 @@ from api.attractions import attractions
 from api.mrts import mrts
 from api.user import user
 from api.booking import router
+from api.order import orders
 from fastapi.staticfiles import StaticFiles
 app=FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# 設置允許所有來源
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # 允許所有來源
-    allow_credentials=True,
-    allow_methods=["*"],  # 允許所有 HTTP 方法
-    allow_headers=["*"],  # 允許所有 HTTP 標頭
-)
+# # 設置允許所有來源
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # 允許所有來源
+#     allow_credentials=True,
+#     allow_methods=["*"],  # 允許所有 HTTP 方法
+#     allow_headers=["*"],  # 允許所有 HTTP 標頭
+# )
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)
@@ -40,6 +41,7 @@ app.include_router(attractions)
 app.include_router(mrts)
 app.include_router(user)
 app.include_router(router)
+app.include_router(orders)
 
 # 異常處理
 @app.exception_handler(RequestValidationError)

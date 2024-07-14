@@ -602,7 +602,11 @@ body{
     text-align: left; 
     color: #666666; 
 }
-
+.cardResult, .expiryResult ,.cvvResult{
+    font-size: 14px;
+    line-height: 38px;
+    margin-left: 10px;
+}
 
 .payment_block .content .card_number{
     display: flex;
@@ -615,7 +619,23 @@ body{
     text-align: left;
     color: #666666;    
 }
-.payment_block .content .card_number_input{
+.tpfield{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 38px;
+    margin-top: 20px;
+    margin-right: calc(100% - 281px);
+    border-radius: 5px;
+    border: solid 1px #E8E8E8;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left; 
+    color: #000000;   
+}
+/* .payment_block .content .card_number_input{
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -630,7 +650,7 @@ body{
     font-weight: 500;
     text-align: left; 
     color: #000000;    
-}
+} */
 .payment_block .content .expiration{
     display: flex;
     align-items: center;
@@ -642,7 +662,7 @@ body{
     text-align: left;
     color: #666666;    
 }
-.payment_block .content .expiration_input{
+/* .payment_block .content .expiration_input{
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -657,8 +677,8 @@ body{
     font-weight: 500;
     text-align: left; 
     color: #000000;    
-}
-.payment_block .content .verification_code{
+} */
+.payment_block .content .ccv{
     display: flex;
     align-items: center;
     width: 81px;
@@ -669,7 +689,7 @@ body{
     text-align: left;
     color: #666666;    
 }
-.payment_block .content .verification_code_input{
+/* .payment_block .content .ccv_input{
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -684,7 +704,7 @@ body{
     font-weight: 500;
     text-align: left; 
     color: #000000;    
-}
+} */
 
 .submit_block{
     width: 1200px;
