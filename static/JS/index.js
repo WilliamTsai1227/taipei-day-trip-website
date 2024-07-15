@@ -180,7 +180,7 @@ function monitor_attraction_clicks(){
     list_items.forEach(item => {
         item.addEventListener("click", () =>{
             id = item.querySelector(".attraction_id").textContent;
-            window.location.replace(`http://34.223.129.79:8000/attraction/${id}`)
+            window.location.href = `http://34.223.129.79:8000/attraction/${id}`;
         })
     })
 }
@@ -188,7 +188,7 @@ function monitor_attraction_clicks(){
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.replace("http://34.223.129.79:8000")
+        window.location.href = "http://34.223.129.79:8000" ;
     })
 }
 
