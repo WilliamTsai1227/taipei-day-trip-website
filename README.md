@@ -26,7 +26,9 @@
 
 
 ## 資料庫架構
-![資料庫架構圖](https://1drv.ms/i/c/5244292d03eb6c71/EenXHCe9f51EoqsMP4zo_BsB1w4qxc50Uy5rTG7qh-FEIQ?e=086SD2)
+![資料庫架構圖](https://github.com/user-attachments/assets/027ffdb9-fddd-46b7-afd4-db97b461b06d)
+
+
 - `member` 儲存會員相關資料
 - `attractions`、`images` 儲存景點相關資訊
 - `booking` 預定資料
