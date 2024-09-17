@@ -1,8 +1,8 @@
 
 from module.connection_pool import connection_pool
 import re
-import datetime
-from datetime import timezone
+
+
 
 class Book:
     @staticmethod
@@ -35,14 +35,14 @@ class Book:
         try:
             conn = connection_pool.get_connection()
             cursor = conn.cursor()
-            cursor.execute(                 #如果已經存在相同用戶的行程，用新的行程取代舊的
+            cursor.execute(                 #If a trip for the same user already exists, replace the old one with the new one.
                 """
                 DELETE FROM booking
                 WHERE user_id = %s 
                 """,
                 (user_id,)
             )
-            cursor.execute(    #寫入預定
+            cursor.execute(    #write reservation
                 """
                 INSERT INTO booking (user_id, attraction_id, date, time, price,status)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -79,21 +79,21 @@ class Book:
 
     @staticmethod
     def validate_attraction_id(attraction_id):
-        """驗證 attraction_id 為數字且在 1～58 範圍"""
+        """Verify that attraction_id is a number and in the range of 1 to 58"""
         if isinstance(attraction_id, int) and 1 <= attraction_id <= 58:
             return True
         return False
 
     @staticmethod
     def validate_price(price):
-        """驗證 price 為數字且為 2000 或 2500"""
+        """Verify that price is a number and is 2000 or 2500"""
         if isinstance(price, int) and price in [2000, 2500]:
             return True
         return False
 
     @staticmethod
     def validate_date(date):
-        """驗證 date 為 '2024-01-08' 這種格式，並確認輸入是否為字串"""
+        """Verify that date is in the format '2024-01-08' and confirm whether the input is a string"""
         if not isinstance(date, str):
             return False
         date_pattern = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -103,7 +103,7 @@ class Book:
     
     @staticmethod
     def validate_time(time):
-        """驗證 time 為 'morning' 或 'afternoon'，並確認輸入是否為字串"""
+        """Verify that time is 'morning' or 'afternoon' and confirm whether the input is a string"""
         if not isinstance(time, str):
             return False
         if time in ["morning", "afternoon"]:

@@ -1,30 +1,27 @@
-from module.connection_pool import *
+from module.connection_pool import connection_pool
 import re
-import jwt
-import datetime
-from datetime import timezone
 
 
-"""格式驗證"""
+"""Format validation"""
 
-# 姓名格式驗證，必須是中文或英文，至少兩個字元
+# Name format verification, must be in Chinese or English, at least two characters
 def check_name_format(name):
     name_pattern = r'^[\u4e00-\u9fa5A-Za-z\s]{2,}$'
     return bool(re.match(name_pattern, name))
 
-# 帳號(email)格式驗證
+# Account (email) format verification
 def check_account_format(account):
     account_pattern = r'\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}'
     return bool(re.match(account_pattern, account))
 
-# 密碼格式驗證，只能是數字及字母，至少八個字元
+# Password format verification, can only be numbers and letters, at least eight characters.
 def check_password_format(password):
     password_pattern = r'^[A-Za-z0-9]{8,}$'
     return bool(re.match(password_pattern, password))
 
-"""註冊及登入流程"""
+"""Registration and login process"""
 
-# 用戶註冊
+# User registration
 def signup_new_user(name, account, password):
     try:
         conn = connection_pool.get_connection()
@@ -44,7 +41,7 @@ def signup_new_user(name, account, password):
         cursor.close()
         conn.close()
 
-# 檢查帳號是否已註冊過
+# Check if the account has already been registered
 def signup_check(account):
     try:
         conn = connection_pool.get_connection()
@@ -56,12 +53,12 @@ def signup_check(account):
             (account,)
         )
         result = cursor.fetchone()  
-        return bool(result)  #result 有找到相同帳號(匹配)將return true
+        return bool(result)  #It will return true if the same account is found (matching)
     finally:
         cursor.close()
         conn.close()
 
-# 登入驗證（帳號密碼是否匹配）
+# Login verification (whether the account and password match)
 def signin_check(account, password):
     try:
         conn = connection_pool.get_connection()
@@ -73,7 +70,7 @@ def signin_check(account, password):
             (account, password)
         )
         result = cursor.fetchone()  
-        return result #result 若沒找到相同帳號(匹配)將return None
+        return result #It will return None if the same account (match) is not found.
     except Exception as e:
         print(f"signin database error: {e}")
         return False
@@ -81,9 +78,6 @@ def signin_check(account, password):
         cursor.close()
         conn.close()
 
-"""登出流程"""
-#登出
-#  def signout(token):
 
 
 

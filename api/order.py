@@ -10,8 +10,8 @@ import re
 import requests
 
 
-# 使用 APIRouter()
-orders = APIRouter()  # 确保使用不同的名字，避免冲突
+
+orders = APIRouter()  
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
@@ -35,7 +35,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
                 "message": "聯絡資訊填寫不完全"
             }
             return JSONResponse(content=response, status_code=400)
-        #處理email及手機格式           
+        #Process email and mobile phone formats          
         email_regex = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-.]+){1,}$')
         phone_regex = re.compile(r'^09\d{8}$')
         email_result= re.fullmatch(email_regex, email)

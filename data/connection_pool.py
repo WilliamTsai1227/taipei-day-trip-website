@@ -16,22 +16,3 @@ connection_pool = pooling.MySQLConnectionPool(
     **db_config
 )
 
-
-# # 从连接池获取连接
-# def get_connection():
-#     return connection_pool.get_connection()
-
-# # 使用连接进行数据库操作
-# def execute_query(query, params=None):
-#     conn = get_connection()
-#     cursor = conn.cursor()
-#     cursor.execute(query, params)
-#     result = cursor.fetchall()
-#     cursor.close()
-#     conn.close()
-#     return result
-
-# # 示例查询
-# query = "SELECT * FROM your_table"
-# result = execute_query(query)
-# print(result)

@@ -1,7 +1,7 @@
 from mysql.connector import pooling
 
 
-# 建立connection_pool
+# Create connection_pool
 db_config = {
     "host": "localhost",
     "port": 3306,
