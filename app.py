@@ -18,7 +18,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
 		"http://taipeitrips.com",
-		"https://taipeitrips.com"
+		"https://taipeitrips.com",
+		"http://www.taipeitrips.com",
+		"https://www.taipeitrips.com"
     ],  
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods

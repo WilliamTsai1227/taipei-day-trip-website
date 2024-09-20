@@ -20,7 +20,7 @@ let checkBookingButton = document.querySelector(".navigation_button_book");
 
 async function append_mrt_station(){
     listBarContent = document.querySelector(".list_bar_content");
-    fetch("http://34.223.129.79:8000/api/mrts")
+    fetch("http://taipeitrips.com/api/mrts")
     .then((response) =>{
         return response.json();
     })
@@ -45,7 +45,7 @@ async function fetch_attractions(){
     if (isLoading) return; // 如果正在加載數據，則不觸發加載操作
     isLoading = true; // 開始加載數據，將 isLoading 設為 true
     let attractions = document.querySelector(".attractions")
-    fetch(`http://34.223.129.79:8000/api/attractions?page=${page}&keyword=${keyword}`)
+    fetch(`http://taipeitrips.com/api/attractions?page=${page}&keyword=${keyword}`)
     .then((response) =>{
         return response.json();
     })
@@ -180,7 +180,7 @@ function monitor_attraction_clicks(){
     list_items.forEach(item => {
         item.addEventListener("click", () =>{
             id = item.querySelector(".attraction_id").textContent;
-            window.location.href = `http://34.223.129.79:8000/attraction/${id}`;
+            window.location.href = `http://taipeitrips.com/attraction/${id}`;
         })
     })
 }
@@ -188,7 +188,7 @@ function monitor_attraction_clicks(){
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://34.223.129.79:8000" ;
+        window.location.href = "http://taipeitrips.com" ;
     })
 }
 
@@ -319,7 +319,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user/auth', {
+            fetch('http://taipeitrips.com/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -411,7 +411,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user', {
+            fetch('http://taipeitrips.com/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -455,7 +455,7 @@ function getUserData(){
         signout_button.style.display = "none";
         return false;
     }
-    fetch('http://34.223.129.79:8000/api/user/auth', {
+    fetch('http://taipeitrips.com/api/user/auth', {
         method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`
@@ -505,7 +505,7 @@ function changeToBookingPage(){
             loginArea.style.display = "flex";
         }else{
             loginArea.style.display = "none";
-            window.location.href = "http://34.223.129.79:8000/booking";
+            window.location.href = "http://taipeitrips.com/booking";
         }
         
     })

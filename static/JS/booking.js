@@ -42,7 +42,7 @@ let userAccount;
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://34.223.129.79:8000";
+        window.location.href = "http://taipeitrips.com";
     })
 }
 
@@ -51,13 +51,13 @@ function backToHomePage(){
 async function getBookingData(){
     let userData = await getUserData();
     if (userData === false){
-        window.location.replace("http://34.223.129.79:8000"); //返回首頁
+        window.location.replace("http://taipeitrips.com"); //返回首頁
     }
     if (userData){
         userName = userData.name;
         userAccount = userData.account;
         let token = localStorage.getItem('token');
-        fetch("http://34.223.129.79:8000/api/booking",{
+        fetch("http://taipeitrips.com/api/booking",{
             method: 'GET',  
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ async function getBookingData(){
             let statusCode = responseData.statusCode;
             if(statusCode === 403){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
-                window.location.replace("http://34.223.129.79:8000"); //返回首頁
+                window.location.replace("http://taipeitrips.com"); //返回首頁
                 return false
             }
             if(statusCode === 200 && responseData.data.data === null){
@@ -126,7 +126,7 @@ async function getBookingData(){
             if(statusCode === 500){
                 alert("伺服器錯誤")
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                window.location.replace("http://34.223.129.79:8000"); //返回首頁
+                window.location.replace("http://taipeitrips.com"); //返回首頁
                 return {"status_code":statusCode,"message":responseData.data.message}
             }
         })
@@ -138,11 +138,11 @@ function deleteBookingData(){
     deleteBtn.addEventListener("click",()=>{
         let loginResult = getUserData()
         if(loginResult == false){
-            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); //返回首頁
         }
         if(loginResult !== false){
             let token = localStorage.getItem('token');
-            fetch("http://34.223.129.79:8000/api/booking",{
+            fetch("http://taipeitrips.com/api/booking",{
                 method: 'DELETE',  
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -151,7 +151,7 @@ function deleteBookingData(){
             .then(response => {
                 const statusCode = response.status;
                 if(statusCode === 403){
-                    window.location.replace("http://34.223.129.79:8000"); //返回首頁
+                    window.location.replace("http://taipeitrips.com"); //返回首頁
                 }
                 if(statusCode === 500){
                     alert("伺服器錯誤")

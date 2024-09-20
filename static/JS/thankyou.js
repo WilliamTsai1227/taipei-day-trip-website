@@ -11,7 +11,7 @@ let footer = document.querySelector(".footer");
 async function getOrderResult(){
     let userdata = getUserData();
     if(userdata == false){
-        window.location.replace("http://34.223.129.79:8000/");
+        window.location.replace("http://taipeitrips.com");
         return;
     }
     let userId = userdata.id;
@@ -22,7 +22,7 @@ async function getOrderResult(){
     // 解析出 {orderNumber}
     let url = new URL(currentUrl); //轉換成URL對象
     let orderNumber = url.searchParams.get('number'); //使用searchParams屬性
-    url = `http://34.223.129.79:8000/api/order/${orderNumber}`;
+    url = `http://taipeitrips.com/api/order/${orderNumber}`;
     fetch(url,{
         method: 'GET',  
         headers: {
@@ -40,7 +40,7 @@ async function getOrderResult(){
         let statusCode = responseData.statusCode;
         if(statusCode === 403){
             console.error(`status_code: ${statusCode},message: 尚未登入`)
-            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); //返回首頁
             return false
         }
         if(statusCode === 200 && responseData.data.data.status === 1){
@@ -71,7 +71,7 @@ async function getOrderResult(){
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://34.223.129.79:8000";
+        window.location.href = "http://taipeitrips.com";
     })
 }
 
@@ -83,9 +83,9 @@ function changeToBookingPage(){
         let loginResult = getUserData();
         if(loginResult == false){
             alert("尚未登入");
-            window.location.replace("http://34.223.129.79:8000/");
+            window.location.replace("http://taipeitrips.com");
         }else{
-            window.location.href = "http://34.223.129.79:8000/booking";
+            window.location.href = "http://taipeitrips.com/booking";
         }
         
     })
@@ -103,7 +103,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
+        const response = await fetch('http://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -133,7 +133,7 @@ async function getUserData() {
 function logout(){
     signoutButton.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        window.location.replace("http://34.223.129.79:8000");
+        window.location.replace("http://taipeitrips.com");
     })
 }
 
