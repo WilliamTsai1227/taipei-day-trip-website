@@ -15,7 +15,7 @@ class Attraction:
             raise ValueError(f"attraction module get database connection error (keyword_attractions): {e}")
         try:
             keyword_pattern = f"%{keyword}"
-            cursor.excute(
+            cursor.execute(
                 """
                 SELECT a.*, GROUP_CONCAT(i.image_url) AS image_urls 
                 FROM attractions a 
@@ -44,7 +44,7 @@ class Attraction:
         except Exception as e:
             raise ValueError(f"attraction module get database connection error(all_attractions): {e}")
         try:
-            cursor.excute(
+            cursor.execute(
                 """
                     SELECT a.*, GROUP_CONCAT(i.image_url) AS image_urls 
                     FROM attractions a 

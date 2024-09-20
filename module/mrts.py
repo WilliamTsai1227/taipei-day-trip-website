@@ -11,7 +11,7 @@ class MRT:
         except Exception as e:
             raise ValueError(f"Databse connect failed:{str(e)}")
         try:
-            cursor.excute(
+            cursor.execute(
                 """
                     SELECT mrt
                     FROM attractions
