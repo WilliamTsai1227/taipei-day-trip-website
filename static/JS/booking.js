@@ -21,16 +21,16 @@ let htmlBody = document.querySelector("body");
 let signoutButton = document.querySelector(".navigation_button_signout");
 let checkBookingButton = document.querySelector(".navigation_button_book");
 let submitButton = document.querySelector('.submit_block .content .submit_btn');
-// 宣告Attraction相關data
+// Declare the obtained Attraction related variables
 let fetchAttractionName;
 let fetchAttractionId;
 let fetchAttractionAddress;
 let fetchAttractionImage;
 let fetchAttractionDate;
-let fetchAttractionTime; //原始景點時間data ,morning or afternoon.
-let fetchAttractionTimeToText; //文字顯示部分
+let fetchAttractionTime; //Original attraction time data, morning or afternoon.
+let fetchAttractionTimeToText; 
 let fetchAttractionPrice;
-//宣告會員相關data
+//Declare member-related data variables
 let userName;
 let userAccount;
 
@@ -38,7 +38,7 @@ let userAccount;
 
 
 
-//返回首頁按紐
+//Return to home page button
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
@@ -46,12 +46,12 @@ function backToHomePage(){
     })
 }
 
-//拿到使用者booking data
+//Get user booking data
 
 async function getBookingData(){
     let userData = await getUserData();
     if (userData === false){
-        window.location.replace("http://taipeitrips.com"); //返回首頁
+        window.location.replace("http://taipeitrips.com"); //Back to home page
     }
     if (userData){
         userName = userData.name;
@@ -74,7 +74,7 @@ async function getBookingData(){
             let statusCode = responseData.statusCode;
             if(statusCode === 403){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
-                window.location.replace("http://taipeitrips.com"); //返回首頁
+                window.location.replace("http://taipeitrips.com");
                 return false
             }
             if(statusCode === 200 && responseData.data.data === null){
@@ -98,7 +98,7 @@ async function getBookingData(){
                 fetchAttractionDate = responseData.data.data.date;
                 fetchAttractionTime = responseData.data.data.time;
                 fetchAttractionPrice = responseData.data.data.price;
-                //景點資訊
+                //Attraction information
                 attractionName.textContent = `台北一日遊 ： ${fetchAttractionName}`;
                 attractionDate.textContent = fetchAttractionDate;
                 if(fetchAttractionTime === "morning"){
@@ -112,10 +112,10 @@ async function getBookingData(){
                 attractionPrice.textContent = `新台幣${String(fetchAttractionPrice)}元`;
                 attractionLocaion.textContent = fetchAttractionAddress;
                 attractionImg.src = fetchAttractionImage;
-                //聯絡資訊
+                //Contact information
                 contractName.value = userName;
                 contractEmail.value = userAccount;
-                //訂購資訊
+                //Booking information
                 submitTotalPrice.textContent = `總價 : 新台幣${String(fetchAttractionPrice)}元`
                 bookingContent.style.display = "flex";
                 contractBlock.style.display = "flex";
@@ -126,7 +126,7 @@ async function getBookingData(){
             if(statusCode === 500){
                 alert("伺服器錯誤")
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                window.location.replace("http://taipeitrips.com"); //返回首頁
+                window.location.replace("http://taipeitrips.com"); 
                 return {"status_code":statusCode,"message":responseData.data.message}
             }
         })
@@ -138,7 +138,7 @@ function deleteBookingData(){
     deleteBtn.addEventListener("click",()=>{
         let loginResult = getUserData()
         if(loginResult == false){
-            window.location.replace("http://taipeitrips.com"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); 
         }
         if(loginResult !== false){
             let token = localStorage.getItem('token');
@@ -151,7 +151,7 @@ function deleteBookingData(){
             .then(response => {
                 const statusCode = response.status;
                 if(statusCode === 403){
-                    window.location.replace("http://taipeitrips.com"); //返回首頁
+                    window.location.replace("http://taipeitrips.com"); 
                 }
                 if(statusCode === 500){
                     alert("伺服器錯誤")
@@ -175,15 +175,15 @@ function deleteBookingData(){
 
 
 
-//查看預定行程按鈕
+//Check out the scheduled itinerary button
 function changeToBookingPage(){
     checkBookingButton.addEventListener("click", ()=>{
         let loginResult = getUserData();
         if(loginResult == false){
             alert("尚未登入");
-            window.location.replace("http://34.223.129.79:8000/");
+            window.location.replace("http://taipeitrips.com");
         }else{
-            window.location.href = "http://34.223.129.79:8000/booking";
+            window.location.href = "http://taipeitrips.com/booking";
         }
         
     })
@@ -191,7 +191,7 @@ function changeToBookingPage(){
 
 
 
-//取得現在登入使用者資料
+//Get current login user information
 
 async function getUserData() {
     try {
@@ -201,7 +201,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
+        const response = await fetch('http://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -215,7 +215,7 @@ async function getUserData() {
         }
 
         if (responseData.data) {
-            let id = responseData.data.id; //取得會員資訊
+            let id = responseData.data.id; //get member info
             let name = responseData.data.name;
             let account = responseData.data.email;
             signoutButton.style.display = "flex";
@@ -226,18 +226,18 @@ async function getUserData() {
         return false;
     }
 }
-//登出
+//logout button
 
 function logout(){
     signoutButton.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        window.location.replace("http://34.223.129.79:8000");
+        window.location.replace("http://taipeitrips.com");
     })
 }
 
 
 
-//金流相關功能
+//Cash flow related functions
 
 async function tapPay() {
     TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
@@ -298,7 +298,7 @@ async function tapPay() {
                 }
             }
         },
-        // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+        // This setting will display the first six and last four digits of the credit card number after the card number is entered correctly.
         isMaskCreditCardNumber: true,
         maskCreditCardNumberRange: {
             beginIndex: 6,
@@ -306,49 +306,19 @@ async function tapPay() {
         }
     })
 
-    // # TPDirect.card.onUpdate(callback)
-    // let inputFormatStatus = false;
-    // TPDirect.card.onUpdate(function (update) {
-    //     if (update.canGetPrime) {
-    //         inputFormatStatus = true;
-    //     } else {
-    //         inputFormatStatus = false;
-    //     }
-    //     // cardTypes = ['mastercard', 'visa', 'jcb', 'amex', 'unknown']
-    //     if (update.cardType === 'visa') {
-    //         // Handle card type visa.
-    //     }
-    //     if (update.status.number === 1 || update.status.number === 2) {
-    //         inputFormatStatus = false;
-    //     }
-    //     if (update.status.number === 0) {
-    //         inputFormatStatus = true;
-    //     }
-    //     if (update.status.expiry === 1 || update.status.expiry === 2) {
-    //         inputFormatStatus = false;
-    //     }
-    //     if (update.status.expiry === 0) {
-    //         inputFormatStatus = true;
-    //     }
-    //     if (update.status.ccv === 1 || update.status.ccv === 2) {
-    //         inputFormatStatus = false;
-    //     }
-    //     if (update.status.ccv === 0) {
-    //         inputFormatStatus = true;
-    //     }
-    // })
+    
 
-    // 確認訂購並付款按鈕
+    // Confirm order and pay button
 
     submitButton.addEventListener('click',async function (event) {
         event.preventDefault();
         let token = localStorage.getItem('token');
         if (!token) {
-            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); //Return to home page
             return ;
         }
 
-        const response = await fetch('http://34.223.129.79:8000/api/user/auth', {
+        const response = await fetch('http://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -358,11 +328,11 @@ async function tapPay() {
         let responseData = await response.json();
         
         if (responseData.data === null) {
-            window.location.replace("http://34.223.129.79:8000"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); //Return to home page
             return ;
         }
 
-        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //檢查會員填寫資訊
+        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //Check member's information
             alert("請完整填寫聯絡資訊");
             return;
         };
@@ -382,8 +352,8 @@ async function tapPay() {
             };
 
 
-            // 發送付款請求到後端
-            fetch('http://34.223.129.79:8000/api/order', {
+            // Send payment request to backend
+            fetch('http://taipeitrips.com/api/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -441,7 +411,7 @@ async function tapPay() {
                     return;
                 }
                 if(statusCode === 403){
-                    window.location.replace("http://34.223.129.79:8000"); //返回首頁
+                    window.location.replace("http://taipeitrips.com"); 
                     return;
                 }  
             })

@@ -18,10 +18,9 @@ async function getOrderResult(){
     let userName = userdata.name;
     let userAccount = userdata.account;
     let currentUrl = window.location.href;
-    let token = localStorage.getItem('token');
-    // 解析出 {orderNumber}
-    let url = new URL(currentUrl); //轉換成URL對象
-    let orderNumber = url.searchParams.get('number'); //使用searchParams屬性
+    let token = localStorage.getItem('token'); //Parse out {orderNumber}
+    let url = new URL(currentUrl); //Convert to URL object
+    let orderNumber = url.searchParams.get('number'); //Using the searchParams attribute
     url = `http://taipeitrips.com/api/order/${orderNumber}`;
     fetch(url,{
         method: 'GET',  
@@ -40,7 +39,7 @@ async function getOrderResult(){
         let statusCode = responseData.statusCode;
         if(statusCode === 403){
             console.error(`status_code: ${statusCode},message: 尚未登入`)
-            window.location.replace("http://taipeitrips.com"); //返回首頁
+            window.location.replace("http://taipeitrips.com"); 
             return false
         }
         if(statusCode === 200 && responseData.data.data.status === 1){
@@ -67,7 +66,7 @@ async function getOrderResult(){
 
 
 
-//返回首頁按紐
+
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
@@ -77,7 +76,7 @@ function backToHomePage(){
 
 
 
-//查看預定行程按鈕
+
 function changeToBookingPage(){
     checkBookingButton.addEventListener("click", ()=>{
         let loginResult = getUserData();
@@ -93,7 +92,7 @@ function changeToBookingPage(){
 
 
 
-//取得現在登入使用者資料
+
 
 async function getUserData() {
     try {
@@ -117,7 +116,7 @@ async function getUserData() {
         }
 
         if (responseData.data) {
-            let id = responseData.data.id; //取得會員資訊
+            let id = responseData.data.id; 
             let name = responseData.data.name;
             let account = responseData.data.email;
             signoutButton.style.display = "flex";
@@ -128,7 +127,7 @@ async function getUserData() {
         return false;
     }
 }
-//登出
+
 
 function logout(){
     signoutButton.addEventListener("click", ()=>{

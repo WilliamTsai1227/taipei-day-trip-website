@@ -5,8 +5,8 @@ function scroll_img() {
     let imgWapper = document.querySelector('.image_wrapper');
     let circle = document.querySelector('.circle');
     let currentIndex = 0;
-    let scrollAmount = 0; //已經滑動像素
-    let scrollStep = imgWapper.offsetWidth; // 每次移動像素
+    let scrollAmount = 0; //Pixels have been slid
+    let scrollStep = imgWapper.offsetWidth; // Move pixels each time
     
     imgContent.style.transform = 'translateX(0px)';
 
@@ -44,7 +44,7 @@ function createCircle() {
     let imgWapper = document.querySelector('.image_wrapper');
     let scrollStep = imgWapper.offsetWidth;
 
-    // 清空原有的圓點
+    // Clear the original dots
     while (circle.firstChild) {
         circle.removeChild(circle.firstChild);
     }
@@ -61,16 +61,16 @@ function createCircle() {
     }
 }
 
-//檢查id的function
+//The function of check ID
 
 function checkId(id) {
-    // 檢查 id 是否是數字
+    // check if id is a number
     if (isNaN(id)) {
         window.location.replace("http://taipeitrips.com");
         return false;
     }
-    // 檢查 id 是否在 1 到 58 的範圍內
-    id = Number(id); // 將 id 轉換為數字
+    // Check if id is in the range 1 to 58
+    id = Number(id); // Convert id to number
     if (id < 1 || id > 58) {
         window.location.replace("http://taipeitrips.com")
         return false;  
@@ -89,11 +89,6 @@ async function loading_attraction_data(){
     checkId(id);
     let response = await fetch(`http://taipeitrips.com/api/attraction/${id}`);
     let result = await response.json();
-    // fetch(`http://34.223.129.79:8000/api/attraction/${id}`)
-    // .then((response) => {
-    //     return response.json();
-    // })
-    // .then((result) => {
     let attraction = result.data;
     let attractionId = attraction.id;
     let attractionName = attraction.name;
@@ -120,7 +115,7 @@ async function loading_attraction_data(){
         })
     createCircle();
     setTimeout(scroll_img, 1000);
-    // })
+
 }
 
 
@@ -162,7 +157,7 @@ function handleResize(){
 }
 
 
-//登入註冊相關功能
+//Login and registration related functions
 
 let htmlBody = document.querySelector("body")
 let loginArea = document.querySelector(".login");
@@ -186,21 +181,21 @@ let bookingButton = document.querySelector(".section_profile_book_form_button")
 let loginBlockStatus = "login";
 
 
-//打開登入框
+//Open login box
 function show_login_block(){
     signin_signup_button.addEventListener("click", ()=>{
         loginArea.style.display = "flex";
     })
 }
 
-//關閉登入框
+//Close login box
 function close_login_block(){
     loginBlockClose.addEventListener("click", ()=>{
         loginArea.style.display = "none";
     })
 }
 
-//查看預定行程按鈕
+//View scheduled itinerary button
 function changeToBookingPage(){
     checkBookingButton.addEventListener("click", async ()=>{
         let loginResult = await getUserData();
@@ -213,7 +208,7 @@ function changeToBookingPage(){
     })
 }
 
-//預定行程
+//Booking schedule
 function booking(){
     bookingButton.addEventListener("click",async ()=>{
         let loginResult = await getUserData();
@@ -274,10 +269,10 @@ function getBookingData(){
     let time = document.querySelector(".section_profile_book_form_datetime input[name='datetime']:checked").value;
     let id = location.pathname.split("/").pop();
     let price = 0;
-    if(checkId(id) === false){  //若id有錯誤checkId(id)會自動返回首頁
+    if(checkId(id) === false){  //If there is an error in the id, checkId(id) will automatically return to the home page.
         return;                 // stop this function
     }
-    if (!dateInput.checkValidity()) { // 如果日期未選擇，顯示內建的警告信息並返回 false
+    if (!dateInput.checkValidity()) { // If no date is selected, display the built-in warning message and return false.
         dateInput.reportValidity();
         return false;
     }
@@ -287,7 +282,7 @@ function getBookingData(){
     if(time === "afternoon"){
         price = 2500;
     }
-    if(price === 0){  //若價錢為空白及終止回傳flase
+    if(price === 0){  //If the price is blank, return false and terminate.
         return false;
     }
     id = Number(id);
@@ -322,32 +317,32 @@ function change_to_login_block(){
     })
 }
 
-// 姓名格式驗證，必須是中文或英文，至少兩個字元
+// Name format verification, must be in Chinese or English, at least two characters
 function checkNameFormat(name) {
     const namePattern = /^[\u4e00-\u9fa5A-Za-z\s]{2,}$/;
     return namePattern.test(name);
 }
 
-// 帳號(email)格式驗證
+// Account (email) format verification
 function checkAccountFormat(account) {
     const accountPattern = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
     return accountPattern.test(account);
 }
 
-// 密碼格式驗證，只能是數字或字母，至少八個字元
+// Password format verification, can only be numbers or letters, at least eight characters
 function checkPasswordFormat(password) {
     const passwordPattern = /^[A-Za-z0-9]{8,}$/;
     return passwordPattern.test(password);
 }
 
-//清除使用者輸入Input內容
+//Clear user input content
 function clear_input(){
     loginBlockNameInput.value = "";
     loginBlockAccountInput.value = "";
     loginBlockPasswordInput.value = "";
 }
 
-//清除error message字樣
+//Clear error message text
 function erase_error_message(){
     signin_signup_button.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
@@ -366,7 +361,7 @@ function erase_error_message(){
     })
 }
 
-//登入
+//log in function
 
 function signin(){
     let emailData = "";
@@ -444,7 +439,7 @@ function signin(){
     })
 }
 
-//註冊
+//Registration function
 
 function signup(){
     let nameData = "";
@@ -527,7 +522,7 @@ function signup(){
     })    
 }
 
-//取得現在登入使用者資料
+//Get current logged in user information
 
 async function getUserData(){
     let token = localStorage.getItem('token');
@@ -554,8 +549,8 @@ async function getUserData(){
             signout_button.style.display = "none";
             return false; 
         }
-        if(responseData.data.data){
-            let id = responseData.data.data.id; //取得會員資訊
+        if(responseData.data.data){ 
+            let id = responseData.data.data.id; //Get member information
             let name = responseData.data.data.name;
             let account = responseData.data.data.email;
             signin_signup_button.style.display = "none";
@@ -569,7 +564,7 @@ async function getUserData(){
     });
 }
 
-//登出
+//logout function
 
 function logout(){
     signout_button.addEventListener("click", ()=>{
