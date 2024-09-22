@@ -75,7 +75,7 @@ class Attraction:
         except Exception as e:
             raise HTTPException(status_code=500, detail="Database connect failed.")
         try:
-            cursor.excute(
+            cursor.execute(
                 """
                     SELECT a.*, GROUP_CONCAT(i.image_url) AS image_urls 
                     FROM attractions a 
