@@ -20,7 +20,7 @@ let checkBookingButton = document.querySelector(".navigation_button_book");
 
 async function append_mrt_station(){
     listBarContent = document.querySelector(".list_bar_content");
-    fetch("http://taipeitrips.com/api/mrts")
+    fetch("https://taipeitrips.com/api/mrts")
     .then((response) =>{
         return response.json();
     })
@@ -45,7 +45,7 @@ async function fetch_attractions(){
     if (isLoading) return; // If data is being loaded, the load operation is not triggered
     isLoading = true; // Start loading data, set isLoading to true
     let attractions = document.querySelector(".attractions")
-    fetch(`http://taipeitrips.com/api/attractions?page=${page}&keyword=${keyword}`)
+    fetch(`https://taipeitrips.com/api/attractions?page=${page}&keyword=${keyword}`)
     .then((response) =>{
         return response.json();
     })
@@ -167,7 +167,7 @@ function monitor_attraction_clicks(){
     list_items.forEach(item => {
         item.addEventListener("click", () =>{
             id = item.querySelector(".attraction_id").textContent;
-            window.location.href = `http://taipeitrips.com/attraction/${id}`;
+            window.location.href = `https://taipeitrips.com/attraction/${id}`;
         })
     })
 }
@@ -175,7 +175,7 @@ function monitor_attraction_clicks(){
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://taipeitrips.com" ;
+        window.location.href = "https://taipeitrips.com" ;
     })
 }
 
@@ -306,7 +306,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://taipeitrips.com/api/user/auth', {
+            fetch('https://taipeitrips.com/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -398,7 +398,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://taipeitrips.com/api/user', {
+            fetch('https://taipeitrips.com/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -442,7 +442,7 @@ function getUserData(){
         signout_button.style.display = "none";
         return false;
     }
-    fetch('http://taipeitrips.com/api/user/auth', {
+    fetch('https://taipeitrips.com/api/user/auth', {
         method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`
@@ -492,7 +492,7 @@ function changeToBookingPage(){
             loginArea.style.display = "flex";
         }else{
             loginArea.style.display = "none";
-            window.location.href = "http://taipeitrips.com/booking";
+            window.location.href = "https://taipeitrips.com/booking";
         }
         
     })

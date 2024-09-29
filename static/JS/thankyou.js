@@ -11,7 +11,7 @@ let footer = document.querySelector(".footer");
 async function getOrderResult(){
     let userdata = getUserData();
     if(userdata == false){
-        window.location.replace("http://taipeitrips.com");
+        window.location.replace("https://taipeitrips.com");
         return;
     }
     let userId = userdata.id;
@@ -21,7 +21,7 @@ async function getOrderResult(){
     let token = localStorage.getItem('token'); //Parse out {orderNumber}
     let url = new URL(currentUrl); //Convert to URL object
     let orderNumber = url.searchParams.get('number'); //Using the searchParams attribute
-    url = `http://taipeitrips.com/api/order/${orderNumber}`;
+    url = `https://taipeitrips.com/api/order/${orderNumber}`;
     fetch(url,{
         method: 'GET',  
         headers: {
@@ -39,7 +39,7 @@ async function getOrderResult(){
         let statusCode = responseData.statusCode;
         if(statusCode === 403){
             console.error(`status_code: ${statusCode},message: 尚未登入`)
-            window.location.replace("http://taipeitrips.com"); 
+            window.location.replace("https://taipeitrips.com"); 
             return false
         }
         if(statusCode === 200 && responseData.data.data.status === 1){
@@ -70,7 +70,7 @@ async function getOrderResult(){
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://taipeitrips.com";
+        window.location.href = "https://taipeitrips.com";
     })
 }
 
@@ -82,9 +82,9 @@ function changeToBookingPage(){
         let loginResult = getUserData();
         if(loginResult == false){
             alert("尚未登入");
-            window.location.replace("http://taipeitrips.com");
+            window.location.replace("https://taipeitrips.com");
         }else{
-            window.location.href = "http://taipeitrips.com/booking";
+            window.location.href = "https://taipeitrips.com/booking";
         }
         
     })
@@ -102,7 +102,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://taipeitrips.com/api/user/auth', {
+        const response = await fetch('https://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -132,7 +132,7 @@ async function getUserData() {
 function logout(){
     signoutButton.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        window.location.replace("http://taipeitrips.com");
+        window.location.replace("https://taipeitrips.com");
     })
 }
 

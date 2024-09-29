@@ -66,13 +66,13 @@ function createCircle() {
 function checkId(id) {
     // check if id is a number
     if (isNaN(id)) {
-        window.location.replace("http://taipeitrips.com");
+        window.location.replace("https://taipeitrips.com");
         return false;
     }
     // Check if id is in the range 1 to 58
     id = Number(id); // Convert id to number
     if (id < 1 || id > 58) {
-        window.location.replace("http://taipeitrips.com")
+        window.location.replace("https://taipeitrips.com")
         return false;  
     }
     return true;
@@ -87,7 +87,7 @@ async function loading_attraction_data(){
     let transport = document.querySelector(".infors_transportation_content");
     let imgContent = document.querySelector(".image_content");
     checkId(id);
-    let response = await fetch(`http://taipeitrips.com/api/attraction/${id}`);
+    let response = await fetch(`https://taipeitrips.com/api/attraction/${id}`);
     let result = await response.json();
     let attraction = result.data;
     let attractionId = attraction.id;
@@ -122,7 +122,7 @@ async function loading_attraction_data(){
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://taipeitrips.com";
+        window.location.href = "https://taipeitrips.com";
     })
 }
 
@@ -204,7 +204,7 @@ function changeToBookingPage(){
             return;
         }
         loginArea.style.display = "none";
-        window.location.href = "http://taipeitrips.com/booking";
+        window.location.href = "https://taipeitrips.com/booking";
     })
 }
 
@@ -222,7 +222,7 @@ function booking(){
             console.error("Get booking data error(date/time/price).");
             return {"error":"Get booking data error(date/time/price)."};
         }
-        fetch("http://taipeitrips.com/api/booking",{
+        fetch("https://taipeitrips.com/api/booking",{
             method: 'POST',  
             headers: {
                 'Content-Type': 'application/json',
@@ -255,7 +255,7 @@ function booking(){
                 return {"status_code":statusCode,"message":responseData.data.message};
             }
             if(statusCode === 200 && responseData.data.ok === true){
-                window.location.href = "http://taipeitrips.com/booking";
+                window.location.href = "https://taipeitrips.com/booking";
                 return true;
             }
         })
@@ -396,7 +396,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://taipeitrips.com/api/user/auth', {
+            fetch('https://taipeitrips.com/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -487,7 +487,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://taipeitrips.com/api/user', {
+            fetch('https://taipeitrips.com/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -531,7 +531,7 @@ async function getUserData(){
         signout_button.style.display = "none";
         return false;
     }
-    fetch('http://taipeitrips.com/api/user/auth', {
+    fetch('https://taipeitrips.com/api/user/auth', {
         method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`

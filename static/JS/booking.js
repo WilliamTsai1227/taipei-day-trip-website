@@ -42,7 +42,7 @@ let userAccount;
 function backToHomePage(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.href = "http://taipeitrips.com";
+        window.location.href = "https://taipeitrips.com";
     })
 }
 
@@ -51,13 +51,13 @@ function backToHomePage(){
 async function getBookingData(){
     let userData = await getUserData();
     if (userData === false){
-        window.location.replace("http://taipeitrips.com"); //Back to home page
+        window.location.replace("https://taipeitrips.com"); //Back to home page
     }
     if (userData){
         userName = userData.name;
         userAccount = userData.account;
         let token = localStorage.getItem('token');
-        fetch("http://taipeitrips.com/api/booking",{
+        fetch("https://taipeitrips.com/api/booking",{
             method: 'GET',  
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -74,7 +74,7 @@ async function getBookingData(){
             let statusCode = responseData.statusCode;
             if(statusCode === 403){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
-                window.location.replace("http://taipeitrips.com");
+                window.location.replace("https://taipeitrips.com");
                 return false
             }
             if(statusCode === 200 && responseData.data.data === null){
@@ -126,7 +126,7 @@ async function getBookingData(){
             if(statusCode === 500){
                 alert("伺服器錯誤")
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`)
-                window.location.replace("http://taipeitrips.com"); 
+                window.location.replace("https://taipeitrips.com"); 
                 return {"status_code":statusCode,"message":responseData.data.message}
             }
         })
@@ -138,11 +138,11 @@ function deleteBookingData(){
     deleteBtn.addEventListener("click",()=>{
         let loginResult = getUserData()
         if(loginResult == false){
-            window.location.replace("http://taipeitrips.com"); 
+            window.location.replace("https://taipeitrips.com"); 
         }
         if(loginResult !== false){
             let token = localStorage.getItem('token');
-            fetch("http://taipeitrips.com/api/booking",{
+            fetch("https://taipeitrips.com/api/booking",{
                 method: 'DELETE',  
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -151,7 +151,7 @@ function deleteBookingData(){
             .then(response => {
                 const statusCode = response.status;
                 if(statusCode === 403){
-                    window.location.replace("http://taipeitrips.com"); 
+                    window.location.replace("https://taipeitrips.com"); 
                 }
                 if(statusCode === 500){
                     alert("伺服器錯誤")
@@ -181,9 +181,9 @@ function changeToBookingPage(){
         let loginResult = getUserData();
         if(loginResult == false){
             alert("尚未登入");
-            window.location.replace("http://taipeitrips.com");
+            window.location.replace("https://taipeitrips.com");
         }else{
-            window.location.href = "http://taipeitrips.com/booking";
+            window.location.href = "https://taipeitrips.com/booking";
         }
         
     })
@@ -201,7 +201,7 @@ async function getUserData() {
             return false;
         }
 
-        const response = await fetch('http://taipeitrips.com/api/user/auth', {
+        const response = await fetch('https://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -231,7 +231,7 @@ async function getUserData() {
 function logout(){
     signoutButton.addEventListener("click", ()=>{
         localStorage.removeItem('token');
-        window.location.replace("http://taipeitrips.com");
+        window.location.replace("https://taipeitrips.com");
     })
 }
 
@@ -314,11 +314,11 @@ async function tapPay() {
         event.preventDefault();
         let token = localStorage.getItem('token');
         if (!token) {
-            window.location.replace("http://taipeitrips.com"); //Return to home page
+            window.location.replace("https://taipeitrips.com"); //Return to home page
             return ;
         }
 
-        const response = await fetch('http://taipeitrips.com/api/user/auth', {
+        const response = await fetch('https://taipeitrips.com/api/user/auth', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -328,7 +328,7 @@ async function tapPay() {
         let responseData = await response.json();
         
         if (responseData.data === null) {
-            window.location.replace("http://taipeitrips.com"); //Return to home page
+            window.location.replace("https://taipeitrips.com"); //Return to home page
             return ;
         }
 
@@ -353,7 +353,7 @@ async function tapPay() {
 
 
             // Send payment request to backend
-            fetch('http://taipeitrips.com/api/order', {
+            fetch('https://taipeitrips.com/api/order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -411,7 +411,7 @@ async function tapPay() {
                     return;
                 }
                 if(statusCode === 403){
-                    window.location.replace("http://taipeitrips.com"); 
+                    window.location.replace("https://taipeitrips.com"); 
                     return;
                 }  
             })
