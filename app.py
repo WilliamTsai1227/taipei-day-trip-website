@@ -13,14 +13,19 @@ app=FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# # 設置允許所有來源
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],  # 允許所有來源
-#     allow_credentials=True,
-#     allow_methods=["*"],  # 允許所有 HTTP 方法
-#     allow_headers=["*"],  # 允許所有 HTTP 標頭
-# )
+# setting CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+		"http://taipeitrips.com",
+		"https://taipeitrips.com",
+		"http://www.taipeitrips.com",
+		"https://www.taipeitrips.com"
+    ],  
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all HTTP headers
+)
 
 # Static Pages (Never Modify Code in this Block)
 @app.get("/", include_in_schema=False)

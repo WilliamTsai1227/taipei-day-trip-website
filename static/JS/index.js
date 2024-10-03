@@ -20,7 +20,7 @@ let checkBookingButton = document.querySelector(".navigation_button_book");
 
 async function append_mrt_station(){
     listBarContent = document.querySelector(".list_bar_content");
-    fetch("http://34.223.129.79:8000/api/mrts")
+    fetch("https://taipeitrips.com/api/mrts")
     .then((response) =>{
         return response.json();
     })
@@ -40,12 +40,12 @@ async function append_mrt_station(){
 
 let page = 0;
 let keyword = "";
-let isLoading = false; // 建立標籤，表示是否正在加載數據
+let isLoading = false; // Create a label to indicate whether data is loading
 async function fetch_attractions(){
-    if (isLoading) return; // 如果正在加載數據，則不觸發加載操作
-    isLoading = true; // 開始加載數據，將 isLoading 設為 true
+    if (isLoading) return; // If data is being loaded, the load operation is not triggered
+    isLoading = true; // Start loading data, set isLoading to true
     let attractions = document.querySelector(".attractions")
-    fetch(`http://34.223.129.79:8000/api/attractions?page=${page}&keyword=${keyword}`)
+    fetch(`https://taipeitrips.com/api/attractions?page=${page}&keyword=${keyword}`)
     .then((response) =>{
         return response.json();
     })
@@ -87,29 +87,16 @@ async function fetch_attractions(){
             attraction.appendChild(attraction_content);
             attractions.appendChild(attraction);
         }
-        isLoading = false; // 數據加載完成，將 isLoading 設為 false
+        isLoading = false; // Data loading is complete, set isLoading to false
         monitor_attraction_clicks(); 
     })
     .catch((error) =>{
         console.log(error);
-        isLoading = false; // 數據加載出錯，將 isLoading 設為 false
+        isLoading = false; // Data loading error, set isLoading to false
     })
 }
 
-// function scrolling_add_attractions(){
-//     window.addEventListener("scroll",function(e){
-//         // let{clientHeight,scrollHeight,scrollTop} = e.target.documentElement; //解構賦值
-//         let clientHeight = e.target.documentElement.clientHeight;
-//         let scrollHeight = e.target.documentElement.scrollHeight;
-//         let scrollTop = e.target.documentElement.scrollTop;
-//         // console.log(scrollTop,scrollHeight,clientHeight)
-//         if(scrollTop+clientHeight >= scrollHeight ){
-//             if (page != null){
-//                 fetch_attractions();
-//             }
-//         }
-//     })
-// }
+
 
 function scrolling_add_attractions(){
     let footer = document.querySelector(".footer");
@@ -143,7 +130,7 @@ function scroll_list(){
     let rightArrow = document.querySelector('.list_bar_right_arrow img');
     let scrollAmount = 0;
 
-    let scrollStep = 200; // 每次移動像素
+    let scrollStep = 200; // Move pixels each time
 
     leftArrow.addEventListener('click', () => {
         scrollAmount = Math.max(scrollAmount - scrollStep, 0);
@@ -180,7 +167,7 @@ function monitor_attraction_clicks(){
     list_items.forEach(item => {
         item.addEventListener("click", () =>{
             id = item.querySelector(".attraction_id").textContent;
-            window.location.replace(`http://34.223.129.79:8000/attraction/${id}`)
+            window.location.href = `https://taipeitrips.com/attraction/${id}`;
         })
     })
 }
@@ -188,25 +175,25 @@ function monitor_attraction_clicks(){
 function back_to_home_page(){
     let homepage_btn = document.querySelector(".navigation_title")
     homepage_btn.addEventListener("click",() => {
-        window.location.replace("http://34.223.129.79:8000")
+        window.location.href = "https://taipeitrips.com" ;
     })
 }
 
 
 
-//登入註冊相關功能
 
 
 
 
-//打開登入框
+
+//Open login box
 function show_login_block(){
     signin_signup_button.addEventListener("click", ()=>{
         loginArea.style.display = "flex";
     })
 }
 
-//關閉登入框
+//Close login box
 function close_login_block(){
     loginBlockClose.addEventListener("click", ()=>{
         loginArea.style.display = "none";
@@ -240,32 +227,32 @@ function change_to_login_block(){
     })
 }
 
-// 姓名格式驗證，必須是中文或英文，至少兩個字元
+// Name format verification, must be in Chinese or English, at least two characters
 function checkNameFormat(name) {
     const namePattern = /^[\u4e00-\u9fa5A-Za-z\s]{2,}$/;
     return namePattern.test(name);
 }
 
-// 帳號(email)格式驗證
+// Account (email) format verification
 function checkAccountFormat(account) {
     const accountPattern = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
     return accountPattern.test(account);
 }
 
-// 密碼格式驗證，只能是數字或字母，至少八個字元
+// Password format verification, can only be numbers or letters, at least eight characters
 function checkPasswordFormat(password) {
     const passwordPattern = /^[A-Za-z0-9]{8,}$/;
     return passwordPattern.test(password);
 }
 
-//清除使用者輸入Input內容
+//Clear user input content
 function clear_input(){
     loginBlockNameInput.value = "";
     loginBlockAccountInput.value = "";
     loginBlockPasswordInput.value = "";
 }
 
-//清除error message字樣
+//Clear error message text
 function erase_error_message(){
     signin_signup_button.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
@@ -284,7 +271,7 @@ function erase_error_message(){
     })
 }
 
-//登入
+//Login function
 
 function signin(){
     let emailData = "";
@@ -319,7 +306,7 @@ function signin(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user/auth', {
+            fetch('https://taipeitrips.com/api/user/auth', {
                 method: 'PUT',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -363,7 +350,7 @@ function signin(){
     })
 }
 
-//註冊
+//Registration function
 
 function signup(){
     let nameData = "";
@@ -411,7 +398,7 @@ function signup(){
                 password: passwordData
             };
             
-            fetch('http://34.223.129.79:8000/api/user', {
+            fetch('https://taipeitrips.com/api/user', {
                 method: 'POST',  
                 headers: {
                     'Content-Type': 'application/json'
@@ -446,7 +433,7 @@ function signup(){
     })    
 }
 
-//取得現在登入使用者資料
+//Get current logged in user information
 
 function getUserData(){
     let token = localStorage.getItem('token');
@@ -455,7 +442,7 @@ function getUserData(){
         signout_button.style.display = "none";
         return false;
     }
-    fetch('http://34.223.129.79:8000/api/user/auth', {
+    fetch('https://taipeitrips.com/api/user/auth', {
         method: 'GET',  
         headers: {
             'Authorization': `Bearer ${token}`
@@ -474,7 +461,7 @@ function getUserData(){
             return false;
         }
         if(responseData.data.data){
-            let id = responseData.data.data.id; //取得會員資訊
+            let id = responseData.data.data.id; 
             let name = responseData.data.data.name;
             let account = responseData.data.data.email;
             signin_signup_button.style.display = "none";
@@ -488,7 +475,7 @@ function getUserData(){
     });
 }
 
-//登出
+//Logout function
 
 function logout(){
     signout_button.addEventListener("click", ()=>{
@@ -497,7 +484,7 @@ function logout(){
     })
 }
 
-//查看預定行程按鈕
+//View scheduled itinerary button
 function changeToBookingPage(){
     checkBookingButton.addEventListener("click", ()=>{
         let loginResult = getUserData();
@@ -505,7 +492,7 @@ function changeToBookingPage(){
             loginArea.style.display = "flex";
         }else{
             loginArea.style.display = "none";
-            window.location.href = "http://34.223.129.79:8000/booking";
+            window.location.href = "https://taipeitrips.com/booking";
         }
         
     })

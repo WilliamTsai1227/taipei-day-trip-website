@@ -39,8 +39,8 @@ def data_process():
         image_url = i["file"]
         cursor.execute("INSERT INTO attractions (id,name,category,description,address,transport,mrt,lat,lng) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                       ,(id,name,category,description,address,transport,mrt,lat,lng))
-        con.commit() #執行完attractions table的一個景點寫入
-        processing_img_url(image_url,id,cursor) #執行此景點的圖片url寫入 images table
+        con.commit() #After executing the writing of an attraction in the attractions table
+        processing_img_url(image_url,id,cursor) #Execute the image url of this attraction to be written into the images table
         id += 1
     cursor.close()
     con.close()

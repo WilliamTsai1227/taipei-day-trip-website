@@ -1,10 +1,8 @@
 from fastapi import *
-from mysql.connector import pooling
-from module.connection_pool import *
+from module.mrts import MRT
 
 
 
-#使用 APIRouter()
 mrts = APIRouter()
 
 
@@ -12,32 +10,14 @@ mrts = APIRouter()
 async def get_mrts():
     try:
         try:
-            conn = connection_pool.get_connection()
-            cursor = conn.cursor()
+            result = MRT.get_sorted_mrt_station()
+        except ValueError as e:
+            raise HTTPException(status_code=500,detail=f"mrt.py module error:{str(e)}")
         except Exception as e:
-            raise HTTPException(status_code=500, detail="Database connect failed")
-        try:
-            cursor.execute(
-                """
-                    SELECT mrt
-                    FROM attractions
-                    GROUP BY mrt
-                    ORDER BY COUNT(*) DESC;
-                """
-                )  
-            result = cursor.fetchall()
-        except Exception as e:
-            # 數據庫查詢錯誤
-            raise HTTPException(status_code=500, detail="Database query failed")
+            raise HTTPException(status_code=500, detail=f"mrt.py module Database error:{str(e)}")
         station_names = [item[0] for item in result if item[0] is not None]
         return {"data": station_names}
     except Exception as e:
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-        # raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        # 確保關閉游標及連接
-        if 'cursor' in locals() and cursor is not None:
-            cursor.close()
-        if 'conn' in locals() and conn is not None:
-            conn.close()
+        raise HTTPException(status_code=500, detail=f"Internal Server Error:{str(e)}")
+
     

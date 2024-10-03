@@ -1,21 +1,25 @@
 import jwt
 import datetime
 from datetime import timezone
+from dotenv import load_dotenv
+import os
+
+# Load environment variable from .env file
+load_dotenv()
+
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 
-
-"""token流程"""
-
-#建立token
+#Create token
 def JWT_token_make(user_id,name,account):
     try:
-        # 計算七天後的時間
+        # Calculate the time after seven days
         expiration = datetime.datetime.now(tz=timezone.utc) + datetime.timedelta(days=7)
 
-        # 包含 exp 來設置過期時間
+        # Include exp to set expiration time
         encoded_jwt = jwt.encode(
             {"user_id": user_id, "name": name, "account": account, "exp": expiration},
-            "secret",
+            JWT_SECRET_KEY,
             algorithm="HS256"
         )
         return encoded_jwt
@@ -23,10 +27,10 @@ def JWT_token_make(user_id,name,account):
         print(f"JWT_token procedure error: {e}")
         return False
 
-# 解碼並驗證 token 的函數
+# The function of Decode and verify token 
 def decode_jwt(token):
     try:
-        decoded_jwt = jwt.decode(token, "secret", algorithms=["HS256"])
+        decoded_jwt = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
         return decoded_jwt
     except jwt.ExpiredSignatureError:
         print("Token has expired")

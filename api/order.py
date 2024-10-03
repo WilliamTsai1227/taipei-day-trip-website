@@ -5,20 +5,23 @@ from module.JWT import decode_jwt
 from module.order import Order
 from module.booking import Book
 from datetime import datetime, timezone, timedelta
+from dotenv import load_dotenv
+import os
 import json
 import re
 import requests
 
+#Load environment variables from .env file
+load_dotenv()
+TAPPAY_PARTNER_KEY = os.getenv("TAPPAY_PARTNER_KEY")
+TAPPAY_MERCHANT_ID = os.getenv("TAPPAY_MERCHANT_ID")
 
-# 使用 APIRouter()
-orders = APIRouter()  # 确保使用不同的名字，避免冲突
+orders = APIRouter()  
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 @orders.post("/api/order")
 async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
-    SECRET_KEY = "secret"
-    ALGORITHM = "HS256"
     try:
         payload = decode_jwt(token)
         if payload is None:
@@ -35,7 +38,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
                 "message": "聯絡資訊填寫不完全"
             }
             return JSONResponse(content=response, status_code=400)
-        #處理email及手機格式           
+        #Process email and mobile phone formats          
         email_regex = re.compile(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-.]+){1,}$')
         phone_regex = re.compile(r'^09\d{8}$')
         email_result= re.fullmatch(email_regex, email)
@@ -52,13 +55,11 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             order_number = order_number.strftime("%Y%m%d%H%M%S") +"-"+ str(booking_id)
             pay_status = 1 # UNPAID 
             Order.create_new_order(user_id, attraction_id, order_number, price, pay_status, date, time, name, email, phone)
-            merchant_id = "williamtsai_FUBON_POS_3"
-            partner_key = "partner_1logTaunpreGr4N0iqRzm38fixZ4Kb0UWD08uo7lRq7k20m2ODSJqgT7"
-            # merchant_id = "GlobalTesting_CTBC"
+            
             paydata = {
                 "prime":  data["prime"],
-                "partner_key": partner_key,
-                "merchant_id": merchant_id,
+                "partner_key": TAPPAY_PARTNER_KEY,
+                "merchant_id": TAPPAY_MERCHANT_ID,
                 "details":"TapPay Test",
                 "amount": price,
                 "cardholder": {
@@ -70,13 +71,12 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
             }
             paydata=json.dumps(paydata)
             # Fetching Data Using Tappay API
-            print("Sending request to TapPay API...")
             tappay_response = requests.post(
                 "https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime",
                 data=paydata,
                 headers={
                     "Content-Type": "application/json", 
-                    "x-api-key": partner_key
+                    "x-api-key": TAPPAY_PARTNER_KEY
                 },
             )
             print(f"Response status code: {tappay_response.status_code}")
@@ -132,8 +132,6 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
 @orders.get("/api/order/{orderNumber}")
 def get_order(orderNumber: str,token: str = Depends(oauth2_scheme)):
     try:
-        SECRET_KEY = "secret"
-        ALGORITHM = "HS256"
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
