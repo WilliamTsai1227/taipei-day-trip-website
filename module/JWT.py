@@ -1,7 +1,13 @@
 import jwt
 import datetime
 from datetime import timezone
+from dotenv import load_dotenv
+import os
 
+# Load environment variable from .env file
+load_dotenv()
+
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 
 #Create token
@@ -13,7 +19,7 @@ def JWT_token_make(user_id,name,account):
         # Include exp to set expiration time
         encoded_jwt = jwt.encode(
             {"user_id": user_id, "name": name, "account": account, "exp": expiration},
-            "secret",
+            JWT_SECRET_KEY,
             algorithm="HS256"
         )
         return encoded_jwt
@@ -24,7 +30,7 @@ def JWT_token_make(user_id,name,account):
 # The function of Decode and verify token 
 def decode_jwt(token):
     try:
-        decoded_jwt = jwt.decode(token, "secret", algorithms=["HS256"])
+        decoded_jwt = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
         return decoded_jwt
     except jwt.ExpiredSignatureError:
         print("Token has expired")

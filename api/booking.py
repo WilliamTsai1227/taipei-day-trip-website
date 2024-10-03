@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, HTTPException, Depends
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from module.JWT import decode_jwt  
@@ -12,8 +12,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 """Get unconfirmed scheduled itineraries."""
 @router.get("/api/booking")
 async def get_user_booking(token: str = Depends(oauth2_scheme)):
-    SECRET_KEY = "secret"
-    ALGORITHM = "HS256"
     try:
         payload = decode_jwt(token)
         if payload is None:
@@ -48,8 +46,6 @@ async def get_user_booking(token: str = Depends(oauth2_scheme)):
 """Create a new scheduled itinerary"""
 @router.post("/api/booking")
 async def create_booking(request: Request, token: str = Depends(oauth2_scheme)):
-    SECRET_KEY = "secret"
-    ALGORITHM = "HS256"
     try:
         payload = decode_jwt(token)
         if payload is None:

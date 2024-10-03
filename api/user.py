@@ -1,11 +1,9 @@
-from fastapi import APIRouter, Request, HTTPException,Depends
+from fastapi import APIRouter, Request,Depends
 from fastapi.responses import JSONResponse
 from module.user import *
 from module.JWT import *
 from pydantic import BaseModel, Field
 from fastapi.security import OAuth2PasswordBearer
-
-
 
 
 
@@ -110,8 +108,6 @@ async def login_process(request: Request):
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 @user.get("/api/user/auth")
 async def get_user_info(request: Request, token: str = Depends(oauth2_scheme)):
-    SECRET_KEY = "secret"
-    ALGORITHM = "HS256"
     try:
         if decode_jwt(token) is None:
             response = {
