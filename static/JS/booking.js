@@ -330,7 +330,7 @@ async function tapPay() {
                 }));
             })
             .then(responseData => {
-                statusCode = responseData.statusCode;
+                let statusCode = responseData.statusCode;
                 if (statusCode === 200 && responseData.body.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.body.data.number;
                     return;
