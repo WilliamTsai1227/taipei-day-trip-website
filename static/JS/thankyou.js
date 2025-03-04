@@ -1,4 +1,7 @@
-let signoutButton = document.querySelector(".navigation_button_signout");
+import {logout} from './modules/auth.js';
+import { getUserData } from './modules/user.js';
+import { back_to_home_page} from './modules/ui.js';
+
 let checkBookingButton = document.querySelector(".navigation_button_book");
 let title = document.querySelector(".data_block .title");
 let orderNumberCaption = document.querySelector(".data_block .order_number_caption");
@@ -37,8 +40,8 @@ async function getOrderResult(){
     })
     .then(responseData => {
         let statusCode = responseData.statusCode;
-        if(statusCode === 403){
-            console.error(`status_code: ${statusCode},message: 尚未登入`)
+        if(statusCode === 403 || statusCode === 401){
+            console.error(`status_code: ${statusCode},message: 尚未登入或無權訪問`)
             window.location.replace("https://taipeitrips.com"); 
             return false
         }
@@ -67,13 +70,6 @@ async function getOrderResult(){
 
 
 
-function backToHomePage(){
-    let homepage_btn = document.querySelector(".navigation_title")
-    homepage_btn.addEventListener("click",() => {
-        window.location.href = "https://taipeitrips.com";
-    })
-}
-
 
 
 
@@ -94,53 +90,9 @@ function changeToBookingPage(){
 
 
 
-async function getUserData() {
-    try {
-        let token = localStorage.getItem('token');
-        if (!token) {
-            signoutButton.style.display = "flex";
-            return false;
-        }
-
-        const response = await fetch('https://taipeitrips.com/api/user/auth', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        let responseData = await response.json();
-        
-        if (responseData.data === null) {
-            return false;
-        }
-
-        if (responseData.data) {
-            let id = responseData.data.id; 
-            let name = responseData.data.name;
-            let account = responseData.data.email;
-            signoutButton.style.display = "flex";
-            return { "id": id, "name": name, "account": account };
-        }
-    } catch (error) {
-        console.error('getUserData() error occurred:', error.message);
-        return false;
-    }
-}
-
-
-function logout(){
-    signoutButton.addEventListener("click", ()=>{
-        localStorage.removeItem('token');
-        window.location.replace("https://taipeitrips.com");
-    })
-}
-
-
-
 async function excute(){
     await getOrderResult();
-    backToHomePage(); 
+    back_to_home_page(); 
     logout();
     changeToBookingPage();
 }
