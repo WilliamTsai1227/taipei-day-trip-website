@@ -13,7 +13,7 @@ async function append_mrt_station(){
     })
     .then((response) => {
         for (let i of response.data){
-            listItem = document.createElement("div");
+            let listItem = document.createElement("div");
             listItem.className = "list_item";
             listItem.textContent = i;
             listBarContent.appendChild(listItem);

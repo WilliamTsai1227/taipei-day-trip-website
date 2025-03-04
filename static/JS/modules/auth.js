@@ -1,4 +1,5 @@
 import { getUserData } from "./user.js";
+import { clear_input } from "./ui.js";
 let loginBlockButton = document.querySelector(".login_block .submit_btn");
 let loginBlockAccountInput = document.querySelector(".login_block .account input");
 let loginBlockPasswordInput = document.querySelector(".login_block .password input");
