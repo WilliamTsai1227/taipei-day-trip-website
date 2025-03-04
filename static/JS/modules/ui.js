@@ -1,4 +1,4 @@
-import { getUserData } from "./user";
+import { getUserData } from "./user.js";
 let loginArea = document.querySelector(".login");
 let loginBlockClose = document.querySelector(".login_block_close_btn");
 let loginSignupButton = document.querySelector(".navigation_button_signin_signup");

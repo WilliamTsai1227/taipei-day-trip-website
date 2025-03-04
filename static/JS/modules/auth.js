@@ -1,4 +1,4 @@
-import { getUserData } from "./user";
+import { getUserData } from "./user.js";
 let loginBlockButton = document.querySelector(".login_block .submit_btn");
 let loginBlockAccountInput = document.querySelector(".login_block .account input");
 let loginBlockPasswordInput = document.querySelector(".login_block .password input");
