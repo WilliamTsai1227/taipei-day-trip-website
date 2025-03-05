@@ -101,13 +101,13 @@ function search(){
     let button = document.querySelector(".hero_section_search_icon");
     let input = document.querySelector(".hero_section_search input");
     let attractions = document.querySelector(".attractions");
-    button.addEventListener("click",() => {
+    button.addEventListener("click",async () => {
         page = 0;
         keyword = input.value;
         while(attractions.firstChild){
             attractions.removeChild(attractions.firstChild);
         }
-        fetch_attractions();
+        await fetch_attractions();
     })
 }
 
