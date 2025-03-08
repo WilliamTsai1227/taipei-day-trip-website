@@ -1,3 +1,6 @@
+import {logout} from './modules/auth.js';
+import { getUserData } from './modules/user.js';
+import { back_to_home_page } from './modules/ui.js';
 
 let headline = document.querySelector(".main_content .booking_data_block .headline");
 let bookingContent = document.querySelector(".main_content .booking_data_block .content");
@@ -17,8 +20,6 @@ let submitBlock = document.querySelector(".main_content .submit_block");
 let submitTotalPrice = document.querySelector(".main_content .submit_block .content .total_price");
 let footer = document.querySelector(".footer");
 let deleteBtn = document.querySelector(".delete_block .btn");
-let htmlBody = document.querySelector("body");
-let signoutButton = document.querySelector(".navigation_button_signout");
 let checkBookingButton = document.querySelector(".navigation_button_book");
 let submitButton = document.querySelector('.submit_block .content .submit_btn');
 // Declare the obtained Attraction related variables
@@ -37,14 +38,6 @@ let userAccount;
 
 
 
-
-//Return to home page button
-function backToHomePage(){
-    let homepage_btn = document.querySelector(".navigation_title")
-    homepage_btn.addEventListener("click",() => {
-        window.location.href = "https://taipeitrips.com";
-    })
-}
 
 //Get user booking data
 
@@ -134,9 +127,9 @@ async function getBookingData(){
     
 }
 
-function deleteBookingData(){
-    deleteBtn.addEventListener("click",()=>{
-        let loginResult = getUserData()
+async function deleteBookingData(){
+    deleteBtn.addEventListener("click",async ()=>{
+        let loginResult = await getUserData()
         if(loginResult == false){
             window.location.replace("https://taipeitrips.com"); 
         }
@@ -167,18 +160,11 @@ function deleteBookingData(){
 
 
 
-
-
-
-
-
-
-
-
 //Check out the scheduled itinerary button
+//If not logged in, the changeToBookingPage will redirect to the home page.
 function changeToBookingPage(){
-    checkBookingButton.addEventListener("click", ()=>{
-        let loginResult = getUserData();
+    checkBookingButton.addEventListener("click", async ()=>{
+        let loginResult = await getUserData();
         if(loginResult == false){
             alert("尚未登入");
             window.location.replace("https://taipeitrips.com");
@@ -186,52 +172,6 @@ function changeToBookingPage(){
             window.location.href = "https://taipeitrips.com/booking";
         }
         
-    })
-}
-
-
-
-//Get current login user information
-
-async function getUserData() {
-    try {
-        let token = localStorage.getItem('token');
-        if (!token) {
-            signoutButton.style.display = "flex";
-            return false;
-        }
-
-        const response = await fetch('https://taipeitrips.com/api/user/auth', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        let responseData = await response.json();
-        
-        if (responseData.data === null) {
-            return false;
-        }
-
-        if (responseData.data) {
-            let id = responseData.data.id; //get member info
-            let name = responseData.data.name;
-            let account = responseData.data.email;
-            signoutButton.style.display = "flex";
-            return { "id": id, "name": name, "account": account };
-        }
-    } catch (error) {
-        console.error('getUserData() error occurred:', error.message);
-        return false;
-    }
-}
-//logout button
-
-function logout(){
-    signoutButton.addEventListener("click", ()=>{
-        localStorage.removeItem('token');
-        window.location.replace("https://taipeitrips.com");
     })
 }
 
@@ -390,7 +330,7 @@ async function tapPay() {
                 }));
             })
             .then(responseData => {
-                statusCode = responseData.statusCode;
+                let statusCode = responseData.statusCode;
                 if (statusCode === 200 && responseData.body.data.payment.status === 0) {
                     window.location.href = "/thankyou?number=" + responseData.body.data.number;
                     return;
@@ -426,10 +366,10 @@ async function tapPay() {
 
 async function excute(){
     await getBookingData();
-    backToHomePage(); 
+    back_to_home_page(); 
     logout();
     changeToBookingPage();
-    deleteBookingData(); 
+    await deleteBookingData(); 
     tapPay();
 }
 excute();
