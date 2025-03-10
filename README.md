@@ -64,5 +64,5 @@
 
 ## 網頁功能操作
 
-- **###Lazy Loading**
+### Lazy Loading
 ![Lazy Loading](https://github.com/WilliamTsai1227/taipei-day-trip-website/blob/72a6ab0357cd5dc2fb8e5b52e2a316c3ddb742c0/gif/Lazy%20loading.gif)
