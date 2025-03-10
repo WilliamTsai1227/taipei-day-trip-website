@@ -65,4 +65,5 @@
 ## 網頁功能操作
 
 - **延遲載入 (Lazy Loading)**
+
 https://github.com/user-attachments/assets/7303b27f-8735-4ad9-8559-49a5ca6e6187
