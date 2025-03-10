@@ -42,3 +42,7 @@ sql_command.sql
 #python
 try.py
 note.py
+
+# Ignore GIF file
+/gif/
+.gif
