@@ -66,47 +66,38 @@
 以下是網頁功能的演示影片，您可以點擊影片縮圖來觀看每個功能的演示。
 
 ### 延遲載入 (Lazy Loading)  
-點擊縮圖查看影片演示：
 
 [![Lazy Loading](https://img.youtube.com/vi/p7z0Wfa3WRc/0.jpg)](https://youtu.be/p7z0Wfa3WRc)
 
 ### 搜尋景點功能   
-點擊縮圖查看影片演示：
 
 [![搜尋景點功能](https://img.youtube.com/vi/qf-TZbt3Xis/0.jpg)](https://youtu.be/qf-TZbt3Xis)
 
 ### 預訂行程功能    
-點擊縮圖查看影片演示：
 
 [![預訂行程功能](https://img.youtube.com/vi/lXXNnQxh8Z8/0.jpg)](https://youtu.be/lXXNnQxh8Z8)
 
 ### 串接第三方金流付款    
-點擊縮圖查看影片演示：
 
 [![串接第三方金流付款](https://img.youtube.com/vi/FJmj-lv3Wuw/0.jpg)](https://youtu.be/FJmj-lv3Wuw)
 
 ### 響應式網頁設計 (RWD)    
-點擊縮圖查看影片演示：
 
 [![響應式網頁設計 (RWD)](https://img.youtube.com/vi/Q05kZzArVnU/0.jpg)](https://youtu.be/Q05kZzArVnU)
 
 ### 註冊並登入會員    
-點擊縮圖查看影片演示：
 
 [![註冊並登入會員](https://img.youtube.com/vi/J1sV6ThiDC8/0.jpg)](https://youtu.be/J1sV6ThiDC8)
 
 ### 驗證帳號是否已註冊    
-點擊縮圖查看影片演示：
 
 [![驗證帳號是否已註冊過](https://img.youtube.com/vi/3tQ3ZNau7PQ/0.jpg)](https://youtu.be/3tQ3ZNau7PQ)
 
 ### 註冊格式確認    
-點擊縮圖查看影片演示：
 
 [![註冊格式確認](https://img.youtube.com/vi/Noq6TNDL6QE/0.jpg)](https://youtu.be/Noq6TNDL6QE)
 
 ### 登入格式確認    
-點擊縮圖查看影片演示：
 
 [![登入格式確認](https://img.youtube.com/vi/BW3QHFk-2gY/0.jpg)](https://youtu.be/BW3QHFk-2gY)
 
