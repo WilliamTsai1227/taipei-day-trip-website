@@ -88,7 +88,7 @@
 
 [![註冊並登入會員](https://img.youtube.com/vi/J1sV6ThiDC8/0.jpg)](https://youtu.be/J1sV6ThiDC8)
 
-- **驗證帳號是否已註冊過**
+- **驗證帳號是否已註冊**
 
 [![驗證帳號是否已註冊過](https://img.youtube.com/vi/3tQ3ZNau7PQ/0.jpg)](https://youtu.be/3tQ3ZNau7PQ)
 
