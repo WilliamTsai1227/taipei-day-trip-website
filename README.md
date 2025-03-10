@@ -110,8 +110,3 @@
 
 [![登入格式確認](https://img.youtube.com/vi/BW3QHFk-2gY/0.jpg)](https://youtu.be/BW3QHFk-2gY)
 
-
-
-<iframe width="560" height="315" src="https://youtu.be/p7z0Wfa3WRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>    
-
-<iframe width="560" height="315" src="https://youtu.be/qf-TZbt3Xis" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>  
