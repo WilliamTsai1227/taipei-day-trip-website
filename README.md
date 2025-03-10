@@ -65,4 +65,5 @@
 ## 網頁功能操作
 
 ### Lazy Loading
-![Lazy Loading](https://github.com/WilliamTsai1227/taipei-day-trip-website/blob/72a6ab0357cd5dc2fb8e5b52e2a316c3ddb742c0/gif/Lazy%20loading.gif)
+<iframe width="560" height="315" src="https://youtu.be/p7z0Wfa3WRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
