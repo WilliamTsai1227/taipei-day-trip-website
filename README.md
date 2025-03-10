@@ -65,28 +65,28 @@
 ## 網頁功能操作
 
 - **延遲載入 (Lazy Loading)**
-<iframe width="560" height="315" src="https://youtu.be/p7z0Wfa3WRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/p7z0Wfa3WRc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **搜尋景點功能**
-<iframe width="560" height="315" src="https://youtu.be/qf-TZbt3Xis" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/qf-TZbt3Xis" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **預訂行程功能**
-<iframe width="560" height="315" src="https://youtu.be/lXXNnQxh8Z8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/lXXNnQxh8Z8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **串接第三方金流付款**
-<iframe width="560" height="315" src="https://youtu.be/FJmj-lv3Wuw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/FJmj-lv3Wuw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **響應式網頁設計 (RWD)**
-<iframe width="560" height="315" src="https://youtu.be/Q05kZzArVnU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/Q05kZzArVnU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **註冊並登入會員**
-<iframe width="560" height="315" src="https://youtu.be/J1sV6ThiDC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/J1sV6ThiDC8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **驗證帳號是否已註冊過**
-<iframe width="560" height="315" src="https://youtu.be/3tQ3ZNau7PQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/3tQ3ZNau7PQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **註冊格式確認**
-<iframe width="560" height="315" src="https://youtu.be/Noq6TNDL6QE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://youtu.be/Noq6TNDL6QE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 
 - **登入格式確認**
 <iframe width="560" height="315" src="https://youtu.be/BW3QHFk-2gY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
