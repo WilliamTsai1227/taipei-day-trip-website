@@ -63,3 +63,41 @@
 - **`orders`** : 訂單資料
 
 ## 網頁功能操作
+以下是網頁功能的演示影片，您可以點擊影片縮圖來觀看每個功能的演示。
+
+### 延遲載入 (Lazy Loading)  
+
+[![Lazy Loading](https://img.youtube.com/vi/p7z0Wfa3WRc/0.jpg)](https://youtu.be/p7z0Wfa3WRc)
+
+### 搜尋景點功能   
+
+[![搜尋景點功能](https://img.youtube.com/vi/qf-TZbt3Xis/0.jpg)](https://youtu.be/qf-TZbt3Xis)
+
+### 預訂行程功能    
+
+[![預訂行程功能](https://img.youtube.com/vi/lXXNnQxh8Z8/0.jpg)](https://youtu.be/lXXNnQxh8Z8)
+
+### 串接第三方金流付款    
+
+[![串接第三方金流付款](https://img.youtube.com/vi/FJmj-lv3Wuw/0.jpg)](https://youtu.be/FJmj-lv3Wuw)
+
+### 響應式網頁設計 (RWD)    
+
+[![響應式網頁設計 (RWD)](https://img.youtube.com/vi/Q05kZzArVnU/0.jpg)](https://youtu.be/Q05kZzArVnU)
+
+### 註冊並登入會員    
+
+[![註冊並登入會員](https://img.youtube.com/vi/J1sV6ThiDC8/0.jpg)](https://youtu.be/J1sV6ThiDC8)
+
+### 驗證帳號是否已註冊    
+
+[![驗證帳號是否已註冊過](https://img.youtube.com/vi/3tQ3ZNau7PQ/0.jpg)](https://youtu.be/3tQ3ZNau7PQ)
+
+### 註冊格式確認    
+
+[![註冊格式確認](https://img.youtube.com/vi/Noq6TNDL6QE/0.jpg)](https://youtu.be/Noq6TNDL6QE)
+
+### 登入格式確認    
+
+[![登入格式確認](https://img.youtube.com/vi/BW3QHFk-2gY/0.jpg)](https://youtu.be/BW3QHFk-2gY)
+
