@@ -31,7 +31,8 @@
 - 驗證密碼：`123`
 
 ## 系統架構
-
+  
+- **系統架構圖**  
 ![Image](https://github.com/user-attachments/assets/3e0d1cc0-99a3-464a-9fd4-638a026d9390)  
   
 1. **Git Flow 開發流程**  
