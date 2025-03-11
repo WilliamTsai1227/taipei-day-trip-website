@@ -32,11 +32,14 @@
 
 ## 系統架構
 
+![Image](https://github.com/user-attachments/assets/3e0d1cc0-99a3-464a-9fd4-638a026d9390)  
+  
 1. **Git Flow 開發流程**  
    透過 Git Flow 的方式開發，確保各個版本的控制。
 
 2. **前後端分離架構**  
-   前端使用 HTML、CSS 和 JavaScript，後端採用 Python FastAPI，並基於 MVC（Model-View-Controller）設計模式模組化開發。
+   前端使用 HTML、CSS 和 JavaScript，後端採用 Python FastAPI，通過 RESTful API 進行通信。  
+   後端基於 MVC 模式進行模組化開發。
 
 3. **資料庫設計**  
    使用 MySQL 作為資料庫，保存會員、景點、預訂及訂單等資料。
@@ -45,13 +48,13 @@
    網站透過 Nginx 作為反向代理，並配置 SSL 證書提供 https 支援，提升網站安全性。
 
 5. **Docker 容器化**  
-   使用 Docker 來打包應用程式及其依賴，並部署至 AWS EC2 上，確保一致性和可移植性。
+   使用 Docker 將後端應用程式及其依賴打包為 Docker 映像檔（Docker Image），並上傳至 Docker Hub。部署時從 Docker Hub 拉取映像檔，在 AWS EC2 上運行容器，確保應用程式在不同環境中的一致性和可移植性。
 
 6. **域名與 DNS 設置**  
-   購買自定義域名並使用 AWS Route53 作為 DNS 伺服器進行管理。
+   在GoDaddy上購買自定義域名，並使用 AWS Route53 作為 DNS 伺服器進行管理配置。
 
 7. **伺服器**  
-   網站運行於 AWS EC2 實例中，並通過 Docker 管理部署。
+   網站運行於 AWS EC2 實例中，並通過 Docker 管理部署。  
 
 ## 資料庫架構
 ![資料庫架構圖](https://github.com/user-attachments/assets/027ffdb9-fddd-46b7-afd4-db97b461b06d)
