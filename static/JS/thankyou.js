@@ -1,6 +1,6 @@
 import {logout} from './modules/auth.js';
 import { getUserData } from './modules/user.js';
-import { back_to_home_page} from './modules/ui.js';
+import { backToHomePage} from './modules/ui.js';
 
 let checkBookingButton = document.querySelector(".navigation_button_book");
 let title = document.querySelector(".data_block .title");
@@ -92,7 +92,7 @@ function changeToBookingPage(){
 
 async function excute(){
     await getOrderResult();
-    back_to_home_page(); 
+    backToHomePage(); 
     logout();
     changeToBookingPage();
 }
