@@ -1,8 +1,8 @@
 import { login, signup, logout} from './modules/auth.js';
 import { getUserData } from './modules/user.js';
-import { back_to_home_page, show_login_block, close_login_block, change_to_signup_block, change_to_login_block, clear_input, erase_error_message, changeToBookingPage } from './modules/ui.js';
+import { backToHomePage, showLoginBlock, closeLoginBlock, changeToSignupBlock, changeToLoginBlock, eraseErrorMessage, changeToBookingPage } from './modules/ui.js';
 
-function scroll_img() {
+function scrollImage() {
     let imgContent = document.querySelector('.image_content');
     let leftArrow = document.querySelector('.section_picture_left_btn img');
     let rightArrow = document.querySelector('.section_picture_right_btn img');
@@ -82,7 +82,7 @@ function checkId(id) {
     return true;
 }
 
-async function loading_attraction_data(){
+async function loadingAttractionData(){
     let id = location.pathname.split("/").pop();
     let name = document.querySelector(".section_profile_name");
     let cat_mrt = document.querySelector(".section_profile_cat_mrt");
@@ -118,14 +118,14 @@ async function loading_attraction_data(){
         imgContent.appendChild(img);
         })
     createCircle();
-    setTimeout(scroll_img, 1000);
+    setTimeout(scrollImage, 1000);
 
 }
 
 
 
 
-function change_book_price_text(){
+function changeBookPriceText(){
     let morningBtn = document.querySelector(".profile_book_form_datetime_morning_btn");
     let afternoonBtn = document.querySelector(".profile_book_form_datetime_afternoon_btn");
     let priceContent = document.querySelector(".section_profile_book_form_price_content");
@@ -149,7 +149,7 @@ function handleResize(){
     window.addEventListener("resize", () => {
         if (window.innerWidth !== lastWidth) {
             lastWidth = window.innerWidth;
-            scroll_img();
+            scrollImage();
         }
     });
 }
@@ -254,18 +254,18 @@ function getBookingData(){
 async function excute(){
     getUserData();
     changeToBookingPage();
-    back_to_home_page(); 
-    show_login_block();
-    close_login_block();
-    change_to_signup_block();
-    change_to_login_block();
+    backToHomePage(); 
+    showLoginBlock();
+    closeLoginBlock();
+    changeToSignupBlock();
+    changeToLoginBlock();
     login();
     signup();
-    erase_error_message();
+    eraseErrorMessage();
     logout(); 
     booking(); 
-    await loading_attraction_data();
-    change_book_price_text();
+    await loadingAttractionData();
+    changeBookPriceText();
     handleResize();
 }
 excute();

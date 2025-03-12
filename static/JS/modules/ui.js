@@ -14,7 +14,7 @@ let loginBlockChangeToLogin = document.querySelector(".login_block .change_to_lo
 let loginBlockStatus = "login";
 let checkBookingButton = document.querySelector(".navigation_button_book");
 
-function back_to_home_page(){
+function backToHomePage(){
     let homepageButton = document.querySelector(".navigation_title")
     homepageButton.addEventListener("click",() => {
         window.location.href = "https://taipeitrips.com" ;
@@ -22,7 +22,7 @@ function back_to_home_page(){
 }
 
 //Open login box
-function show_login_block(){
+function showLoginBlock(){
     loginSignupButton.addEventListener("click", ()=>{
         loginArea.style.display = "flex";
         loginBlockAccountInput.value = "test@gmail.com";  // Test account for Demonstration
@@ -31,15 +31,15 @@ function show_login_block(){
 }
 
 //Close login box
-function close_login_block(){
+function closeLoginBlock(){
     loginBlockClose.addEventListener("click", ()=>{
         loginArea.style.display = "none";
     })
 }
 
-function change_to_signup_block(){    
+function changeToSignupBlock(){    
     loginBlockChangeToSignup.addEventListener("click", ()=>{
-        clear_input();
+        clearInput();
         loginBlockErrorMessage.textContent="";
         loginBlockTitle.textContent = "註冊會員帳號";
         loginBlockName.style.display = "flex";
@@ -51,7 +51,7 @@ function change_to_signup_block(){
     });
 }
 
-function change_to_login_block(){
+function changeToLoginBlock(){
     loginBlockChangeToLogin.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
         loginBlockTitle.textContent = "登入會員帳號";
@@ -67,14 +67,14 @@ function change_to_login_block(){
 
 
 //Clear user input content
-function clear_input(){
+function clearInput(){
     loginBlockNameInput.value = "";
     loginBlockAccountInput.value = "";
     loginBlockPasswordInput.value = "";
 }
 
 //Clear error message text
-function erase_error_message(){
+function eraseErrorMessage(){
     loginSignupButton.addEventListener("click", ()=>{
         loginBlockErrorMessage.textContent="";
     })
@@ -107,4 +107,4 @@ function changeToBookingPage(){
     })
 }
 
-export {back_to_home_page, show_login_block, close_login_block, change_to_signup_block, change_to_login_block, clear_input,erase_error_message, changeToBookingPage}
+export {backToHomePage, showLoginBlock, closeLoginBlock, changeToSignupBlock, changeToLoginBlock, clearInput,eraseErrorMessage, changeToBookingPage}

@@ -1,5 +1,5 @@
 import { getUserData } from "./user.js";
-import { clear_input } from "./ui.js";
+import { clearInput } from "./ui.js";
 let loginArea = document.querySelector(".login");
 let loginBlockButton = document.querySelector(".login_block .submit_btn");
 let loginBlockAccountInput = document.querySelector(".login_block .account input");
@@ -83,7 +83,7 @@ function login(){
                 } else if (statusCode === 200) {
                     const token = responseData.token;
                     localStorage.setItem('token', token);
-                    clear_input();
+                    clearInput();
                     const userData = await getUserData();
                     if (userData === false) {
                         console.error("user token procedure error.");

@@ -1,6 +1,6 @@
 import {logout} from './modules/auth.js';
 import { getUserData } from './modules/user.js';
-import { back_to_home_page } from './modules/ui.js';
+import { backToHomePage } from './modules/ui.js';
 
 let headline = document.querySelector(".main_content .booking_data_block .headline");
 let bookingContent = document.querySelector(".main_content .booking_data_block .content");
@@ -366,7 +366,7 @@ async function tapPay() {
 
 async function excute(){
     await getBookingData();
-    back_to_home_page(); 
+    backToHomePage(); 
     logout();
     changeToBookingPage();
     await deleteBookingData(); 
