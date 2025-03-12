@@ -85,7 +85,7 @@ function checkId(id) {
 async function loadingAttractionData(){
     let id = location.pathname.split("/").pop();
     let name = document.querySelector(".section_profile_name");
-    let cat_mrt = document.querySelector(".section_profile_cat_mrt");
+    let categoryMrt = document.querySelector(".section_profile_cat_mrt");
     let description = document.querySelector(".infors_description");
     let address = document.querySelector(".infors_location_content");
     let transport = document.querySelector(".infors_transportation_content");
@@ -105,7 +105,7 @@ async function loadingAttractionData(){
 
 
     name.textContent = attractionName;
-    cat_mrt.textContent = attractionCategory+" at "+attractionMrt;
+    categoryMrt.textContent = attractionCategory+" at "+attractionMrt;
     description.textContent = attractionDescription;
     address.textContent = attractionAddress;
     transport.textContent = attractionTrasport;
