@@ -1,12 +1,16 @@
 import os
+from dotenv import load_dotenv
 import json
 import mysql.connector
 import re
+
+load_dotenv()
+
 con = mysql.connector.connect(
-    user="root",
-    password="12345678",
-    host="localhost",
-    database="taipei_day_trip_website"
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    host=os.getenv("DB_HOST"),
+    database=os.getenv("DB_NAME")
 )
 #image URL filtering and write to database
 def processing_img_url(img_url,id,cursor):
