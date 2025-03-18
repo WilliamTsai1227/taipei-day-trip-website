@@ -16,7 +16,7 @@ async def get_user_booking(token: str = Depends(oauth2_scheme)):
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
-            return JSONResponse(content=response, status_code=403)
+            return JSONResponse(content=response, status_code=401)
         
         user_id = payload.get("user_id")
         data = Book.find_member_booking(user_id)
@@ -50,7 +50,7 @@ async def create_booking(request: Request, token: str = Depends(oauth2_scheme)):
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
-            return JSONResponse(content=response, status_code=403)
+            return JSONResponse(content=response, status_code=401)
         
         # token decoding
         user_id = payload.get("user_id")
@@ -106,7 +106,7 @@ async def delete_booking(token: str = Depends(oauth2_scheme)):
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
-            return JSONResponse(content=response, status_code=403)
+            return JSONResponse(content=response, status_code=401)
         
         user_id = payload.get("user_id") #Get user_id from decoded token
         

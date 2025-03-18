@@ -1,14 +1,14 @@
-from fastapi import *
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from api.attractions import attractions
 from api.mrts import mrts
 from api.user import user
 from api.booking import router
 from api.order import orders
-from fastapi.staticfiles import StaticFiles
+
 app=FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")

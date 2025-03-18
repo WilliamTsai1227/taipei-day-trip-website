@@ -65,7 +65,7 @@ async function getBookingData(){
         })
         .then(responseData => {
             let statusCode = responseData.statusCode;
-            if(statusCode === 403){
+            if(statusCode === 401){
                 console.error(`status_code: ${statusCode},message: 尚未登入`)
                 window.location.replace("https://taipeitrips.com");
                 return false
@@ -143,7 +143,7 @@ async function deleteBookingData(){
             })
             .then(response => {
                 const statusCode = response.status;
-                if(statusCode === 403){
+                if(statusCode === 401){
                     window.location.replace("https://taipeitrips.com"); 
                 }
                 if(statusCode === 500){
@@ -350,7 +350,7 @@ async function tapPay() {
                     alert("伺服器錯誤");
                     return;
                 }
-                if(statusCode === 403){
+                if(statusCode === 401){
                     window.location.replace("https://taipeitrips.com"); 
                     return;
                 }  

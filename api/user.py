@@ -62,7 +62,7 @@ async def login_process(request: Request):
     try:
         data = await request.json() 
         if data =="" or data["email"] ==""  or data["password"] =="" :
-            response = {"error":True , "message": "json數據空白"}
+            response = {"error":True , "message": "JSON數據空白"}
             return JSONResponse(content = response, status_code = 400)
         account = data["email"]
         password = data["password"]
@@ -82,7 +82,7 @@ async def login_process(request: Request):
         user_data = signin_check(account, password)
         if user_data is None:
             response = {"error": True,"message": "帳號或密碼錯誤"}
-            return JSONResponse(content=response, status_code=400)
+            return JSONResponse(content=response, status_code=401)
         if user_data is False:
             response = {"error": True,"message": "Database login procedure server error."}
             return JSONResponse(content=response, status_code=500)
@@ -96,7 +96,7 @@ async def login_process(request: Request):
             response = {"token": token}
             return JSONResponse(content=response, status_code=200)
         else:
-            response = {"error": True,"message": "token程序伺服器運作錯誤"}
+            response = {"error": True,"message": "Token程序伺服器運作錯誤"}
             return JSONResponse(content=response, status_code=500)
         
     except Exception as e:
@@ -113,7 +113,7 @@ async def get_user_info(request: Request, token: str = Depends(oauth2_scheme)):
             response = {
                 "data": None
             }
-            return JSONResponse(content=response, status_code=200)
+            return JSONResponse(content=response, status_code=401)
         payload = decode_jwt(token)
         user_id = payload.get("user_id")
         name = payload.get("name")

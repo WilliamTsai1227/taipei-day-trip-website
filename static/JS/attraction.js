@@ -201,7 +201,7 @@ function booking(){
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`);
                 return {"status_code":statusCode,"message":responseData.data.message};
             }
-            if(statusCode === 403){
+            if(statusCode === 401){
                 alert("尚未登入，預約失敗")
                 console.error(`status_code: ${statusCode},message:${responseData.data.message}`);
                 return {"status_code":statusCode,"message":responseData.data.message};

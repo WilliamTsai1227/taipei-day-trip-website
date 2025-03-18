@@ -76,7 +76,7 @@ function login(){
                 const statusCode = response.status;
                 const responseData = await response.json(); 
 
-                if (statusCode === 400 || statusCode === 500) {
+                if (statusCode === 401 || statusCode === 400 || statusCode === 500) {
                     loginBlockErrorMessage.textContent = responseData.message;
                     loginBlockErrorMessage.style.color = "red";
                     console.error(statusCode, responseData.message);
@@ -167,13 +167,19 @@ function signup(){
                }
                if(statusCode === 500){
                   console.log(statusCode , responseData.message)
+                  alert("伺服器錯誤,status_code:"+ statusCode +",訊息："+responseData.message)
                }
                if(statusCode === 200 && responseData.ok === true){
                   loginBlockErrorMessage.textContent = "註冊成功";
                   loginBlockErrorMessage.style.color = "green";
                }
             }catch (error){
-                console.error('Error signup procedure:', error); 
+                console.error('Error signup procedure:', error);
+                if (typeof statusCode !== 'undefined' && typeof responseData !== 'undefined') {
+                    alert("註冊失敗, status_code: " + statusCode + ", 訊息: " + responseData.message);
+                } else {
+                    alert("註冊失敗, 未知錯誤: " + error.message);
+                }
             }
             
         }
