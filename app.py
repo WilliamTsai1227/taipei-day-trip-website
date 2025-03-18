@@ -1,14 +1,14 @@
-from fastapi import *
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from api.attractions import attractions
 from api.mrts import mrts
 from api.user import user
 from api.booking import router
 from api.order import orders
-from fastapi.staticfiles import StaticFiles
+
 app=FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -40,7 +40,9 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
-
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("./static/favicon.ico", media_type="image/x-icon")
 
 app.include_router(attractions)
 app.include_router(mrts)

@@ -26,7 +26,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
-            return JSONResponse(content=response, status_code=403)
+            return JSONResponse(content=response, status_code=401)
         user_id = payload.get("user_id")
         data = await request.json()  
         name =  data["order"]["contact"]["name"]
@@ -135,7 +135,7 @@ def get_order(orderNumber: str,token: str = Depends(oauth2_scheme)):
         payload = decode_jwt(token)
         if payload is None:
             response = {"error": True, "message": "未登入系統,拒絕存取"}
-            return JSONResponse(content=response, status_code=403)
+            return JSONResponse(content=response, status_code=401)
         else:
             result = Order.get_order_information(orderNumber)
             if result:

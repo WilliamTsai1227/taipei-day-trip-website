@@ -72,7 +72,6 @@ def signin_check(account, password):
         result = cursor.fetchone()  
         return result #It will return None if the same account (match) is not found.
     except Exception as e:
-        print(f"signin database error: {e}")
         return False
     finally:
         cursor.close()

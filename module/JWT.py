@@ -24,7 +24,6 @@ def JWT_token_make(user_id,name,account):
         )
         return encoded_jwt
     except Exception as e:
-        print(f"JWT_token procedure error: {e}")
         return False
 
 # The function of Decode and verify token 
@@ -33,8 +32,6 @@ def decode_jwt(token):
         decoded_jwt = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS256"])
         return decoded_jwt
     except jwt.ExpiredSignatureError:
-        print("Token has expired")
         return None
     except jwt.InvalidTokenError:
-        print("Invalid token")
         return None
