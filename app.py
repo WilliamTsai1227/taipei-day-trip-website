@@ -40,7 +40,9 @@ async def booking(request: Request):
 @app.get("/thankyou", include_in_schema=False)
 async def thankyou(request: Request):
 	return FileResponse("./static/thankyou.html", media_type="text/html")
-
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse("./static/favicon.ico", media_type="image/x-icon")
 
 app.include_router(attractions)
 app.include_router(mrts)
