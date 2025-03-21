@@ -1,30 +1,36 @@
 # <a href="https://taipeitrips.com/" target="_blank">台北一日遊</a>
-Taipei-Day-Trip is a travel e-commerce website that allows you to browse, search, book attractions, register & log in to a member account, and pay by credit card through third-party payment methods.  
+Taipei-Day-Trip is a travel e-commerce website that allows you to browse, search, book attractions, register & log in to a member account, and pay by credit card through third-party payment methods.
+
 台北一日遊是一個旅遊電商網站，可以讓您瀏覽、搜尋、預定景點、註冊＆登入會員帳號，並透過第三方金流使用信用卡付款。
 
 ## 開發流程
 
-1. **前端開發**   
+1. **前端開發**
+
    Implemented based on Figma designs, using HTML, CSS, and JavaScript to complete the layout and front-end functionality, ensuring the interface meets design specifications and user interactions work as intended.  
 
    依據 Figma 文件進行規劃與設計，使用 HTML、CSS 和 JavaScript 完成網頁切版與前端功能實作，確保介面符合設計規格及使用者互動功能正常。  
 
-2. **資料處理與儲存**    
+2. **資料處理與儲存**
+
    Used a Python script to extract and organize attraction data from the taipei-attractions.json file. The data was standardized and stored in a MySQL database for easy access and management.    
 
    使用Python 程式統⼀將景點資料從taipei-attractions.json中提取並整理景點資料，統一結構化後存入 MySQL 資料庫以便存取與管理。  
 
-3. **後端開發**    
+3. **後端開發**
+
    Adopted Python FastAPI as the backend framework with a front-end and back-end separation architecture. Through RESTful API design, the front-end uses AJAX to send requests to the backend, which returns a JSON response after processing the request.  
 
    採用 Python FastAPI 作為後端框架，採用前後端分離架構。採用 RESTful API 設計，前端利用 AJAX 技術發送 Request 向後端獲取數據，後端接收請求後回傳 JSON 格式的 Response。  
 
-4. **版本控制與協作**   
+4. **版本控制與協作**
+
    Used Git/GitHub to create a develop branch for new feature development. After weekly development is completed, submitted a Pull Request to the Reviewer, and after review and approval, merged the develop branch into the main branch.  
 
    使用 Git/GitHub 建立 `develop` 分支進行新功能開發。每週開發完成後，向 Reviewer 提交 Pull Request，經審核同意後將 `develop` 分支合併至 `main` 分支。  
 
-5. **部署與測試**  
+5. **部署與測試** 
+
    During the local development phase, used Postman to test the API, ensuring functionality and expected behavior. After development was completed, deployed the project using Docker to sync with the EC2 instance, and then used Postman again to verify the API's accuracy in the live environment, ensuring the system operated correctly.  
 
    在本地開發階段，使用 Postman 對 API 進行測試，確保功能正常並符合預期。開發完成後，將專案同步部署至 EC2 Instance，並再次利用 Postman 驗證 API 在實際環境中正確性，確保整體系統運作無誤。  
@@ -78,38 +84,45 @@ You can preview information about attractions by entering the website. If you wa
 - **系統架構圖**     
 ![Image](https://github.com/user-attachments/assets/cc9b5ea3-9ae6-4a9d-b7ad-fc351d2ddea0)   
     
-1. **Git Flow 開發流程**  
+1. **Git Flow 開發流程**
+
    Developed using Git Flow to ensure version control across different stages.  
 
    透過 Git Flow 的方式開發，確保各個版本的控制。  
 
-2. **前後端分離架構**  
+2. **前後端分離架構**
+
    The front-end uses HTML, CSS, and JavaScript, while the back-end is built with Python FastAPI, communicating through RESTful APIs. The back-end follows the MVC (Model-View-Controller) architecture for development.  
 
    前端使用 HTML、CSS 和 JavaScript，後端採用 Python FastAPI，通過 RESTful API 進行通信。    
    後端基於 MVC 模式進行開發。  
 
-3. **資料庫設計**    
+3. **資料庫設計**
+
    Used MySQL as the database to store data such as member information, attractions, bookings, and orders.  
 
    使用 MySQL 作為資料庫，保存會員、景點、預訂及訂單等資料。  
 
-4. **Nginx 反向代理與 SSL 支援**   
+4. **Nginx 反向代理與 SSL 支援**
+
    The website uses Nginx as a reverse proxy and configures an SSL certificate to provide HTTPS support, enhancing website security.  
 
    網站透過 Nginx 作為反向代理，並配置 SSL 證書提供 https 支援，提升網站安全性。  
 
-5. **Docker 容器化**  
+5. **Docker 容器化**
+
    Used Docker to package the application and its dependencies into a Docker image, and uploaded it to Docker Hub. During deployment, the image is pulled from Docker Hub and deployed in a container on AWS EC2, ensuring consistency and portability across different environments.  
 
    使用 Docker 將程式及其依賴打包為 Docker 映像檔（Docker Image），並上傳至 Docker Hub。部署時從 Docker Hub 拉取映像檔，在 AWS EC2 上運行容器，確保應用程式在不同環境中的一致性和可移植性。  
 
-6. **域名與 DNS 設置**   
+6. **域名與 DNS 設置**
+
    Purchased a custom domain on GoDaddy and used AWS Route 53 as the DNS server for management and configuration.   
 
    在GoDaddy上購買自定義域名，並使用 AWS Route53 作為 DNS 伺服器進行管理配置。  
 
-7. **伺服器**   
+7. **伺服器**
+
    The website runs on an AWS EC2 instance and is managed and deployed through Docker.   
 
    網站運行於 AWS EC2 實例中，並通過 Docker 管理部署。    
@@ -131,7 +144,8 @@ The project follows a front-end and back-end separation approach. The back-end p
 ⚠️ Developed according to the specification of RESTful API（Not involved in planning）
 
 ## 網頁功能操作  
-The following is a demonstration video of the web page functions. You can click on the video thumbnails to watch the demonstration of each function.  
+The following is a demonstration video of the web page functions. You can click on the video thumbnails to watch the demonstration of each function.
+  
 以下是網頁功能的演示影片，您可以點擊影片縮圖來觀看每個功能的演示。  
 
 ### 延遲載入 (Lazy Loading)    
