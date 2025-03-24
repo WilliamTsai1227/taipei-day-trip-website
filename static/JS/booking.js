@@ -180,186 +180,180 @@ function changeToBookingPage(){
 //Cash flow related functions
 
 async function tapPay() {
-    TPDirect.setupSDK(151711, 'app_4L6D7260cV24Upa7DWKA1jOaIIZ69D4ZF7qCr8SOC1OVDTTf6Rix7qz4liTe', 'sandbox');
-    // Display ccv field
-    let fields = {
-        number: {
-            // css selector
-            element: '#card-number',
-            placeholder: '**** **** **** ****'
-        },
-        expirationDate: {
-            // DOM object
-            element: '#card-expiration-date',
-            placeholder: 'MM / YY'
-        },
-        ccv: {
-            element: '#card-ccv',
-            placeholder: 'ccv'
+    try{
+        const response = await fetch("https://taipeitrips.com/api/tappay/setup-sdk",{
+            method: 'POST'
+        });
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }
-    // # TPDirect.card.setup(config)
-    TPDirect.card.setup({
-        fields: fields,
-        styles: {
-            // Style all elements
-            'input': {
-                'color': 'gray'
-            },
-            // Styling ccv field
-            'input.ccv': {
-                // 'font-size': '16px'
-            },
-            // Styling expiration-date field
-            'input.expiration-date': {
-                // 'font-size': '16px'
-            },
-            // Styling card-number field
-            'input.card-number': {
-                // 'font-size': '16px'
-            },
-            // style focus state
-            ':focus': {
-                'color': 'black'
-            },
-            // style valid state
-            '.valid': {
-                'color': 'green'
-            },
-            // style invalid state
-            '.invalid': {
-                'color': 'red'
-            },
-            // Media queries
-            // Note that these apply to the iframe, not the root window.
-            '@media screen and (max-width: 400px)': {
-                'input': {
-                    'color': 'orange'
-                }
-            }
-        },
-        // This setting will display the first six and last four digits of the credit card number after the card number is entered correctly.
-        isMaskCreditCardNumber: true,
-        maskCreditCardNumberRange: {
-            beginIndex: 6,
-            endIndex: 11
-        }
-    })
 
+        const sdkData = await response.json();
+        if (!sdkData) {
+            throw new Error('Invalid TPDirect.setupSDK parameter response data');
+        } 
+        const appId = sdkData.TAPPAY_APPID;
+        const appKey = sdkData.TAPPAY_APPKEY;
+        const serverType = sdkData.TAPPAY_SERVER_TYPE;
+
+        TPDirect.setupSDK(appId, appKey, serverType);
+        let fields = {
+            number: {
+                element: '#card-number',
+                placeholder: '**** **** **** ****'
+            },
+            expirationDate: {
+                element: '#card-expiration-date',
+                placeholder: 'MM / YY'
+            },
+            ccv: {
+                element: '#card-ccv',
+                placeholder: 'ccv'
+            }
+        }
+        // # TPDirect.card.setup(config)
+        TPDirect.card.setup({
+            fields: fields,
+            styles: {
+                'input': {'color': 'gray'},
+                'input.ccv': {},
+                'input.expiration-date': {},
+                'input.card-number': {},
+                ':focus': {'color': 'black'},
+                '.valid': {'color': 'green'},
+                '.invalid': {'color': 'red'},
+                '@media screen and (max-width: 400px)': {'input': {'color': 'orange'}}
+            },
+            // This setting will display the first six and last four digits of the credit card number after the card number is entered correctly.
+            isMaskCreditCardNumber: true,
+            maskCreditCardNumberRange: {
+                beginIndex: 6,
+                endIndex: 11
+            }
+        })
+    } catch(error){
+        console.error('Error:', error.message);
+        alert('TapPay SDK 設置失敗，請稍後再試');
+    }
     
 
     // Confirm order and pay button
 
     submitButton.addEventListener('click',async function (event) {
-        event.preventDefault();
-        let token = localStorage.getItem('token');
-        if (!token) {
-            window.location.replace("https://taipeitrips.com"); //Return to home page
-            return ;
-        }
-
-        const response = await fetch('https://taipeitrips.com/api/user/auth', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
+        try{
+            event.preventDefault();
+            let token = localStorage.getItem('token');
+            if (!token) {
+                window.location.replace("https://taipeitrips.com"); //Return to home page
+                return ;
             }
-        });
-
-        let responseData = await response.json();
-        
-        if (responseData.data === null) {
-            window.location.replace("https://taipeitrips.com"); //Return to home page
-            return ;
-        }
-
-        if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //Check member's information
-            alert("請完整填寫聯絡資訊");
-            return;
-        };
-        const tappayStatus = TPDirect.card.getTappayFieldsStatus();
-
-        if (tappayStatus.canGetPrime === false) {
-            alert("信用卡資料錯誤")
-            console.error(`Frontend get Tappay prime status: ${tappayStatus.canGetPrime}`)
-            return;
-        };
-
-
-        TPDirect.card.getPrime(function (result) {
-            if (result.status !== 0) {
-                console.error('get prime error ' + result.msg);
+    
+            const response = await fetch('https://taipeitrips.com/api/user/auth', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            let responseData = await response.json();
+            
+            if (responseData.data === null) {
+                window.location.replace("https://taipeitrips.com"); //Return to home page
+                return ;
+            }
+    
+            if(contractName.value === "" || contractEmail.value ==="" || contractPhone.value ===""){ //Check member's information
+                alert("請完整填寫聯絡資訊");
                 return;
             };
-
-
-            // Send payment request to backend
-            fetch('https://taipeitrips.com/api/order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                    // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    prime: result.card.prime,
-                    order: {
-                        price: fetchAttractionPrice,
-                        trip: {
-                            attraction: {
-                                id: fetchAttractionId,
-                                name: fetchAttractionName,
-                                address: fetchAttractionAddress,
-                                image: fetchAttractionImage
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+    
+            if (tappayStatus.canGetPrime === false) {
+                alert("信用卡資料錯誤")
+                console.error(`Frontend get Tappay prime status: ${tappayStatus.canGetPrime}`)
+                return;
+            };
+    
+    
+            TPDirect.card.getPrime(function (result) {
+                if (result.status !== 0) {
+                    console.error('get prime error ' + result.msg);
+                    return;
+                };
+    
+    
+                // Send payment request to backend
+                fetch('https://taipeitrips.com/api/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                        // 'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify({
+                        prime: result.card.prime,
+                        order: {
+                            price: fetchAttractionPrice,
+                            trip: {
+                                attraction: {
+                                    id: fetchAttractionId,
+                                    name: fetchAttractionName,
+                                    address: fetchAttractionAddress,
+                                    image: fetchAttractionImage
+                                },
+                                date: fetchAttractionDate,
+                                time: fetchAttractionTime
                             },
-                            date: fetchAttractionDate,
-                            time: fetchAttractionTime
-                        },
-                        contact: {
-                            name: userName,
-                            email: userAccount,
-                            phone: document.querySelector('.phone_input').value
+                            contact: {
+                                name: userName,
+                                email: userAccount,
+                                phone: document.querySelector('.phone_input').value
+                            }
                         }
-                    }
+                    })
                 })
-            })
-            .then(response =>{
-                let statusCode = response.status;
-                return response.json().then(data => ({
-                    statusCode: statusCode,
-                    body: data
-                }));
-            })
-            .then(responseData => {
-                let statusCode = responseData.statusCode;
-                if (statusCode === 200 && responseData.body.data.payment.status === 0) {
-                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
-                    return;
-                } 
-                if (statusCode === 200 && responseData.body.data.payment.status === 1) {
-                    alert("付款失敗");
-                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
-                    return;
-                } 
-                if(statusCode === 400){
-                    alert("付款失敗，輸入資訊有誤，請重新再試一次")
-                    console.error(responseData.body.message);
-                    window.location.href = "/thankyou?number=" + responseData.body.data.number;
-                    return;
-                }
-                if(statusCode === 500){
-                    alert("伺服器錯誤");
-                    return;
-                }
-                if(statusCode === 401){
-                    window.location.replace("https://taipeitrips.com"); 
-                    return;
-                }  
-            })
-            .catch(error => {
-                console.error('Payment processing Error:', error);
-                // alert('An error occurred while processing the payment.');
+                .then(response =>{
+                    let statusCode = response.status;
+                    return response.json().then(data => ({
+                        statusCode: statusCode,
+                        body: data
+                    }));
+                })
+                .then(responseData => {
+                    let statusCode = responseData.statusCode;
+                    if (statusCode === 200 && responseData.body.data.payment.status === 0) {
+                        window.location.href = "/thankyou?number=" + responseData.body.data.number;
+                        return;
+                    } 
+                    if (statusCode === 200 && responseData.body.data.payment.status === 1) {
+                        alert("付款失敗");
+                        window.location.href = "/thankyou?number=" + responseData.body.data.number;
+                        return;
+                    } 
+                    if(statusCode === 400){
+                        alert("付款失敗，輸入資訊有誤，請重新再試一次")
+                        console.error(responseData.body.message);
+                        window.location.href = "/thankyou?number=" + responseData.body.data.number;
+                        return;
+                    }
+                    if(statusCode === 500){
+                        alert("伺服器錯誤");
+                        return;
+                    }
+                    if(statusCode === 401){
+                        window.location.replace("https://taipeitrips.com"); 
+                        return;
+                    }  
+                })
+                .catch(error => {
+                    console.error(`Payment processing Error:${error.message || error}`);
+                    alert('An error occurred while processing the payment.');
+                });
             });
-        });
+        }catch (error){
+            console.error(`Front-end payment procedure Error:${error.message || error}`);
+            alert('An error occurred. Please try again.');
+        }
     });
 }
 
