@@ -13,8 +13,11 @@ import requests
 
 #Load environment variables from .env file
 load_dotenv()
-TAPPAY_PARTNER_KEY = os.getenv("TAPPAY_PARTNER_KEY")
-TAPPAY_MERCHANT_ID = os.getenv("TAPPAY_MERCHANT_ID")
+TAPPAY_PARTNER_KEY = os.getenv("TAPPAY_PARTNER_KEY", "")
+TAPPAY_MERCHANT_ID = os.getenv("TAPPAY_MERCHANT_ID", "")
+TAPPAY_APPID = os.getenv("TAPPAY_APPID", "")
+TAPPAY_APPKEY = os.getenv("TAPPAY_APPKEY", "")
+TAPPAY_SERVER_TYPE = os.getenv("TAPPAY_SERVER_TYPE", "")
 
 orders = APIRouter()  
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -79,10 +82,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
                     "x-api-key": TAPPAY_PARTNER_KEY
                 },
             )
-            print(f"Response status code: {tappay_response.status_code}")
             tappay_response_data = tappay_response.json()
-            print("Received response from TapPay API:")
-            print(tappay_response_data)
             if tappay_response_data["status"] == 0:
                 Order.order_paystatus_change(order_number) #change order status to paid.
                 pay_status=0   # PAID
@@ -130,7 +130,7 @@ async def create_order(request: Request,token: str = Depends(oauth2_scheme)):
 
 
 @orders.get("/api/order/{orderNumber}")
-def get_order(orderNumber: str,token: str = Depends(oauth2_scheme)):
+async def get_order(orderNumber: str,token: str = Depends(oauth2_scheme)):
     try:
         payload = decode_jwt(token)
         if payload is None:
@@ -174,6 +174,25 @@ def get_order(orderNumber: str,token: str = Depends(oauth2_scheme)):
         }
         return JSONResponse(content=response, status_code=500) 
 
-
+"""Return the TapPay's front-end Setup SDK information"""  
+@orders.post("/api/tappay/setup-sdk")
+async def get_tappay_setup_sdk():
+    try:
+        tappay_appid = int(TAPPAY_APPID)
+    except ValueError:
+        return JSONResponse(content={"error": True, "message": "Invalid APPID"}, status_code=500)
+    try:
+        response={
+            "TAPPAY_APPID":tappay_appid,
+            "TAPPAY_APPKEY":TAPPAY_APPKEY,
+            "TAPPAY_SERVER_TYPE":TAPPAY_SERVER_TYPE
+        }
+        return JSONResponse(content=response, status_code=200)
+    except Exception as e:
+        response={
+            "error": True,
+            "message": str(e)
+        }
+        return JSONResponse(content=response, status_code=500)
 
 

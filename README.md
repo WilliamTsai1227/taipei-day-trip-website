@@ -1,7 +1,24 @@
 # <a href="https://taipeitrips.com/" target="_blank">台北一日遊</a>
 Taipei-Day-Trip is a travel e-commerce website that allows you to browse, search, book attractions, register & log in to a member account, and pay by credit card through third-party payment methods.
 
-台北一日遊是一個旅遊電商網站，可以讓您瀏覽、搜尋、預定景點、註冊＆登入會員帳號，並透過第三方金流使用信用卡付款。
+台北一日遊是一個旅遊電商網站，可以讓您瀏覽、搜尋、預定景點、註冊＆登入會員帳號，並透過第三方金流使用信用卡付款。  
+
+## Live Demo  
+https://taipeitrips.com/  
+
+## 測試用  
+You can preview information about attractions by entering the website. If you want to book a travel date and time, you need to log in. The following are the test accounts and passwords.  
+
+進入網站即可預覽景點相關資訊，若想要預定行程日期及時段，需要登入才可以使用。以下是測試帳號及密碼。  
+
+| 帳號           | 密碼     | 手機號碼   |
+|---------------|----------|------------|
+| test@gmail.com | 12345678 | 0912345678 |
+
+| 卡片號碼            | 過期時間 | 驗證密碼 |
+|--------------------|----------|----------|
+| 4242 4242 4242 4242 | 12/25    | 123      |  
+
 
 ## 開發流程
 
@@ -61,23 +78,6 @@ Taipei-Day-Trip is a travel e-commerce website that allows you to browse, search
 6. **景點畫面輪播**   
    The images of each attraction are displayed through a carousel.  
    每個景點的圖片資料透過輪播圖呈現。  
-
-## Live Demo  
-https://taipeitrips.com/  
-
-## 測試用  
-You can preview information about attractions by entering the website. If you want to book a travel date and time, you need to log in. The following are the test accounts and passwords.  
-
-進入網站即可預覽景點相關資訊，若想要預定行程日期及時段，需要登入才可以使用。以下是測試帳號及密碼。  
-
-| 帳號           | 密碼     | 手機號碼   |
-|---------------|----------|------------|
-| test@gmail.com | 12345678 | 0912345678 |
-
-| 卡片號碼            | 過期時間 | 驗證密碼 |
-|--------------------|----------|----------|
-| 4242 4242 4242 4242 | 12/25    | 123      |
-
 
 ## 系統架構  
   
@@ -145,7 +145,7 @@ The project follows a front-end and back-end separation approach. The back-end p
 
 ## 網頁功能操作  
 The following is a demonstration video of the web page functions. You can click on the video thumbnails to watch the demonstration of each function.
-  
+
 以下是網頁功能的演示影片，您可以點擊影片縮圖來觀看每個功能的演示。  
 
 ### 延遲載入 (Lazy Loading)    
