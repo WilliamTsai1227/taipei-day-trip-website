@@ -14,17 +14,17 @@ class Attraction:
         except Exception as e:
             raise ValueError(f"attraction module get database connection error (keyword_attractions): {e}")
         try:
-            keyword_pattern = f"%{keyword}"
+            keyword_pattern = f"%{keyword}%"
             cursor.execute(
                 """
                 SELECT a.*, GROUP_CONCAT(i.image_url) AS image_urls 
                 FROM attractions a 
                 LEFT JOIN images i ON a.id = i.attractions_id 
-                WHERE a.name LIKE %s OR a.mrt = %s 
+                WHERE a.name LIKE %s OR a.mrt LIKE %s 
                 GROUP BY a.id 
                 LIMIT %s, 12
                 """,
-                (keyword_pattern, keyword, query_page)
+                (keyword_pattern, keyword_pattern, query_page)
             )
             result = cursor.fetchall()
             return result
