@@ -1,7 +1,7 @@
 # <a href="https://taipeitrips.com/" target="_blank">台北一日遊</a>
 Taipei-Day-Trip is a travel e-commerce website that allows you to browse, search, book attractions, register & log in to a member account, and pay by credit card through third-party payment methods.
 
-台北一日遊是一個旅遊電商網站，可以讓您瀏覽、搜尋、預定景點、註冊＆登入會員帳號，並透過第三方金流使用信用卡付款。  
+台北一日遊是一個旅遊電商網站，可以讓您瀏覽、搜尋、預定景點、註冊＆登入會員帳號，並透過第三方金流使用測試信用卡付款。  
 
 ## Live Demo  
 https://taipeitrips.com/  
@@ -57,7 +57,7 @@ You can preview information about attractions by entering the website. If you wa
 
 1. **景點搜尋**  
    Quickly search for nearby attractions using keywords from attraction or metro station names.   
-   使用景點或捷運站名稱關鍵字，快速搜尋附近的景點資訊。    
+   使用景點或捷運站名稱關鍵字，快速搜尋景點資訊。    
 
 2. **註冊並登入會員帳戶**   
    Users can register and log in to their accounts to book trips and make payments.  
@@ -69,7 +69,7 @@ You can preview information about attractions by entering the website. If you wa
 
 4. **線上付款**  
    Integrated TapPay payment service, allowing users to easily complete payments and receive an order number.    
-   集成 TapPay 金流服務，使用者可輕鬆完成付款並取得訂單編號。  
+   集成 TapPay 測試帳號金流服務，使用者可測試付款並取得訂單編號。  
 
 5. **延遲載入功能**  
    Implemented lazy loading while browsing a large amount of attraction data to improve website performance.   
@@ -179,7 +179,7 @@ Users can register and log in to their accounts to book trips.
 ### 串接第三方金流付款(TapPay)   
 Use TapPay to connect to a third-party cash flow system. After the credit card is successfully authenticated, the user completes the payment.  
 
-使用 TapPay 串接第三方金流系統，信用卡認證成功後，使用者完成付款。  
+使用 TapPay 串接第三方金流系統，使用測試信用卡認證成功後，使用者完成付款。  
 
 [![串接第三方金流付款](https://img.youtube.com/vi/FJmj-lv3Wuw/0.jpg)](https://youtu.be/FJmj-lv3Wuw)
 
